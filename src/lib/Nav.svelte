@@ -25,7 +25,7 @@
 </script>
 
 <nav class="navbar navbar-expand-md">
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0 container-md">
         <a class="navbar-brand" href="#">Navbar</a>
         <button
             class="navbar-toggler collapsed d-flex d-md-none flex-column justify-content-around"
@@ -41,7 +41,7 @@
             <span class="toggler-icon linea-inferior" />
         </button>
         <div class="collapse navbar-collapse px-2" id="contenidoNavbar">
-            <ul class="navbar-nav rounded-3 p-3 my-3 me-auto">
+            <ul class="navbar-nav rounded-3 p-3 my-3 p-md-0 my-md-0">
                 {#each opcionesNav as opcionNav}
                     {#if opcionNav.tipo == "enlace"}
                         <li class="nav-item text-start">
@@ -82,7 +82,7 @@
                         aria-label="Buscar un centro"
                     />
                 </form>
-                <li class="nav-item w-100">
+                <li class="nav-item">
                     <a class="boton-empezar nav-link text-start" href="#about"
                         >Empezar</a
                     >
@@ -200,7 +200,7 @@
         background: #4154f1;
         padding: 8px 20px;
         margin-top: 10px;
-        margin-top: 10px;
+        margin-bottom: 10px;
         border-radius: 4px !important;
         color: #fff !important;
     }
@@ -210,6 +210,19 @@
     }
 
     @media (min-width: 768px) {
+        #contenidoNavbar {
+            background-color: #fff;
+        }
+
+        input[type="search"] {
+            margin-top: 0px !important;
+        }
+
+        .boton-empezar {
+            width: 150px;
+            text-align: center !important;
+            margin: 0px;
+        }
     }
     /*
     .navbar .dropdown ul {
