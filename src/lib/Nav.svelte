@@ -24,7 +24,7 @@
     ];
 </script>
 
-<nav class="navbar navbar-expand-md">
+<!-- <nav class="navbar navbar-expand-md">
     <div class="container-fluid px-0 container-md">
         <a class="navbar-brand" href="#">Navbar</a>
         <button
@@ -88,6 +88,72 @@
                     >
                 </li>
             </ul>
+        </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#contenidoNavbar"
+            aria-controls="contenidoNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon" />
+        </button>
+        <div class="collapse navbar-collapse" id="contenidoNavbar">
+            <ul class="navbar-nav mb-0 p-2">
+                {#each opcionesNav as opcionNav}
+                    {#if opcionNav.tipo == "enlace"}
+                        <li class="nav-item text-start">
+                            <Link class="nav-link" to={opcionNav.ruta}
+                                >{opcionNav.pagina}</Link
+                            >
+                        </li>
+                    {:else if opcionNav.tipo == "dropdown"}
+                        <li class="nav-item dropdown">
+                            <button
+                                class="nav-link dropdown-toggle border-0 bg-white"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                {opcionNav.pagina}
+                            </button>
+                            <ul class="dropdown-menu border-0">
+                                {#each opcionNav.paginas as pagina}
+                                    <li>
+                                        <Link
+                                            class="dropdown-item py-2"
+                                            to={pagina.ruta}
+                                        >
+                                            {pagina.pagina}
+                                        </Link>
+                                    </li>
+                                {/each}
+                            </ul>
+                        </li>
+                    {/if}
+                {/each}
+            </ul>
+            <div class="fondo-blanco text-end">
+                <form class="d-flex">
+                    <input
+                        class="form-control"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                    />
+                </form>
+                <button class="boton-empezar w-100 text-start border-0"
+                    >Empezar</button
+                >
+            </div>
         </div>
     </div>
 </nav>
@@ -169,16 +235,32 @@
         padding-bottom: 10px !important;
     }
 
-    input[type="search"] {
+    /* input[type="search"] {
         margin-top: 10px !important;
         margin-bottom: 10px !important;
-    }
-
+    } */
+    /* 
     #contenidoNavbar {
         background-color: rgba(1, 22, 61, 0.9);
+    } */
+
+    #contenidoNavbar {
+        background-color: rgba(1, 22, 61, 0.9) !important;
+        margin-left: -12px !important;
+        margin-right: -12px !important;
+    }
+
+    .fondo-blanco {
+        background-color: #fff;
+        border-radius: 0px 0px 4px 4px;
+        padding: 10px;
+        margin: 0px 20px 20px 20px;
     }
 
     .navbar-nav {
+        border-radius: 4px 4px 0px 0px;
+        margin: 20px;
+        margin-bottom: 0px;
         background-color: #fff !important;
     }
 
@@ -199,8 +281,8 @@
     .boton-empezar {
         background: #4154f1;
         padding: 8px 20px;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        /* margin-top: 10px;
+        margin-bottom: 10px; */
         border-radius: 4px !important;
         color: #fff !important;
     }
@@ -219,7 +301,7 @@
         }
 
         .boton-empezar {
-            width: 150px;
+            width: 150px !important;
             text-align: center !important;
             margin: 0px;
         }
