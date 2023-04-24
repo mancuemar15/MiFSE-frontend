@@ -1,5 +1,6 @@
 <script>
     import { Router, Route, Link } from "svelte-navigator";
+    import mifseLogo from "../assets/logo-mifse.svg";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -26,7 +27,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid container-lg">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <Link to="/" class="navbar-brand">
+            <img src={mifseLogo} alt="Universia" width="120" />
+        </Link>
         <button
             class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
             type="button"
