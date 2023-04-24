@@ -24,11 +24,11 @@
     ];
 </script>
 
-<!-- <nav class="navbar navbar-expand-md">
-    <div class="container-fluid px-0 container-md">
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid container-lg">
         <a class="navbar-brand" href="#">Navbar</a>
         <button
-            class="navbar-toggler collapsed d-flex d-md-none flex-column justify-content-around"
+            class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#contenidoNavbar"
@@ -40,8 +40,11 @@
             <span class="toggler-icon linea-media" />
             <span class="toggler-icon linea-inferior" />
         </button>
-        <div class="collapse navbar-collapse px-2" id="contenidoNavbar">
-            <ul class="navbar-nav rounded-3 p-3 my-3 p-md-0 my-md-0">
+        <div
+            class="collapse navbar-collapse justify-content-lg-between"
+            id="contenidoNavbar"
+        >
+            <ul class="navbar-nav pt-2 px-3 pb-0 mx-3 mt-4 mb-0 my-lg-0 p-lg-0">
                 {#each opcionesNav as opcionNav}
                     {#if opcionNav.tipo == "enlace"}
                         <li class="nav-item text-start">
@@ -59,7 +62,7 @@
                             >
                                 {opcionNav.pagina}
                             </button>
-                            <ul class="dropdown-menu border-0">
+                            <ul class="dropdown-menu border-0 my-2">
                                 {#each opcionNav.paginas as pagina}
                                     <li>
                                         <Link
@@ -74,80 +77,16 @@
                         </li>
                     {/if}
                 {/each}
-                <form class="nav-item" role="search">
+            </ul>
+            <div
+                class="fondo-blanco d-lg-flex pb-2 pt-0 px-3 mx-3 mb-4 mt-0 my-lg-0 p-lg-0"
+            >
+                <form class="d-flex">
                     <input
                         class="form-control"
                         type="search"
                         placeholder="Buscar un centro"
                         aria-label="Buscar un centro"
-                    />
-                </form>
-                <li class="nav-item">
-                    <a class="boton-empezar nav-link text-start" href="#about"
-                        >Empezar</a
-                    >
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#contenidoNavbar"
-            aria-controls="contenidoNavbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon" />
-        </button>
-        <div class="collapse navbar-collapse" id="contenidoNavbar">
-            <ul class="navbar-nav mb-0 p-2">
-                {#each opcionesNav as opcionNav}
-                    {#if opcionNav.tipo == "enlace"}
-                        <li class="nav-item text-start">
-                            <Link class="nav-link" to={opcionNav.ruta}
-                                >{opcionNav.pagina}</Link
-                            >
-                        </li>
-                    {:else if opcionNav.tipo == "dropdown"}
-                        <li class="nav-item dropdown">
-                            <button
-                                class="nav-link dropdown-toggle border-0 bg-white"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                {opcionNav.pagina}
-                            </button>
-                            <ul class="dropdown-menu border-0">
-                                {#each opcionNav.paginas as pagina}
-                                    <li>
-                                        <Link
-                                            class="dropdown-item py-2"
-                                            to={pagina.ruta}
-                                        >
-                                            {pagina.pagina}
-                                        </Link>
-                                    </li>
-                                {/each}
-                            </ul>
-                        </li>
-                    {/if}
-                {/each}
-            </ul>
-            <div class="fondo-blanco text-end">
-                <form class="d-flex">
-                    <input
-                        class="form-control"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
                     />
                 </form>
                 <button class="boton-empezar w-100 text-start border-0"
@@ -235,14 +174,10 @@
         padding-bottom: 10px !important;
     }
 
-    /* input[type="search"] {
+    input[type="search"] {
         margin-top: 10px !important;
         margin-bottom: 10px !important;
-    } */
-    /* 
-    #contenidoNavbar {
-        background-color: rgba(1, 22, 61, 0.9);
-    } */
+    }
 
     #contenidoNavbar {
         background-color: rgba(1, 22, 61, 0.9) !important;
@@ -252,20 +187,15 @@
 
     .fondo-blanco {
         background-color: #fff;
-        border-radius: 0px 0px 4px 4px;
-        padding: 10px;
-        margin: 0px 20px 20px 20px;
+        border-radius: 0px 0px 10px 10px;
     }
 
     .navbar-nav {
-        border-radius: 4px 4px 0px 0px;
-        margin: 20px;
-        margin-bottom: 0px;
+        border-radius: 10px 10px 0px 0px;
         background-color: #fff !important;
     }
 
     .dropdown-menu {
-        margin-bottom: 2px;
         border-radius: 4px;
         box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25) !important;
     }
@@ -281,8 +211,8 @@
     .boton-empezar {
         background: #4154f1;
         padding: 8px 20px;
-        /* margin-top: 10px;
-        margin-bottom: 10px; */
+        margin-top: 10px;
+        margin-bottom: 10px;
         border-radius: 4px !important;
         color: #fff !important;
     }
@@ -291,13 +221,13 @@
         background: #5969f3;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 992px) {
         #contenidoNavbar {
-            background-color: #fff;
+            background-color: #fff !important;
         }
 
         input[type="search"] {
-            margin-top: 0px !important;
+            margin: 0px !important;
         }
 
         .boton-empezar {
@@ -305,65 +235,21 @@
             text-align: center !important;
             margin: 0px;
         }
-    }
-    /*
-    .navbar .dropdown ul {
-        display: block;
-        position: absolute;
-        top: calc(100% + 30px);
-        margin: 0;
-        padding: 10px 0;
-        z-index: 99;
-        opacity: 0;
-        background: #fff;
-        box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
-        transition: 0.3s;
-        border-radius: 4px;
-    }
 
-    .navbar .dropdown ul a {
-        padding: 10px 20px;
-        font-size: 15px;
-        text-transform: none;
-        font-weight: 600;
-    }
-
-    .navbar .dropdown ul a i {
-        font-size: 12px;
-    }
-
-    .navbar .dropdown ul a:hover,
-    .navbar .dropdown ul .active:hover,
-    .navbar .dropdown ul li:hover > a {
-        color: #4154f1;
-    }
-
-    .navbar .dropdown:hover > ul {
-        opacity: 1;
-        top: 100%;
-        visibility: visible;
-    }
-
-    .navbar .dropdown .dropdown ul {
-        top: 0;
-        left: calc(100% - 30px);
-        visibility: hidden;
-    }
-
-    .navbar .dropdown .dropdown:hover > ul {
-        opacity: 1;
-        top: 0;
-        left: 100%;
-        visibility: visible;
-    }
-
-    @media (max-width: 1366px) {
-        .navbar .dropdown .dropdown ul {
-            left: -90%;
+        .navbar .dropdown ul {
+            display: block;
+            position: absolute;
+            top: calc(100% + 30px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
         }
 
-        .navbar .dropdown .dropdown:hover > ul {
-            left: -100%;
+        .navbar .dropdown:hover > ul {
+            opacity: 1;
+            top: 85%;
+            visibility: visible;
         }
-    } */
+    }
 </style>
