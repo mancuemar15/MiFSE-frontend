@@ -28,7 +28,7 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid container-lg">
         <Link to="/" class="navbar-brand">
-            <img src={mifseLogo} alt="Universia" width="120" />
+            <img src={mifseLogo} alt="Logo MiFSE" width="120" />
         </Link>
         <button
             class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
@@ -210,7 +210,7 @@
         background-color: #fff !important;
     }
 
-    button.navbar {
+    button.nav-link {
         background-color: transparent !important;
     }
 
