@@ -34,8 +34,8 @@
 
 <style>
     .banner {
-        position: absolute;
-        top: 0px;
+        position: relative;
+        top: -77.43px;
         z-index: -99;
         width: 100%;
         background: url(/src/assets/bg.png) top center no-repeat;

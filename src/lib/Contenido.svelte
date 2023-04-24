@@ -1,6 +1,6 @@
 <script>
     import { Route } from "svelte-navigator";
-    import Inicio from "./Banner.svelte";
+    import Inicio from "./Inicio.svelte";
 </script>
 
 <main>

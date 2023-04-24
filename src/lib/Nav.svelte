@@ -1,5 +1,5 @@
 <script>
-    import { Router, Route, Link } from "svelte-navigator";
+    import { Link } from "svelte-navigator";
     import mifseLogo from "../assets/logo-mifse.svg";
 
     const opcionesNav = [
