@@ -88,9 +88,17 @@
                     <input
                         class="form-control"
                         type="search"
+                        list="datalistOptions"
                         placeholder="Buscar un centro"
                         aria-label="Buscar un centro"
                     />
+                    <datalist id="datalistOptions">
+                        <option value="San Francisco" /><option
+                            value="New York"
+                        /><option value="Seattle" /><option
+                            value="Los Angeles"
+                        /><option value="Chicago" /></datalist
+                    >
                 </form>
                 <button class="boton-empezar w-100 text-start border-0"
                     >Empezar</button
@@ -237,6 +245,11 @@
             width: 150px !important;
             text-align: center !important;
             margin: 0px;
+        }
+
+        .navbar-nav,
+        .fondo-blanco {
+            gap: 15px;
         }
 
         .navbar .dropdown ul {
