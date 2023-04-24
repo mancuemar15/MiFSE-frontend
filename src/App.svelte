@@ -1,12 +1,12 @@
 <script>
   import { Router } from "svelte-navigator";
   import Nav from "./lib/Nav.svelte";
-  import svelteLogo from "./assets/svelte.svg";
-  import viteLogo from "/vite.svg";
+  import Contenido from "./lib/Contenido.svelte";
 </script>
 
 <Router>
   <Nav />
+  <Contenido />
 </Router>
 <main>
   <!-- <div>
