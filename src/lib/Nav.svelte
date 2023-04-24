@@ -23,6 +23,15 @@
             ruta: "/ultimas-posiciones",
         },
     ];
+
+    function getProps({ location, href, isPartiallyCurrent, isCurrent }) {
+        const isActive =
+            href === "/" ? isCurrent : isPartiallyCurrent || isCurrent;
+
+        if (isActive) {
+            return { className: "activo" };
+        }
+    }
 </script>
 
 <nav class="navbar navbar-expand-lg">
@@ -51,8 +60,10 @@
                 {#each opcionesNav as opcionNav}
                     {#if opcionNav.tipo == "enlace"}
                         <li class="nav-item text-start">
-                            <Link class="nav-link" to={opcionNav.ruta}
-                                >{opcionNav.pagina}</Link
+                            <Link
+                                class="nav-link"
+                                to={opcionNav.ruta}
+                                {getProps}>{opcionNav.pagina}</Link
                             >
                         </li>
                     {:else if opcionNav.tipo == "dropdown"}
@@ -70,7 +81,8 @@
                                     <li>
                                         <Link
                                             class="dropdown-item py-2"
-                                            to={pagina.ruta}
+                                            to="/lista/{pagina.ruta}"
+                                            {getProps}
                                         >
                                             {pagina.pagina}
                                         </Link>
@@ -93,6 +105,26 @@
                         aria-label="Buscar un centro"
                     />
                     <datalist id="datalistOptions">
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
+                        <option value="San Francisco" />
                         <option value="San Francisco" /><option
                             value="New York"
                         /><option value="Seattle" /><option
@@ -178,7 +210,7 @@
     :global(
             .navbar a:hover,
             .navbar button:hover,
-            .navbar .active,
+            .navbar *[className="activo"],
             .navbar li:hover > a
         ) {
         color: #4154f1 !important;
