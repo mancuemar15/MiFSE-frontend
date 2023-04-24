@@ -25,7 +25,7 @@
     ];
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg">
     <div class="container-fluid container-lg">
         <Link to="/" class="navbar-brand">
             <img src={mifseLogo} alt="Universia" width="120" />
@@ -163,6 +163,10 @@
 
     /* Fin botón menú hamburguesa */
 
+    .navbar {
+        background: none;
+    }
+
     :global(.navbar a, .navbar button) {
         font-family: "Nunito", sans-serif;
         font-size: 16px;
@@ -206,6 +210,10 @@
         background-color: #fff !important;
     }
 
+    button.navbar {
+        background-color: transparent !important;
+    }
+
     .dropdown-menu {
         border-radius: 4px;
         box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25) !important;
@@ -234,7 +242,7 @@
 
     @media (min-width: 992px) {
         #contenidoNavbar {
-            background-color: #fff !important;
+            background-color: transparent !important;
         }
 
         input[type="search"] {
@@ -249,6 +257,7 @@
 
         .navbar-nav,
         .fondo-blanco {
+            background-color: transparent !important;
             gap: 15px;
         }
 
