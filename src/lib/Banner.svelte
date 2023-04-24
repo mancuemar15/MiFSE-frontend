@@ -8,12 +8,10 @@
             <div
                 class="col-lg-6 d-flex flex-column justify-content-center text-center text-md-start"
             >
-                <h1>
-                    Toda la información para tu residencia en MiFSE
-                </h1>
+                <h1>Toda la información para tu residencia en MiFSE</h1>
                 <h2>
-                    We are team of talented designers making websites with
-                    Bootstrap
+                    Encuentra los centros que mejor se ajustan a tus necesidades
+                    y crea tu lista de preferencias
                 </h2>
                 <div>
                     <div class="text-center text-lg-start">
