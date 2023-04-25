@@ -44,7 +44,7 @@
 <section id="faq" class="faq">
     <div class="container">
         <header class="header-seccion">
-            <h2>F.A.Q</h2>
+            <h2>FAQs</h2>
             <p>Preguntas frecuentes</p>
         </header>
 

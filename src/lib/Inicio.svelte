@@ -1,6 +1,7 @@
 <script>
     import Banner from "./Banner.svelte";
     import Caracteristicas from "./Caracteristicas.svelte";
+    import Contacto from "./Contacto.svelte";
     import Faqs from "./Faqs.svelte";
     import Valores from "./Valores.svelte";
 </script>
@@ -9,3 +10,4 @@
 <Valores />
 <Caracteristicas />
 <Faqs />
+<Contacto />
