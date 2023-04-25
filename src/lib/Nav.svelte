@@ -32,9 +32,21 @@
             return { className: "activo" };
         }
     }
+
+    window.addEventListener("scroll", () => {
+        let navElement = document.querySelector(".navbar");
+        if (
+            (window.scrollY > 100 && window.innerWidth > 992) ||
+            (window.scrollY > 40 && window.innerWidth <= 992)
+        ) {
+            navElement.classList.add("navbar-scrolled");
+        } else {
+            navElement.classList.remove("navbar-scrolled");
+        }
+    });
 </script>
 
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid container-lg">
         <Link to="/" class="navbar-brand">
             <img src={mifseLogo} alt="Logo MiFSE" width="120" />
@@ -104,7 +116,7 @@
                         placeholder="Buscar un centro"
                         aria-label="Buscar un centro"
                     />
-                    <datalist id="datalistOptions">
+                    <datalist id="datalistOptions" style="max-height: 20px;">
                         <option value="San Francisco" />
                         <option value="San Francisco" />
                         <option value="San Francisco" />
@@ -119,7 +131,7 @@
                         <option value="San Francisco" />
                         <option value="San Francisco" />
                         <option value="San Francisco" />
-                        <option value="San Francisco" />
+                        <option value="San Franciscoasñdlkañsldkfalñsdkfañlskdlñsldkfalñksdñlkfalñsdkfñlaksdlñfkñlasdkflñaslñd" />
                         <option value="San Francisco" />
                         <option value="San Francisco" />
                         <option value="San Francisco" />
@@ -196,7 +208,8 @@
     /* Fin botón menú hamburguesa */
 
     .navbar {
-        background: none;
+        background: transparent;
+        transition: 0.3s;
     }
 
     :global(.navbar a, .navbar button) {
@@ -270,6 +283,12 @@
 
     .boton-empezar:hover {
         background: #5969f3;
+    }
+
+    :global(.navbar-scrolled) {
+        background: #fff !important;
+        padding: 4px 0;
+        box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
     }
 
     @media (min-width: 992px) {

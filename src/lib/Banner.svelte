@@ -1,5 +1,5 @@
 <script>
-    import imagenBanner from "../assets/graduation - copia.png";
+    import imagenBanner from "../assets/banner.png";
 </script>
 
 <section id="banner" class="banner d-flex align-items-center">
@@ -34,9 +34,6 @@
 
 <style>
     .banner {
-        position: relative;
-        top: -77.43px;
-        z-index: -99;
         width: 100%;
         background: url(/src/assets/bg.png) top center no-repeat;
         background-size: cover;
