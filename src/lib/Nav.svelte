@@ -1,5 +1,5 @@
 <script>
-    import { Link } from "svelte-navigator";
+    import { Link, Router } from "svelte-navigator";
     import mifseLogo from "../assets/logo-mifse.svg";
 
     const opcionesNav = [
@@ -7,6 +7,7 @@
         {
             tipo: "dropdown",
             pagina: "Haz tu lista",
+            ruta: "lista",
             paginas: [
                 { tipo: "enlace", pagina: "Biología", ruta: "/biologia" },
                 { tipo: "enlace", pagina: "Enfermería", ruta: "/enfermeria" },
@@ -93,7 +94,7 @@
                                     <li>
                                         <Link
                                             class="dropdown-item py-2"
-                                            to="/lista/{pagina.ruta}"
+                                            to="{opcionNav.ruta}/{pagina.ruta}"
                                             {getProps}
                                         >
                                             {pagina.pagina}
@@ -131,7 +132,9 @@
                         <option value="San Francisco" />
                         <option value="San Francisco" />
                         <option value="San Francisco" />
-                        <option value="San Franciscoasñdlkañsldkfalñsdkfañlskdlñsldkfalñksdñlkfalñsdkfñlaksdlñfkñlasdkflñaslñd" />
+                        <option
+                            value="San Franciscoasñdlkañsldkfalñsdkfañlskdlñsldkfalñksdñlkfalñsdkfñlaksdlñfkñlasdkflñaslñd"
+                        />
                         <option value="San Francisco" />
                         <option value="San Francisco" />
                         <option value="San Francisco" />

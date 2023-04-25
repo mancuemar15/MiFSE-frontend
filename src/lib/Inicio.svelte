@@ -3,6 +3,7 @@
     import Caracteristicas from "./Caracteristicas.svelte";
     import Contacto from "./Contacto.svelte";
     import Faqs from "./Faqs.svelte";
+    import Footer from "./Footer.svelte";
     import Valores from "./Valores.svelte";
 </script>
 
@@ -11,3 +12,4 @@
 <Caracteristicas />
 <Faqs />
 <Contacto />
+<Footer />
