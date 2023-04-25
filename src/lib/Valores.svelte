@@ -7,7 +7,7 @@
 <section id="valores" class="valores">
     <div class="container">
         <header class="header-seccion">
-            <h2>NUESTROS VALORES</h2>
+            <h2>VALORES</h2>
             <p>Nuestra manera de hacer las cosas</p>
         </header>
 
