@@ -7,7 +7,7 @@
     <div class="footer-top">
         <div class="container">
             <div class="row gy-4">
-                <div class="col-lg-6 col-xl-8 col-md-12 footer-info">
+                <div class="col-md-6 col-xl-8 col-sm-12 footer-info">
                     <div class="logo d-flex align-items-center">
                         <img src={logoMifse} alt="" />
                     </div>
