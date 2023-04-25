@@ -46,6 +46,7 @@
         font-size: 32px;
         font-weight: 700;
         color: #012970;
+        outline: transparent;
     }
 
     h2 {
