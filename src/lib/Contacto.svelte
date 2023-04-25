@@ -83,7 +83,7 @@
         height: 100%;
     }
 
-    .formulario-contacto .error-message {
+    /* .formulario-contacto .error-message {
         display: none;
         color: #fff;
         background: #ed3c0d;
@@ -101,7 +101,7 @@
         padding: 15px;
         margin-bottom: 24px;
         font-weight: 600;
-    }
+    } */
 
     /* .formulario-contacto .loading {
         display: none;
