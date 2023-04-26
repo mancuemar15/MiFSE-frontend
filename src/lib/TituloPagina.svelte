@@ -32,6 +32,7 @@
         color: #a3bdea;
         font-weight: 700;
         padding: 10px 0;
+        text-transform: uppercase;
     }
 
     @media (min-width: 992px) {
