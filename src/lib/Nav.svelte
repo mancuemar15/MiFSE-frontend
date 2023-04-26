@@ -1,6 +1,7 @@
 <script>
-    import { Link, Router } from "svelte-navigator";
+    import { Link } from "svelte-navigator";
     import mifseLogo from "../assets/logo-mifse.svg";
+    import Buscador from "./Buscador.svelte";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -107,7 +108,8 @@
             <div
                 class="fondo-blanco d-lg-flex pb-2 pt-0 px-3 mx-3 mb-4 mt-0 my-lg-0 p-lg-0"
             >
-                <form class="d-flex">
+                <Buscador placeholder="Buscar un centro" />
+                <!-- <form class="d-flex">
                     <input
                         class="form-control"
                         type="search"
@@ -115,36 +117,14 @@
                         placeholder="Buscar un centro"
                         aria-label="Buscar un centro"
                     />
-                    <datalist id="datalistOptions" style="max-height: 20px;">
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option
-                            value="San Franciscoasñdlkañsldkfalñsdkfañlskdlñsldkfalñksdñlkfalñsdkfñlaksdlñfkñlasdkflñaslñd"
-                        />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
-                        <option value="San Francisco" />
+                    <datalist id="datalistOptions">
                         <option value="San Francisco" /><option
                             value="New York"
                         /><option value="Seattle" /><option
                             value="Los Angeles"
                         /><option value="Chicago" /></datalist
                     >
-                </form>
+                </form> -->
                 <button class="boton-empezar w-100 text-start border-0"
                     >Empezar</button
                 >
@@ -235,11 +215,6 @@
         padding-bottom: 10px !important;
     }
 
-    input[type="search"] {
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
-    }
-
     #contenidoNavbar {
         background-color: rgba(1, 22, 61, 0.9) !important;
         margin-left: -12px !important;
@@ -295,10 +270,6 @@
     @media (min-width: 992px) {
         #contenidoNavbar {
             background-color: transparent !important;
-        }
-
-        input[type="search"] {
-            margin: 0px !important;
         }
 
         .boton-empezar {
