@@ -36,10 +36,8 @@
 
     window.addEventListener("scroll", () => {
         let navElement = document.querySelector(".navbar");
-        if (
-            (window.scrollY > 100 && window.innerWidth > 992) ||
-            (window.scrollY > 40 && window.innerWidth <= 992)
-        ) {
+
+        if (window.scrollY > 10) {
             navElement.classList.add("navbar-scrolled");
         } else {
             navElement.classList.remove("navbar-scrolled");
@@ -212,7 +210,7 @@
 
     .navbar {
         background: transparent;
-        transition: 0.3s;
+        transition: 0.25s;
     }
 
     :global(.navbar a, .navbar button) {

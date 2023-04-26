@@ -1,5 +1,5 @@
 <script>
-    import { Link, Route } from "svelte-navigator";
+    import { Link } from "svelte-navigator";
     import logoMifse from "../assets/logo-mifse.svg";
 </script>
 
