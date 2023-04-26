@@ -38,6 +38,8 @@
             {/each}
         </div>
     </section>
-    <TablaUltimasPosiciones ultimasPosiciones={datosTabla} />
+    {#if datosTabla.length > 0}
+        <TablaUltimasPosiciones ultimasPosiciones={datosTabla} />
+    {/if}
 </div>
 <Footer />
