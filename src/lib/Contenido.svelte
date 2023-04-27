@@ -8,5 +8,5 @@
 <main>
     <Route path="/" component={Inicio} />
     <Route path="/ultimas-posiciones" component={UltimasPosiciones} />
-    <Route path="/centro/:nombre" component="{Centro}" />
+    <Route path="/centro/:id" component={Centro} />
 </main>

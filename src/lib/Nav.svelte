@@ -288,7 +288,7 @@
             display: block;
             position: absolute;
             top: calc(100% + 30px);
-            z-index: 99;
+            z-index: 50;
             opacity: 0;
             visibility: hidden;
             transition: 0.3s;
