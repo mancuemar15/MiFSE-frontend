@@ -1,6 +1,7 @@
 <script>
     import { onMount, onDestroy } from "svelte";
-    import { navigate, Link } from "svelte-navigator";
+    import { navigate, Link, Route } from "svelte-navigator";
+    import Centro from "./Centro.svelte";
 
     export let placeholder = "Buscar...";
     let searchTerm = "";
@@ -30,32 +31,25 @@
         }
     }
 
-    function handleFocus() {
-        showSuggestions = true;
+    function handleClickOutside(event) {
+        // Check if the click event originated from within the component
+        if (
+            event.target.closest(".search-container") === null &&
+            showSuggestions
+        ) {
+            showSuggestions = false;
+        }
     }
 
-    function handleBlur() {
-        showSuggestions = false;
-    }
-
-    // Añadimos los event listeners para el input
+    // Add event listener for click events outside the component
     onMount(() => {
-        const input = document.querySelector(".form-control");
-        // input.addEventListener("focus", handleFocus);
-        // input.addEventListener("blur", handleBlur);
+        document.addEventListener("click", handleClickOutside);
     });
 
-    // Limpiamos los event listeners al destruir el componente
+    // Clean up the event listener on component destruction
     onDestroy(() => {
-        const input = document.querySelector(".form-control");
-        // input.removeEventListener("focus", handleFocus);
-        // input.removeEventListener("blur", handleBlur);
+        document.removeEventListener("click", handleClickOutside);
     });
-
-    function handleCentroClick(id) {
-        // navigate(`/centro/458`);
-        navigate(`/centro/${id}`);
-    }
 </script>
 
 <div class="search-container">
@@ -63,21 +57,30 @@
         type="text"
         class="form-control"
         on:input={handleInput}
+        on:click={() => (showSuggestions = true)}
         {placeholder}
     />
     {#if showSuggestions}
         <ul>
             {#if suggestions.length > 0}
+                <!-- <Link to="/centro/{suggestion.id}">{suggestion.nombre}</Link> -->
+                <!-- <li>
+                {suggestion.nombre}
+            </li> -->
                 {#each suggestions as suggestion}
-                    <!-- <Link to="/centro/{suggestion.id}">{suggestion.nombre}</Link> -->
-                    <!-- <li>
-                        {suggestion.nombre}
-                    </li> -->
-
-                    <li on:click={() => handleCentroClick(suggestion.id)}>
-                        {suggestion.nombre}
+                    <li>
+                        <Link to={`/centro/${suggestion.id}`}
+                            >{suggestion.nombre}</Link
+                        >
+                        <!-- <Route path="centro/:id" let:params>
+                            <Centro centro={suggestion} />
+                        </Route> -->
                     </li>
                 {/each}
+                <!-- 
+                                        <li on:click={() => handleCentroClick(suggestion.id)}>
+                                            {suggestion.nombre}
+                                        </li> -->
             {:else if suggestions.length === 0 && searchTerm.length > 0}
                 <li class="sin-sugerencias">No hay sugerencias</li>
             {/if}

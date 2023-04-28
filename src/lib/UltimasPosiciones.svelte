@@ -42,4 +42,3 @@
         <TablaUltimasPosiciones ultimasPosiciones={datosTabla} />
     {/if}
 </div>
-<Footer />

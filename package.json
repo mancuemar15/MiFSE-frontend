@@ -15,6 +15,7 @@
     "vite": "^4.3.0"
   },
   "dependencies": {
+    "leaflet": "^1.9.3",
     "svelte-google-maps": "^0.2.0",
     "svelte-navigator": "^3.2.2"
   }

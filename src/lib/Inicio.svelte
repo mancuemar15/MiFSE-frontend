@@ -12,4 +12,3 @@
 <Caracteristicas />
 <Faqs />
 <Contacto />
-<Footer />
