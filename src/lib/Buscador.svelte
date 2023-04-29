@@ -1,7 +1,6 @@
 <script>
     import { onMount, onDestroy } from "svelte";
-    import { navigate, Link, Route } from "svelte-navigator";
-    import Centro from "./Centro.svelte";
+    import { Link } from "svelte-navigator";
 
     export let placeholder = "Buscar...";
     let searchTerm = "";
@@ -41,6 +40,13 @@
         }
     }
 
+    function handleLink() {
+        showSuggestions = false;
+        document.querySelector(".search-container input").value = "";
+        suggestions = [];
+        searchTerm = "";
+    }
+
     // Add event listener for click events outside the component
     onMount(() => {
         document.addEventListener("click", handleClickOutside);
@@ -63,50 +69,20 @@
     {#if showSuggestions}
         <ul>
             {#if suggestions.length > 0}
-                <!-- <Link to="/centro/{suggestion.id}">{suggestion.nombre}</Link> -->
-                <!-- <li>
-                {suggestion.nombre}
-            </li> -->
                 {#each suggestions as suggestion}
                     <li>
-                        <Link to={`/centro/${suggestion.id}`}
-                            >{suggestion.nombre}</Link
+                        <Link
+                            to={`/centro/${suggestion.id}`}
+                            on:click={handleLink}>{suggestion.nombre}</Link
                         >
-                        <!-- <Route path="centro/:id" let:params>
-                            <Centro centro={suggestion} />
-                        </Route> -->
                     </li>
                 {/each}
-                <!-- 
-                                        <li on:click={() => handleCentroClick(suggestion.id)}>
-                                            {suggestion.nombre}
-                                        </li> -->
             {:else if suggestions.length === 0 && searchTerm.length > 0}
                 <li class="sin-sugerencias">No hay sugerencias</li>
             {/if}
         </ul>
     {/if}
 </div>
-
-<!-- <div class="search-container">
-    <input
-        type="text"
-        class="form-control"
-        on:input={handleInput}
-        {placeholder}
-    />
-    {#if showSuggestions}
-        <ul>
-            {#if suggestions.length > 0}
-                {#each suggestions as suggestion}
-                    <li value={suggestion.id}>{suggestion.nombre}</li>
-                {/each}
-            {:else if suggestions.length === 0 && searchTerm.length > 0}
-                <li class="sin-sugerencias">No hay sugerencias</li>
-            {/if}
-        </ul>
-    {/if}
-</div> -->
 
 <style>
     div {

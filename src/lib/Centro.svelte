@@ -2,6 +2,7 @@
     import { onMount, onDestroy } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Mapa from "./Mapa.svelte";
+    import Comentarios from "./Comentarios.svelte";
 
     export let id;
 
@@ -76,7 +77,10 @@
             </div>
         </div>
     </section>
-    <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    {#key centro}
+        <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    {/key}
+    <Comentarios />
 {:catch error}
     <p>Error: {error.message}</p>
 {/await}
