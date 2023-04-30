@@ -5,36 +5,28 @@
 
     export let latitud;
     export let longitud;
-    let map;
+    let mapa;
 
     onMount(() => {
-        // Crear el mapa y configurar la vista
-        map = L.map("map").setView([51.505, -0.09], 13);
+        mapa = L.map("mapa").setView([latitud, longitud], 13);
 
-        // Añadir una capa de mapa base de OpenStreetMap
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution:
                 '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-        }).addTo(map);
+        }).addTo(mapa);
 
-        // Añadir un marcador en la ubicación especificada
-        // L.marker([51.5, -0.09])
-        //     .addTo(map)
-        //     .bindPopup("¡Hola, mundo!")
-        //     .openPopup();
-        L.marker([latitud, longitud]).addTo(map);
+        L.marker([latitud, longitud]).addTo(mapa);
     });
 
-    // Actualizar la posición del marcador cuando cambien las coordenadas
-    $: map && map.setView([latitud, longitud], 13);
+    $: mapa && mapa.setView([latitud, longitud], 13);
 </script>
 
 <div class="container">
-    <div id="map" />
+    <div id="mapa" />
 </div>
 
 <style>
-    #map {
+    #mapa {
         height: 400px;
         width: 100%;
     }
