@@ -124,7 +124,9 @@
             </div>
         </div>
     </section>
-    <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    {#key centro}
+        <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    {/key}
     <Comentarios comentarios={centro.comentarios} />
 {:catch error}
     <p>Error: {error.message}</p>
