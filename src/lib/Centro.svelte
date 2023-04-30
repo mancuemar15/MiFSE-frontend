@@ -3,6 +3,7 @@
     import TituloPagina from "./TituloPagina.svelte";
     import Mapa from "./Mapa.svelte";
     import Comentarios from "./Comentarios.svelte";
+    import { capitalizar } from "./utilidadesString";
 
     export let id;
 
@@ -41,12 +42,8 @@
 
     function agruparEspecialidadesPorTitulacion(especialidades) {
         for (let especialidad of especialidades) {
-            let nombre =
-                especialidad.nombre.charAt(0).toUpperCase() +
-                especialidad.nombre.slice(1).toLowerCase();
-            let titulacion =
-                especialidad.titulacion.nombre.charAt(0).toUpperCase() +
-                especialidad.titulacion.nombre.slice(1).toLowerCase();
+            let nombre = capitalizar(especialidad.nombre);
+            let titulacion = capitalizar(especialidad.titulacion.nombre);
             if (titulacion in especialidadesPorTitulacion) {
                 especialidadesPorTitulacion[titulacion].push(nombre);
             } else {

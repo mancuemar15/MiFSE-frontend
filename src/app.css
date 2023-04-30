@@ -41,6 +41,11 @@ section {
   color: #012970;
 }
 
+.obligatorio::after {
+  content: "*";
+  color: red;
+}
+
 @media (min-width: 768px) {
   .header-seccion p {
     font-size: 38px;
