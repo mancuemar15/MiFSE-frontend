@@ -2,6 +2,7 @@
     import { Link } from "svelte-navigator";
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
+    import { usuario } from "./store";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -106,28 +107,43 @@
                 {/each}
             </ul>
             <div
-                class="fondo-blanco d-lg-flex pb-2 pt-0 px-3 mx-3 mb-4 mt-0 my-lg-0 p-lg-0"
+                class="fondo-blanco d-lg-flex align-items-center pb-2 pt-0 px-3 mx-3 mb-4 mt-0 my-lg-0 p-lg-0"
             >
                 <Buscador placeholder="Buscar un centro" />
-                <!-- <form class="d-flex">
-                    <input
-                        class="form-control"
-                        type="search"
-                        list="datalistOptions"
-                        placeholder="Buscar un centro"
-                        aria-label="Buscar un centro"
-                    />
-                    <datalist id="datalistOptions">
-                        <option value="San Francisco" /><option
-                            value="New York"
-                        /><option value="Seattle" /><option
-                            value="Los Angeles"
-                        /><option value="Chicago" /></datalist
+                {#if $usuario}
+                    <div
+                        class="dropdown dropdown-usuario d-flex justify-content-end"
                     >
-                </form> -->
-                <button class="boton-empezar w-100 text-start border-0"
-                    >Empezar</button
-                >
+                        <button
+                            class="d-block border-0 bg-white dropdown-toggle d-flex align-items-center justify-content-center"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <i class="bi bi-person-circle d-flex" />
+                        </button>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end text-small border-0"
+                        >
+                            <li>
+                                <a class="dropdown-item" href="#">Mensajes</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Perfil</a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a class="dropdown-item" href="#"
+                                    >Cerrar sesión</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                {:else}
+                    <button class="boton-empezar w-100 text-start border-0"
+                        >Empezar</button
+                    >
+                {/if}
             </div>
         </div>
     </div>
@@ -210,9 +226,14 @@
         color: #4154f1 !important;
     }
 
-    :global(a.nav-link, button.nav-link) {
+    :global(a.nav-link, button.nav-link),
+    .dropdown-usuario {
         padding-top: 10px !important;
         padding-bottom: 10px !important;
+    }
+
+    .dropdown-usuario i {
+        font-size: 2rem;
     }
 
     #contenidoNavbar {
@@ -267,6 +288,10 @@
         box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
     }
 
+    .dropdown-usuario:hover > ul {
+        top: 90% !important;
+    }
+
     @media (min-width: 992px) {
         #contenidoNavbar {
             background-color: transparent !important;
@@ -276,6 +301,11 @@
             width: 150px !important;
             text-align: center !important;
             margin: 0px;
+        }
+
+        .dropdown-usuario {
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
         }
 
         .navbar-nav,
@@ -298,6 +328,10 @@
             opacity: 1;
             top: 85%;
             visibility: visible;
+        }
+
+        .dropdown-usuario:hover > ul {
+            top: 115% !important;
         }
     }
 </style>

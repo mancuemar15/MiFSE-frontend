@@ -128,6 +128,7 @@
     @media (min-width: 992px) {
         input[type="text"] {
             margin: 0px !important;
+            height: 40px;
         }
 
         ul {
