@@ -35,6 +35,29 @@
         .catch(() => {
             imagenCentro = `/img/centro/centro.jpg`;
         });
+
+    let especialidadesPorTitulacion = {};
+    function getEspecialidadesPorTitulacion() {
+        return fetch(`http://localhost:8090/especialidades/centro/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                for (let especialidad of data) {
+                    let nombre =
+                        especialidad.nombre.charAt(0).toUpperCase() +
+                        especialidad.nombre.slice(1).toLowerCase();
+                    let titulacion =
+                        especialidad.titulacion.nombre.charAt(0).toUpperCase() +
+                        especialidad.titulacion.nombre.slice(1).toLowerCase();
+                    if (titulacion in especialidadesPorTitulacion) {
+                        especialidadesPorTitulacion[titulacion].push(nombre);
+                    } else {
+                        especialidadesPorTitulacion[titulacion] = [nombre];
+                    }
+                }
+                return especialidadesPorTitulacion;
+            })
+            .catch((error) => console.error(error));
+    }
 </script>
 
 {#await getCentro() then}
@@ -73,32 +96,28 @@
                             <li>
                                 <strong>Especialidades</strong>:
                                 <ul class="list-group-flush titulaciones mt-2">
-                                    <!-- {#each centro.especialidades as especialidad}
-                                        <li class="titulacion">
-                                            <details>
-                                                <summary>{especialidad.titulacion.nombre}</summary>
-                                                <ul
-                                                    class="list-group-flush especialidades mt-2"
-                                                >
-                                                    <li>
-                                                        <i
-                                                            class="bi bi-chevron-right"
-                                                        />Enfermería del trabajo
-                                                    </li>
-                                                    <li>
-                                                        <i
-                                                            class="bi bi-chevron-right"
-                                                        />Matrona
-                                                    </li>
-                                                    <li>
-                                                        <i
-                                                            class="bi bi-chevron-right"
-                                                        />Matrona
-                                                    </li>
-                                                </ul>
-                                            </details>
-                                        </li>
-                                    {/each} -->
+                                    {#await getEspecialidadesPorTitulacion() then}
+                                        {#each Object.keys(especialidadesPorTitulacion) as titulacion}
+                                            <li class="titulacion">
+                                                <details>
+                                                    <summary
+                                                        >{titulacion}</summary
+                                                    >
+                                                    <ul
+                                                        class="list-group-flush especialidades mt-2"
+                                                    >
+                                                        {#each especialidadesPorTitulacion[titulacion] as especialidad}
+                                                            <li>
+                                                                <i
+                                                                    class="bi bi-chevron-right"
+                                                                />{especialidad}
+                                                            </li>
+                                                        {/each}
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        {/each}
+                                    {/await}
                                 </ul>
                             </li>
                         </ul>
