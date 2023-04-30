@@ -72,19 +72,33 @@
                             </li>
                             <li>
                                 <strong>Especialidades</strong>:
-                                <ul class="especialidades mt-2 ps-4 ps-sm-5">
-                                    <li>
-                                        <i class="bi bi-chevron-right" />
-                                        Enfermería del trabajo
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right" />
-                                        Matrona
-                                    </li>
-                                    <li>
-                                        <i class="bi bi-chevron-right" />
-                                        Matrona
-                                    </li>
+                                <ul class="list-group-flush titulaciones mt-2">
+                                    <!-- {#each centro.especialidades as especialidad}
+                                        <li class="titulacion">
+                                            <details>
+                                                <summary>{especialidad.titulacion.nombre}</summary>
+                                                <ul
+                                                    class="list-group-flush especialidades mt-2"
+                                                >
+                                                    <li>
+                                                        <i
+                                                            class="bi bi-chevron-right"
+                                                        />Enfermería del trabajo
+                                                    </li>
+                                                    <li>
+                                                        <i
+                                                            class="bi bi-chevron-right"
+                                                        />Matrona
+                                                    </li>
+                                                    <li>
+                                                        <i
+                                                            class="bi bi-chevron-right"
+                                                        />Matrona
+                                                    </li>
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    {/each} -->
                                 </ul>
                             </li>
                         </ul>
@@ -124,11 +138,55 @@
 
     .centro .centro-info ul {
         list-style: none;
-        padding: 0;
+        margin-bottom: 0;
         font-size: 15px;
+        padding-left: 8%;
+    }
+
+    .centro .centro-info > ul {
+        padding: 0;
     }
 
     .centro .centro-info ul li + li {
         margin-top: 10px;
+    }
+
+    .titulacion > details > summary {
+        width: fit-content;
+        color: #012970;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    .titulacion > details > summary:hover,
+    .titulacion > details[open] > summary:first-of-type {
+        color: #4154f1;
+    }
+
+    .especialidades i {
+        padding-right: 4px;
+        color: #d0d4fc;
+        font-size: 12px;
+    }
+
+    @media (min-width: 425px) {
+        .titulaciones,
+        .titulaciones ul {
+            padding-left: 12% !important;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .titulaciones,
+        .titulaciones ul {
+            padding-left: 64px !important;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .titulaciones,
+        .titulaciones ul {
+            padding-left: 12% !important;
+        }
     }
 </style>
