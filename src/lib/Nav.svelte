@@ -3,6 +3,8 @@
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
     import { usuario } from "./store";
+    import ModalRegistro from "./ModalRegistro.svelte";
+
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -45,6 +47,18 @@
             navElement.classList.remove("navbar-scrolled");
         }
     });
+
+    let showPopup = false;
+
+    const onShowPopup = (ev) => {
+        showPopup = true;
+    };
+
+    const onPopupClose = (data) => {
+        showPopup = false;
+
+        console.log(data);
+    };
 </script>
 
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -140,13 +154,15 @@
                         </ul>
                     </div>
                 {:else}
-                    <button class="boton-empezar w-100 text-start border-0"
-                        >Empezar</button
+                    <button
+                        class="boton-empezar w-100 text-start border-0"
+                        on:click={onShowPopup}>Empezar</button
                     >
                 {/if}
             </div>
         </div>
     </div>
+    <ModalRegistro open={showPopup} onClosed={() => onPopupClose()} />
 </nav>
 
 <style>
