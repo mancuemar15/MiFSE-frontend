@@ -65,7 +65,7 @@
             {:else}
                 <p>Para poder comentar debes iniciar sesión o registrarte.</p>
                 <div
-                    class="d-flex flex-row justify-content-center botones-usuario-anonimo"
+                    class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
                 >
                     <button class="btn btn-primary">Iniciar sesión</button>
                     <button class="btn btn-primary">Registrarse</button>
