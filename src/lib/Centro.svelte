@@ -1,5 +1,5 @@
 <script>
-    import { onMount, onDestroy } from "svelte";
+    import { onMount } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Mapa from "./Mapa.svelte";
     import Comentarios from "./Comentarios.svelte";
@@ -9,22 +9,25 @@
     let imagenCentro = `/img/centro/centro.jpg`;
 
     let centro = {};
+    let especialidadesPorTitulacion = [];
 
     const getCentro = async () => {
         const response = await fetch(`http://localhost:8090/centros/${id}`);
         centro = await response.json();
     };
 
-    onMount(getCentro);
+    const getEspecialidadesPorTitulacion = async () => {
+        const response = await fetch(
+            `http://localhost:8090/especialidades/centro/${id}`
+        );
+        const especialidades = await response.json();
+        agruparEspecialidadesPorTitulacion(especialidades);
+    };
 
-    onDestroy(() => {
-        centro = {};
-        imagenCentro = `/img/centro/centro.jpg`;
-    });
-
-    $: if (id) {
+    onMount(() => {
         getCentro();
-    }
+        getEspecialidadesPorTitulacion();
+    });
 
     fetch(`/img/centro/${id}.jpg`)
         .then((response) => {
@@ -33,30 +36,29 @@
             }
         })
         .catch(() => {
-            imagenCentro = `/img/centro/centro.jpg`;
+            imagenCentro = "";
         });
 
-    let especialidadesPorTitulacion = {};
-    function getEspecialidadesPorTitulacion() {
-        return fetch(`http://localhost:8090/especialidades/centro/${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-                for (let especialidad of data) {
-                    let nombre =
-                        especialidad.nombre.charAt(0).toUpperCase() +
-                        especialidad.nombre.slice(1).toLowerCase();
-                    let titulacion =
-                        especialidad.titulacion.nombre.charAt(0).toUpperCase() +
-                        especialidad.titulacion.nombre.slice(1).toLowerCase();
-                    if (titulacion in especialidadesPorTitulacion) {
-                        especialidadesPorTitulacion[titulacion].push(nombre);
-                    } else {
-                        especialidadesPorTitulacion[titulacion] = [nombre];
-                    }
-                }
-                return especialidadesPorTitulacion;
-            })
-            .catch((error) => console.error(error));
+    function agruparEspecialidadesPorTitulacion(especialidades) {
+        for (let especialidad of especialidades) {
+            let nombre =
+                especialidad.nombre.charAt(0).toUpperCase() +
+                especialidad.nombre.slice(1).toLowerCase();
+            let titulacion =
+                especialidad.titulacion.nombre.charAt(0).toUpperCase() +
+                especialidad.titulacion.nombre.slice(1).toLowerCase();
+            if (titulacion in especialidadesPorTitulacion) {
+                especialidadesPorTitulacion[titulacion].push(nombre);
+            } else {
+                especialidadesPorTitulacion[titulacion] = [nombre];
+            }
+        }
+    }
+
+    $: if (id) {
+        especialidadesPorTitulacion = [];
+        getCentro();
+        getEspecialidadesPorTitulacion();
     }
 </script>
 
@@ -96,28 +98,24 @@
                             <li>
                                 <strong>Especialidades</strong>:
                                 <ul class="list-group-flush titulaciones mt-2">
-                                    {#await getEspecialidadesPorTitulacion() then}
-                                        {#each Object.keys(especialidadesPorTitulacion) as titulacion}
-                                            <li class="titulacion">
-                                                <details>
-                                                    <summary
-                                                        >{titulacion}</summary
-                                                    >
-                                                    <ul
-                                                        class="list-group-flush especialidades mt-2"
-                                                    >
-                                                        {#each especialidadesPorTitulacion[titulacion] as especialidad}
-                                                            <li>
-                                                                <i
-                                                                    class="bi bi-chevron-right"
-                                                                />{especialidad}
-                                                            </li>
-                                                        {/each}
-                                                    </ul>
-                                                </details>
-                                            </li>
-                                        {/each}
-                                    {/await}
+                                    {#each Object.keys(especialidadesPorTitulacion) as titulacion}
+                                        <li class="titulacion">
+                                            <details>
+                                                <summary>{titulacion}</summary>
+                                                <ul
+                                                    class="list-group-flush especialidades mt-2"
+                                                >
+                                                    {#each especialidadesPorTitulacion[titulacion] as especialidad}
+                                                        <li>
+                                                            <i
+                                                                class="bi bi-chevron-right"
+                                                            />{especialidad}
+                                                        </li>
+                                                    {/each}
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    {/each}
                                 </ul>
                             </li>
                         </ul>
@@ -129,10 +127,8 @@
             </div>
         </div>
     </section>
-    {#key centro}
-        <Mapa latitud={centro.latitud} longitud={centro.longitud} />
-    {/key}
-    <Comentarios />
+    <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    <Comentarios comentarios={centro.comentarios} />
 {:catch error}
     <p>Error: {error.message}</p>
 {/await}
