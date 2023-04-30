@@ -13,7 +13,6 @@
     const getCentro = async () => {
         const response = await fetch(`http://localhost:8090/centros/${id}`);
         centro = await response.json();
-        console.log(centro);
     };
 
     onMount(getCentro);
@@ -27,15 +26,15 @@
         getCentro();
     }
 
-    // fetch(`/img/centro/${nombre}.jpg`)
-    //     .then((response) => {
-    //         if (response.ok) {
-    //             imagenCentro = `/img/centro/${nombre}.jpg`;
-    //         }
-    //     })
-    //     .catch(() => {
-    //         imagenCentro = `/img/centro/centro.jpg`;
-    //     });
+    fetch(`/img/centro/${id}.jpg`)
+        .then((response) => {
+            if (response.ok) {
+                imagenCentro = `/img/centro/${id}.jpg`;
+            }
+        })
+        .catch(() => {
+            imagenCentro = `/img/centro/centro.jpg`;
+        });
 </script>
 
 {#await getCentro() then}
@@ -47,26 +46,46 @@
                     <div class="centro-info">
                         <h3>Información del centro</h3>
                         <ul>
-                            <li><strong>Category</strong>: Web design</li>
-                            <li><strong>Client</strong>: ASU Company</li>
                             <li>
-                                <strong>Project date</strong>: 01 March, 2020
+                                <strong>Valoración</strong>: {centro.valoracionMedia
+                                    ? centro.valoracionMedia
+                                    : "Sin valoraciones"}
                             </li>
                             <li>
-                                <strong>Project URL</strong>:
-                                <a href="#">www.example.com</a>
+                                <strong>Dirección</strong>: {centro.direccion}
                             </li>
                             <li>
-                                <strong>Project date</strong>: 01 March, 2020
+                                <strong>Localidad</strong>: {centro.localidad
+                                    .nombre}
                             </li>
                             <li>
-                                <strong>Project date</strong>: 01 March, 2020
+                                <strong>Provincia</strong>:
+                                <span class="text-capitalize"
+                                    >{centro.localidad.provincia.nombre.toLowerCase()}</span
+                                >
                             </li>
                             <li>
-                                <strong>Project date</strong>: 01 March, 2020
+                                <strong>Comunidad Autónoma</strong>:
+                                <span class="text-capitalize"
+                                    >{centro.localidad.provincia.autonomia.nombre.toLowerCase()}</span
+                                >
                             </li>
                             <li>
-                                <strong>Project date</strong>: 01 March, 2020
+                                <strong>Especialidades</strong>:
+                                <ul class="especialidades mt-2 ps-4 ps-sm-5">
+                                    <li>
+                                        <i class="bi bi-chevron-right" />
+                                        Enfermería del trabajo
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-chevron-right" />
+                                        Matrona
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-chevron-right" />
+                                        Matrona
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
