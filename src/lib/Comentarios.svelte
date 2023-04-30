@@ -1,6 +1,18 @@
 <script>
+    import StarRatting from "@ernane/svelte-star-rating";
     import { usuario } from "./store.js";
     let idCentro;
+    let configuracionEstrellas = {
+        countStars: 5,
+        range: { min: 0, max: 5, step: 0.5 },
+        starConfig: {
+            size: 30,
+            fillColor: "#F9ED4F",
+            strokeColor: "#012970",
+            unfilledColor: "#FFFFFF",
+            strokeUnfilledColor: "#012970",
+        },
+    };
 </script>
 
 <section class="blog-comments">
@@ -80,32 +92,43 @@
         </div>
         <!-- End comment #4 -->
         <div class="reply-form">
-            <h4 class="mb-3">Deja tu comentario y valoración</h4>
-            {#if $usuario}
-                <form action="">
-                    <div class="row">
-                        <div class="col form-group">
-                            <textarea
-                                name="comment"
-                                class="form-control"
-                                placeholder="Comentario*"
-                            />
-                        </div>
+            <h4 class="mb-3">Deja tu valoración y comentario</h4>
+            <!-- {#if $usuario} -->
+            <form class="text-center" action="">
+                <div class="row">
+                    <div class="col form-group">
+                        <StarRatting config={configuracionEstrellas} />
                     </div>
-                    <button type="submit" class="btn btn-primary"
-                        >Enviar comentario</button
-                    >
-                </form>
-            {:else}
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <textarea
+                            name="comment"
+                            class="form-control"
+                            placeholder="Comentario*"
+                            required
+                        />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary"
+                    >Enviar comentario</button
+                >
+            </form>
+            <!-- {:else}
                 <p>Para poder comentar debes iniciar sesión o registrarte.</p>
                 <a href="/login" class="btn btn-primary">Iniciar sesión</a>
                 <a href="/registro" class="btn btn-primary">Registrarse</a>
-            {/if}
+            {/if} -->
         </div>
     </div>
 </section>
 
 <style>
+    :global(section.stars-container) {
+        justify-content: start !important;
+        padding: 0;
+    }
+
     .blog-comments {
         margin-bottom: 30px;
     }
