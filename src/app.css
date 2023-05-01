@@ -46,6 +46,25 @@ section {
   color: red;
 }
 
+.boton-azul {
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  background: #4154f1;
+  border: 0;
+  padding: 10px 30px;
+  color: #fff !important;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.boton-azul:hover {
+  background: #5969f3;
+  color: #fff !important;
+  box-shadow: 0 5px 15px rgba(65, 84, 241, 0.4);
+  transform: scale(1.01);
+}
+
 form label {
   font-family: "Nunito", sans-serif;
 }

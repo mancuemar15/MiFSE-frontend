@@ -58,8 +58,8 @@
                             />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"
-                        >Enviar comentario</button
+                    <button type="submit" class="btn btn-primary boton-azul"
+                        >Enviar</button
                     >
                 </form>
             {:else}
@@ -67,8 +67,12 @@
                 <div
                     class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
                 >
-                    <button class="btn btn-primary">Iniciar sesión</button>
-                    <button class="btn btn-primary">Registrarse</button>
+                    <button class="btn btn-primary boton-azul"
+                        >Iniciar sesión</button
+                    >
+                    <button class="btn btn-primary boton-azul"
+                        >Registrarse</button
+                    >
                 </div>
             {/if}
         </div>
@@ -96,6 +100,7 @@
     }
 
     .blog-comments .reply-form h4 {
+        color: #012970;
         font-weight: bold;
         font-size: 22px;
     }
@@ -117,17 +122,6 @@
 
     .blog-comments .reply-form .form-group {
         margin-bottom: 25px;
-    }
-
-    .blog-comments .reply-form .btn-primary {
-        border-radius: 4px;
-        padding: 10px 20px;
-        border: 0;
-        background-color: #012970;
-    }
-
-    .blog-comments .reply-form .btn-primary:hover {
-        background-color: #013289;
     }
 
     .botones-usuario-anonimo {

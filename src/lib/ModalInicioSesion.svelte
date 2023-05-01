@@ -76,7 +76,7 @@
                         on:submit={iniciarSesion}
                     >
                         <div class="row gy-3 gy-lg-4">
-                            <div class="col-md-12 mt-0 mt-lg-auto">
+                            <div class="col-md-12 mt-0">
                                 <label
                                     for="email"
                                     class="form-label obligatorio">Email</label
@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="col-md-12 text-center">
-                                <button type="submit">Iniciar sesión</button>
+                                <button type="submit" class="boton-azul">Iniciar sesión</button>
                             </div>
                         </div>
                     </form>
@@ -156,19 +156,6 @@
 
     .formulario-inicio-sesion input:focus {
         border-color: #4154f1;
-    }
-
-    .formulario-inicio-sesion button[type="submit"] {
-        background: #4154f1;
-        border: 0;
-        padding: 10px 30px;
-        color: #fff;
-        transition: 0.4s;
-        border-radius: 4px;
-    }
-
-    .formulario-inicio-sesion button[type="submit"]:hover {
-        background: #5969f3;
     }
 
     @media (min-width: 425px) {

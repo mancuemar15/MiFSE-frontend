@@ -161,14 +161,14 @@
                     </div>
                 {:else}
                     <button
-                        class="boton-empezar w-100 text-start border-0"
+                        class="boton-empezar boton-azul w-100 text-start border-0"
                         on:click={onShowPopup}>Empezar</button
                     >
-                    <ModalRegistro open={showPopup} onClosed={onPopupClose} />
-                    <!-- <ModalInicioSesion
+                    <!-- <ModalRegistro open={showPopup} onClosed={onPopupClose} /> -->
+                    <ModalInicioSesion
                         open={showPopup}
                         onClosed={onPopupClose}
-                    /> -->
+                    />
                 {/if}
             </div>
         </div>
@@ -245,7 +245,6 @@
 
     :global(
             .navbar a:hover,
-            .navbar button:hover,
             .navbar *[className="activo"],
             .navbar li:hover > a
         ) {
@@ -296,16 +295,9 @@
     }
 
     .boton-empezar {
-        background: #4154f1;
         padding: 8px 20px;
         margin-top: 10px;
         margin-bottom: 10px;
-        border-radius: 4px !important;
-        color: #fff !important;
-    }
-
-    .boton-empezar:hover {
-        background: #5969f3;
     }
 
     :global(.navbar-scrolled) {

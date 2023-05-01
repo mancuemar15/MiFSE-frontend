@@ -67,7 +67,7 @@
                                 Your message has been sent. Thank you!
                             </div> -->
 
-                            <button type="submit">Enviar</button>
+                            <button type="submit" class="boton-azul">Enviar</button>
                         </div>
                     </div>
                 </form>
@@ -138,19 +138,6 @@
 
     .formulario-contacto textarea {
         padding: 12px 15px;
-    }
-
-    .formulario-contacto button[type="submit"] {
-        background: #4154f1;
-        border: 0;
-        padding: 10px 30px;
-        color: #fff;
-        transition: 0.4s;
-        border-radius: 4px;
-    }
-
-    .formulario-contacto button[type="submit"]:hover {
-        background: #5969f3;
     }
 
     /* @keyframes animate-loading {

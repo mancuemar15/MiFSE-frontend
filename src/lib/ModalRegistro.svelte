@@ -270,7 +270,9 @@
                             </div>
 
                             <div class="col-md-12 text-center">
-                                <button type="submit">Registrarse</button>
+                                <button type="submit" class="boton-azul"
+                                    >Registrarse</button
+                                >
                             </div>
                         </div>
                     </form>
@@ -322,19 +324,6 @@
         border-color: #4154f1;
     }
 
-    .formulario-inicio-sesion button[type="submit"] {
-        background: #4154f1;
-        border: 0;
-        padding: 10px 30px;
-        color: #fff;
-        transition: 0.4s;
-        border-radius: 4px;
-    }
-
-    .formulario-inicio-sesion button[type="submit"]:hover {
-        background: #5969f3;
-    }
-
     @media (min-width: 425px) {
         .formulario-inicio-sesion {
             padding: 30px;
@@ -352,6 +341,10 @@
     @media (min-width: 992px) {
         .modal {
             --bs-modal-width: 800px;
+        }
+
+        .formulario-inicio-sesion {
+            padding-top: 0;
         }
     }
 </style>
