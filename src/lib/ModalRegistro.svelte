@@ -4,21 +4,15 @@
     import { onMount } from "svelte";
     import { capitalizar } from "./utilidadesString";
     import { getNotificationsContext } from "svelte-notifications";
+    import { closeModal } from "svelte-modals";
+
+    export let isOpen;
+    export let abrirOtra;
 
     const { addNotification } = getNotificationsContext();
 
-    export let open = false;
-    export let onClosed;
-
     let titulaciones = [];
     let tiposResidente = [];
-
-    const modalClose = () => {
-        open = false;
-        if (onClosed) {
-            onClosed();
-        }
-    };
 
     const getTitulaciones = async () => {
         const response = await fetch("http://localhost:8090/titulaciones");
@@ -70,7 +64,7 @@
                         type: "success",
                         removeAfter: 4000,
                     });
-                    modalClose();
+                    closeModal();
                 } else if (response.status === 409) {
                     addNotification({
                         text: "Ya existe un usuario con ese email",
@@ -131,7 +125,7 @@
     });
 </script>
 
-{#if open}
+{#if isOpen}
     <div
         class="modal"
         id="modal-registro"
@@ -154,7 +148,7 @@
                         class="btn-close"
                         data-dismiss="modal"
                         aria-label="Close"
-                        on:click={modalClose}
+                        on:click={closeModal}
                     />
                 </div>
                 <div class="modal-body">
@@ -309,6 +303,14 @@
                                         >
                                     {/each}
                                 </select>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button
+                                    type="button"
+                                    class="btn btn-link pe-0"
+                                    on:click={abrirOtra}
+                                    >Ya estoy registrado, iniciar sesión</button
+                                >
                             </div>
 
                             <div class="col-md-12 text-center">

@@ -3,18 +3,12 @@
     import { quintOut } from "svelte/easing";
     import { usuario } from "./store";
     import { getNotificationsContext } from "svelte-notifications";
+    import { closeModal } from "svelte-modals";
+
+    export let isOpen;
+    export let abrirOtra;
 
     const { addNotification } = getNotificationsContext();
-
-    export let open = false;
-    export let onClosed;
-
-    const modalClose = () => {
-        open = false;
-        if (onClosed) {
-            onClosed();
-        }
-    };
 
     function iniciarSesion(event) {
         event.preventDefault();
@@ -39,7 +33,7 @@
                         removeAfter: 4000,
                     });
                     $usuario = response.json();
-                    modalClose();
+                    closeModal();
                 } else {
                     addNotification({
                         text: "Inicio de sesión incorrecto, compruebe sus credenciales",
@@ -60,7 +54,7 @@
     }
 </script>
 
-{#if open}
+{#if isOpen}
     <div
         class="modal"
         id="modal-inicio-sesion"
@@ -83,7 +77,7 @@
                         class="btn-close"
                         data-dismiss="modal"
                         aria-label="Close"
-                        on:click={modalClose}
+                        on:click={closeModal}
                     />
                 </div>
                 <div class="modal-body">
@@ -92,7 +86,7 @@
                         on:submit={iniciarSesion}
                     >
                         <div class="row gy-3 gy-lg-4">
-                            <div class="col-md-12 mt-0">
+                            <div class="col-12 mt-0">
                                 <label
                                     for="email"
                                     class="form-label obligatorio">Email</label
@@ -106,7 +100,7 @@
                                 />
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <label
                                     for="contrasena"
                                     class="form-label obligatorio"
@@ -119,6 +113,14 @@
                                     name="contrasena"
                                     required
                                 />
+                            </div>
+                            <div class="col-12 text-end">
+                                <button
+                                    type="button"
+                                    class="btn btn-link pe-0"
+                                    on:click={abrirOtra}
+                                    >No estoy registrado, registrarme</button
+                                >
                             </div>
 
                             <div class="col-md-12 text-center">

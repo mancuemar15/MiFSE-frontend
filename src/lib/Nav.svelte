@@ -3,8 +3,9 @@
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
     import { usuario } from "./store";
-    import ModalInicioSesion from "./ModalInicioSesion.svelte";
+    import { closeModal, openModal } from "svelte-modals";
     import ModalRegistro from "./ModalRegistro.svelte";
+    import ModalInicioSesion from "./ModalInicioSesion.svelte";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -48,17 +49,23 @@
         }
     });
 
-    let showPopup = false;
+    function abrirModalRegistro() {
+        openModal(ModalRegistro, {
+            abrirOtra: () => {
+                closeModal();
+                abrirModalInicioSesion();
+            },
+        });
+    }
 
-    const onShowPopup = (ev) => {
-        showPopup = true;
-    };
-
-    const onPopupClose = (data) => {
-        showPopup = false;
-
-        console.log(data);
-    };
+    function abrirModalInicioSesion() {
+        openModal(ModalInicioSesion, {
+            abrirOtra: () => {
+                closeModal();
+                abrirModalRegistro();
+            },
+        });
+    }
 
     function cerrarSesion() {
         usuario.set(null);
@@ -162,13 +169,8 @@
                 {:else}
                     <button
                         class="boton-empezar boton-azul w-100 text-start border-0"
-                        on:click={onShowPopup}>Empezar</button
+                        on:click={abrirModalRegistro}>Empezar</button
                     >
-                    <ModalRegistro open={showPopup} onClosed={onPopupClose} />
-                    <!-- <ModalInicioSesion
-                        open={showPopup}
-                        onClosed={onPopupClose}
-                    /> -->
                 {/if}
             </div>
         </div>

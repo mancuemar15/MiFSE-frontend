@@ -65,6 +65,15 @@ section {
   transform: scale(1.01);
 }
 
+.btn-link {
+  font-family: "Nunito", sans-serif;
+  color: #012970;
+}
+
+.btn-link:hover {
+  color: #4154f1 !important;
+}
+
 form label {
   font-family: "Nunito", sans-serif;
 }
