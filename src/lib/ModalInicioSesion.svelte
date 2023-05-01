@@ -71,52 +71,45 @@
                     />
                 </div>
                 <div class="modal-body">
-                    <div class="row gy-4">
-                        <div class="col">
-                            <form
-                                class="formulario-inicio-sesion"
-                                on:submit={iniciarSesion}
-                            >
-                                <div class="row gy-4">
-                                    <div class="col-md-12 mt-0">
-                                        <label
-                                            for="email"
-                                            class="form-label obligatorio"
-                                            >Email</label
-                                        >
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            class="form-control"
-                                            name="email"
-                                            required
-                                        />
-                                    </div>
+                    <form
+                        class="formulario-inicio-sesion"
+                        on:submit={iniciarSesion}
+                    >
+                        <div class="row gy-3 gy-lg-4">
+                            <div class="col-md-12 mt-0 mt-lg-auto">
+                                <label
+                                    for="email"
+                                    class="form-label obligatorio">Email</label
+                                >
+                                <input
+                                    type="email"
+                                    id="email"
+                                    class="form-control"
+                                    name="email"
+                                    required
+                                />
+                            </div>
 
-                                    <div class="col-md-12">
-                                        <label
-                                            for="contrasena"
-                                            class="form-label obligatorio"
-                                            >Contraseña</label
-                                        >
-                                        <input
-                                            type="password"
-                                            id="contrasena"
-                                            class="form-control"
-                                            name="contrasena"
-                                            required
-                                        />
-                                    </div>
+                            <div class="col-md-12">
+                                <label
+                                    for="contrasena"
+                                    class="form-label obligatorio"
+                                    >Contraseña</label
+                                >
+                                <input
+                                    type="password"
+                                    id="contrasena"
+                                    class="form-control"
+                                    name="contrasena"
+                                    required
+                                />
+                            </div>
 
-                                    <div class="col-md-12 text-center">
-                                        <button type="submit"
-                                            >Iniciar sesión</button
-                                        >
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="col-md-12 text-center">
+                                <button type="submit">Iniciar sesión</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -140,7 +133,7 @@
     }
 
     .modal-title {
-        font-size: 22px;
+        font-size: 26px;
         font-weight: 700;
         color: #012970;
     }
@@ -163,10 +156,6 @@
 
     .formulario-inicio-sesion input:focus {
         border-color: #4154f1;
-    }
-
-    .formulario-inicio-sesion input {
-        padding: 10px 15px;
     }
 
     .formulario-inicio-sesion button[type="submit"] {

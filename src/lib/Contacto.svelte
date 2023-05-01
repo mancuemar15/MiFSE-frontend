@@ -11,7 +11,7 @@
         <div class="row gy-4">
             <div class="col">
                 <form class="formulario-contacto">
-                    <div class="row gy-4">
+                    <div class="row gy-3 gy-lg-4">
                         <div class="col-md-6">
                             <label for="nombre" class="form-label">Nombre</label
                             >
@@ -134,10 +134,6 @@
     .formulario-contacto input:focus,
     .formulario-contacto textarea:focus {
         border-color: #4154f1;
-    }
-
-    .formulario-contacto input {
-        padding: 10px 15px;
     }
 
     .formulario-contacto textarea {
