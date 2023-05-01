@@ -2,6 +2,9 @@
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
     import { usuario } from "./store";
+    import { getNotificationsContext } from "svelte-notifications";
+
+    const { addNotification } = getNotificationsContext();
 
     export let open = false;
     export let onClosed;
@@ -28,18 +31,31 @@
             body: JSON.stringify(datos),
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error(response.statusText);
+                if (response.ok) {
+                    addNotification({
+                        text: "Inicio de sesión correcto",
+                        position: "top-right",
+                        type: "success",
+                        removeAfter: 4000,
+                    });
+                    $usuario = response.json();
+                    modalClose();
+                } else {
+                    addNotification({
+                        text: "Inicio de sesión incorrecto, compruebe sus credenciales",
+                        position: "top-right",
+                        type: "error",
+                        removeAfter: 4000,
+                    });
                 }
-                // Aquí podrías hacer algo con la respuesta
-                console.log("Inicio de sesión exitoso");
-                $usuario = response.json();
-                // Cerrar el modal
-                modalClose();
             })
-            .catch((error) => {
-                console.error("Error al iniciar sesión:", error);
-                // Aquí podrías mostrar un mensaje de error en el formulario
+            .catch(() => {
+                addNotification({
+                    text: "Se ha producido un error al iniciar sesión",
+                    position: "top-right",
+                    type: "error",
+                    removeAfter: 4000,
+                });
             });
     }
 </script>
@@ -47,7 +63,7 @@
 {#if open}
     <div
         class="modal"
-        id="sampleModal"
+        id="modal-inicio-sesion"
         tabindex="-1"
         role="dialog"
         aria-labelledby="sampleModalLabel"
@@ -106,7 +122,9 @@
                             </div>
 
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="boton-azul">Iniciar sesión</button>
+                                <button type="submit" class="boton-azul"
+                                    >Iniciar sesión</button
+                                >
                             </div>
                         </div>
                     </form>

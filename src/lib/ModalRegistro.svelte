@@ -134,7 +134,7 @@
 {#if open}
     <div
         class="modal"
-        id="sampleModal"
+        id="modal-registro"
         tabindex="-1"
         role="dialog"
         aria-labelledby="sampleModalLabel"
