@@ -4,6 +4,7 @@
     import Buscador from "./Buscador.svelte";
     import { usuario } from "./store";
     import ModalInicioSesion from "./ModalInicioSesion.svelte";
+    import ModalRegistro from "./ModalRegistro.svelte";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -163,10 +164,11 @@
                         class="boton-empezar w-100 text-start border-0"
                         on:click={onShowPopup}>Empezar</button
                     >
-                    <ModalInicioSesion
+                    <ModalRegistro open={showPopup} onClosed={onPopupClose} />
+                    <!-- <ModalInicioSesion
                         open={showPopup}
                         onClosed={onPopupClose}
-                    />
+                    /> -->
                 {/if}
             </div>
         </div>
