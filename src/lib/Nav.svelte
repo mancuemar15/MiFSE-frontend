@@ -3,8 +3,7 @@
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
     import { usuario } from "./store";
-    import ModalRegistro from "./ModalRegistro.svelte";
-
+    import ModalInicioSesion from "./ModalInicioSesion.svelte";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -59,6 +58,10 @@
 
         console.log(data);
     };
+
+    function cerrarSesion() {
+        usuario.set(null);
+    }
 </script>
 
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -147,8 +150,10 @@
                             </li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <a class="dropdown-item" href="#"
-                                    >Cerrar sesión</a
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    on:click={cerrarSesion}>Cerrar sesión</a
                                 >
                             </li>
                         </ul>
@@ -158,11 +163,14 @@
                         class="boton-empezar w-100 text-start border-0"
                         on:click={onShowPopup}>Empezar</button
                     >
+                    <ModalInicioSesion
+                        open={showPopup}
+                        onClosed={onPopupClose}
+                    />
                 {/if}
             </div>
         </div>
     </div>
-    <ModalRegistro open={showPopup} onClosed={() => onPopupClose()} />
 </nav>
 
 <style>
