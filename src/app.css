@@ -46,6 +46,10 @@ section {
   color: red;
 }
 
+form label {
+  font-family: "Nunito", sans-serif;
+}
+
 @media (min-width: 768px) {
   .header-seccion p {
     font-size: 38px;
