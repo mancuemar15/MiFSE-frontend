@@ -3,6 +3,9 @@
     import { quintOut } from "svelte/easing";
     import { onMount } from "svelte";
     import { capitalizar } from "./utilidadesString";
+    import { getNotificationsContext } from "svelte-notifications";
+
+    const { addNotification } = getNotificationsContext();
 
     export let open = false;
     export let onClosed;
@@ -27,14 +30,31 @@
         tiposResidente = await response.json();
     };
 
-    function registrarUsuario(event) {
+    function registrarResidente(event) {
         event.preventDefault();
         const formulario = event.target;
         const nombre = formulario.nombre.value;
+        const apellido1 = formulario.apellido1.value;
+        const apellido2 = formulario.apellido2.value
+            ? formulario.apellido2.value
+            : null;
         const email = formulario.email.value;
         const contrasena = formulario.contrasena.value;
-        const url = "http://localhost:8090/usuarios";
-        const datos = { nombre, email, contrasena };
+        const titulacion = formulario.titulacion.value;
+        const tipoResidente = formulario.tipoResidente.value;
+        const url = "http://localhost:8090/residentes";
+        const datos = {
+            nombre,
+            apellido1,
+            apellido2,
+            email,
+            contrasena,
+            fechaAlta: new Date().toJSON(),
+            titulacion: { id: titulacion },
+            tipoResidente: { id: tipoResidente },
+            tipoUsuario: { id: 2 },
+        };
+        console.log(JSON.stringify(datos));
         fetch(url, {
             method: "POST",
             headers: {
@@ -43,53 +63,72 @@
             body: JSON.stringify(datos),
         })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error(response.statusText);
+                if (response.ok) {
+                    addNotification({
+                        text: "Registro completado con éxito",
+                        position: "top-right",
+                        type: "success",
+                        removeAfter: 4000,
+                    });
+                    modalClose();
+                } else if (response.status === 409) {
+                    addNotification({
+                        text: "Ya existe un usuario con ese email",
+                        position: "top-right",
+                        type: "error",
+                        removeAfter: 4000,
+                    });
+                } else {
+                    addNotification({
+                        text: "No se ha podido registrar el usuario",
+                        position: "top-right",
+                        type: "error",
+                        removeAfter: 4000,
+                    });
                 }
-                // Aquí podrías hacer algo con la respuesta
-                console.log("Usuario registrado exitosamente");
-                // Cerrar el modal
-                modalClose();
             })
-            .catch((error) => {
-                console.error("Error al registrar usuario:", error);
-                // Aquí podrías mostrar un mensaje de error en el formulario
+            .catch(() => {
+                addNotification({
+                    text: "Ha ocurrido un error inesperado",
+                    position: "top-right",
+                    type: "error",
+                    removeAfter: 4000,
+                });
             });
+    }
+
+    function validarEmail(event) {
+        const formulario = event.target.form;
+        const email = formulario.email.value;
+        const emailConfirmar = formulario.emailConfirmar.value;
+
+        if (email !== emailConfirmar) {
+            formulario.emailConfirmar.setCustomValidity(
+                "Los correos electrónicos no coinciden"
+            );
+        } else {
+            formulario.emailConfirmar.setCustomValidity("");
+        }
+    }
+
+    function validarContrasena(event) {
+        const formulario = event.target.form;
+        const contrasena = formulario.contrasena.value;
+        const contrasenaConfirmar = formulario.contrasenaConfirmar.value;
+
+        if (contrasena !== contrasenaConfirmar) {
+            formulario.contrasenaConfirmar.setCustomValidity(
+                "Las contraseñas no coinciden"
+            );
+        } else {
+            formulario.contrasenaConfirmar.setCustomValidity("");
+        }
     }
 
     onMount(() => {
         getTitulaciones();
         getTiposResidente();
     });
-
-    // function iniciarSesion(event) {
-    //     event.preventDefault();
-    //     const formulario = event.target;
-    //     const email = formulario.email.value;
-    //     const contrasena = formulario.contrasena.value;
-    //     const url = "http://localhost:8090/usuarios/login";
-    //     const datos = { email, contrasena };
-    //     fetch(url, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(datos),
-    //     })
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 throw new Error(response.statusText);
-    //             }
-    //             // Aquí podrías hacer algo con la respuesta
-    //             console.log("Inicio de sesión exitoso");
-    //             // Cerrar el modal
-    //             modalClose();
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error al iniciar sesión:", error);
-    //             // Aquí podrías mostrar un mensaje de error en el formulario
-    //         });
-    // }
 </script>
 
 {#if open}
@@ -121,7 +160,7 @@
                 <div class="modal-body">
                     <form
                         class="formulario-inicio-sesion"
-                        on:submit={registrarUsuario}
+                        on:submit={registrarResidente}
                     >
                         <div class="row gy-3 gy-lg-4">
                             <div class="col-lg-4 mt-0 mt-lg-auto">
@@ -160,7 +199,6 @@
                                     id="apellido2"
                                     class="form-control"
                                     name="apellido2"
-                                    required
                                 />
                             </div>
                             <div class="col-lg-6">
@@ -174,21 +212,23 @@
                                     class="form-control"
                                     name="email"
                                     required
+                                    on:input={validarEmail}
                                 />
                             </div>
 
                             <div class="col-lg-6">
                                 <label
-                                    for="email-repetir"
+                                    for="email-confirmar"
                                     class="form-label obligatorio"
                                     >Repetir email</label
                                 >
                                 <input
                                     type="email"
-                                    id="email-repetir"
+                                    id="email-confirmar"
                                     class="form-control"
-                                    name="email-repetir"
+                                    name="emailConfirmar"
                                     required
+                                    on:input={validarEmail}
                                 />
                             </div>
 
@@ -204,20 +244,22 @@
                                     class="form-control"
                                     name="contrasena"
                                     required
+                                    on:input={validarContrasena}
                                 />
                             </div>
                             <div class="col-lg-6">
                                 <label
-                                    for="contrasena-repetir"
+                                    for="contrasena-confirmar"
                                     class="form-label obligatorio"
                                     >Repetir contraseña</label
                                 >
                                 <input
                                     type="password"
-                                    id="contrasena-repetir"
+                                    id="contrasena-confirmar"
                                     class="form-control"
-                                    name="contrasena-repetir"
+                                    name="contrasenaConfirmar"
                                     required
+                                    on:input={validarContrasena}
                                 />
                             </div>
                             <div class="col-lg-6">
@@ -232,7 +274,7 @@
                                     class="form-select"
                                     required
                                 >
-                                    <option value="0" selected disabled
+                                    <option value="" selected disabled
                                         >Selecciona una titulación</option
                                     >
                                     {#each titulaciones as titulacion}
@@ -251,12 +293,12 @@
                                     >Tipo de residente</label
                                 >
                                 <select
-                                    name="tipo-residente"
+                                    name="tipoResidente"
                                     id="tipo-residente"
                                     class="form-select"
                                     required
                                 >
-                                    <option value="0" selected disabled
+                                    <option value="" selected disabled
                                         >Selecciona un tipo de residente</option
                                     >
                                     {#each tiposResidente as tipoResidente}

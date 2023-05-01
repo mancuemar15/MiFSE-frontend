@@ -3,15 +3,18 @@
   import Nav from "./lib/Nav.svelte";
   import Contenido from "./lib/Contenido.svelte";
   import Footer from "./lib/Footer.svelte";
+  import Notifications from "svelte-notifications";
 </script>
 
 <Router>
-  <Nav />
-  <Contenido />
-  <Footer />
+  <Notifications>
+    <Nav />
+    <Contenido />
+    <Footer />
+  </Notifications>
 </Router>
-<main>
-  <!-- <div>
+
+<!-- <div>
     <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
     </a>
@@ -32,9 +35,11 @@
   <p class="read-the-docs">
     Click on the Vite and Svelte logos to learn more
   </p> -->
-</main>
 
 <style>
+  :global(.notifications div) {
+    z-index: 100000 !important;
+  }
   /* .logo {
     height: 6em;
     padding: 1.5em;

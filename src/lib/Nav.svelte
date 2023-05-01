@@ -164,11 +164,11 @@
                         class="boton-empezar boton-azul w-100 text-start border-0"
                         on:click={onShowPopup}>Empezar</button
                     >
-                    <!-- <ModalRegistro open={showPopup} onClosed={onPopupClose} /> -->
-                    <ModalInicioSesion
+                    <ModalRegistro open={showPopup} onClosed={onPopupClose} />
+                    <!-- <ModalInicioSesion
                         open={showPopup}
                         onClosed={onPopupClose}
-                    />
+                    /> -->
                 {/if}
             </div>
         </div>
