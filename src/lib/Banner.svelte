@@ -1,5 +1,6 @@
 <script>
     import imagenBanner from "../assets/banner.png";
+    import { abrirModalRegistro } from "./utilidadesModales";
 </script>
 
 <section id="banner" class="banner d-flex align-items-center">
@@ -15,13 +16,13 @@
                 </h2>
                 <div>
                     <div class="text-center text-lg-start">
-                        <a
-                            href="#about"
+                        <button
+                            type="button"
                             class="btn boton-empezar d-inline-flex align-items-center justify-content-center align-self-center"
+                            on:click={abrirModalRegistro}
+                            >Empezar
+                            <i class="bi bi-arrow-right" /></button
                         >
-                            <span>Empezar</span>
-                            <i class="bi bi-arrow-right" />
-                        </a>
                     </div>
                 </div>
             </div>
@@ -64,9 +65,6 @@
         color: #fff;
         background: #4154f1;
         box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
-    }
-
-    .boton-empezar span {
         font-family: "Nunito", sans-serif;
         font-weight: 600;
         font-size: 16px;

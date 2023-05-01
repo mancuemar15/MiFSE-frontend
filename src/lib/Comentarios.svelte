@@ -2,6 +2,11 @@
     import StarRatting from "@ernane/svelte-star-rating";
     import { usuario } from "./store.js";
     import Comentario from "./Comentario.svelte";
+    import {
+        abrirModalRegistro,
+        abrirModalInicioSesion,
+    } from "./utilidadesModales";
+
     export let comentarios = [];
     let configuracionEstrellas = {
         countStars: 5,
@@ -67,11 +72,13 @@
                 <div
                     class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
                 >
-                    <button class="btn btn-primary boton-azul"
-                        >Iniciar sesión</button
+                    <button
+                        class="btn btn-primary boton-azul"
+                        on:click={abrirModalInicioSesion}>Iniciar sesión</button
                     >
-                    <button class="btn btn-primary boton-azul"
-                        >Registrarse</button
+                    <button
+                        class="btn btn-primary boton-azul"
+                        on:click={abrirModalRegistro}>Registrarse</button
                     >
                 </div>
             {/if}

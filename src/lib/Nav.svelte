@@ -3,9 +3,7 @@
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
     import { usuario } from "./store";
-    import { closeModal, openModal } from "svelte-modals";
-    import ModalRegistro from "./ModalRegistro.svelte";
-    import ModalInicioSesion from "./ModalInicioSesion.svelte";
+    import { abrirModalRegistro } from "./utilidadesModales";
 
     const opcionesNav = [
         { tipo: "enlace", pagina: "Inicio", ruta: "/" },
@@ -48,24 +46,6 @@
             navElement.classList.remove("navbar-scrolled");
         }
     });
-
-    function abrirModalRegistro() {
-        openModal(ModalRegistro, {
-            abrirOtra: () => {
-                closeModal();
-                abrirModalInicioSesion();
-            },
-        });
-    }
-
-    function abrirModalInicioSesion() {
-        openModal(ModalInicioSesion, {
-            abrirOtra: () => {
-                closeModal();
-                abrirModalRegistro();
-            },
-        });
-    }
 
     function cerrarSesion() {
         usuario.set(null);
