@@ -3,7 +3,7 @@
     import TituloPagina from "./TituloPagina.svelte";
     import Mapa from "./Mapa.svelte";
     import Comentarios from "./Comentarios.svelte";
-    import { capitalizar } from "./utilidadesString.js";
+    import { capitalizar } from "./utilidadesString";
 
     export let id;
 
