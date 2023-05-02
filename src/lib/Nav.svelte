@@ -1,32 +1,34 @@
 <script>
-    import { Link } from "svelte-navigator";
+    import { Link, useLocation } from "svelte-navigator";
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
     import { usuario } from "./store";
     import { abrirModalRegistro } from "./utilidadesModales";
 
     const opcionesNav = [
-        { tipo: "enlace", pagina: "Inicio", ruta: "/" },
+        { tipo: "enlace", texto: "Inicio", ruta: "/" },
         {
             tipo: "dropdown",
-            pagina: "Haz tu lista",
-            ruta: "lista",
-            paginas: [
-                { tipo: "enlace", pagina: "Biología", ruta: "/biologia" },
-                { tipo: "enlace", pagina: "Enfermería", ruta: "/enfermeria" },
-                { tipo: "enlace", pagina: "Farmacia", ruta: "/farmacia" },
-                { tipo: "enlace", pagina: "Física", ruta: "/fisica" },
-                { tipo: "enlace", pagina: "Medicina", ruta: "/medicina" },
-                { tipo: "enlace", pagina: "Psicología", ruta: "/psicologia" },
-                { tipo: "enlace", pagina: "Química", ruta: "/quimica" },
+            texto: "Haz tu lista",
+            ruta: "/lista",
+            enlaces: [
+                { tipo: "enlace", texto: "Biología", ruta: "/biologia" },
+                { tipo: "enlace", texto: "Enfermería", ruta: "/enfermeria" },
+                { tipo: "enlace", texto: "Farmacia", ruta: "/farmacia" },
+                { tipo: "enlace", texto: "Física", ruta: "/fisica" },
+                { tipo: "enlace", texto: "Medicina", ruta: "/medicina" },
+                { tipo: "enlace", texto: "Psicología", ruta: "/psicologia" },
+                { tipo: "enlace", texto: "Química", ruta: "/quimica" },
             ],
         },
         {
             tipo: "enlace",
-            pagina: "Últimas posiciones",
+            texto: "Últimas posiciones",
             ruta: "/ultimas-posiciones",
         },
     ];
+
+    const location = useLocation();
 
     function getProps({ location, href, isPartiallyCurrent, isCurrent }) {
         const isActive =
@@ -81,28 +83,32 @@
                             <Link
                                 class="nav-link"
                                 to={opcionNav.ruta}
-                                {getProps}>{opcionNav.pagina}</Link
+                                {getProps}>{opcionNav.texto}</Link
                             >
                         </li>
                     {:else if opcionNav.tipo == "dropdown"}
                         <li class="nav-item dropdown">
                             <button
+                                id="lista-dropdown"
                                 class="nav-link dropdown-toggle border-0 bg-white"
+                                class:activo={$location.pathname.includes(
+                                    "/lista"
+                                )}
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                {opcionNav.pagina}
+                                {opcionNav.texto}
                             </button>
                             <ul class="dropdown-menu border-0 my-2">
-                                {#each opcionNav.paginas as pagina}
+                                {#each opcionNav.enlaces as enlace}
                                     <li>
                                         <Link
                                             class="dropdown-item py-2"
-                                            to="{opcionNav.ruta}/{pagina.ruta}"
+                                            to="{opcionNav.ruta}/{enlace.ruta}"
                                             {getProps}
                                         >
-                                            {pagina.pagina}
+                                            {enlace.texto}
                                         </Link>
                                     </li>
                                 {/each}
@@ -229,7 +235,9 @@
             .navbar a:hover,
             .navbar *[className="activo"],
             .navbar li:hover > a
-        ) {
+        ),
+    .navbar button:hover,
+    .navbar button.activo {
         color: #4154f1 !important;
     }
 
