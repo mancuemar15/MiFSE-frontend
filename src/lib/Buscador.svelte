@@ -3,81 +3,81 @@
     import { Link } from "svelte-navigator";
 
     export let placeholder = "Buscar...";
-    let searchTerm = "";
-    let suggestions = [];
-    let showSuggestions = false;
+    let terminoBusqueda = "";
+    let sugerenciasCentros = [];
+    let mostrarSugerencias = false;
 
     function handleInput(event) {
-        searchTerm = event.target.value;
-        if (searchTerm.length > 0) {
-            fetchSuggestions();
+        terminoBusqueda = event.target.value;
+        if (terminoBusqueda.length > 0) {
+            getSugerenciasCentros();
         } else {
-            suggestions = [];
-            showSuggestions = false;
+            sugerenciasCentros = [];
+            mostrarSugerencias = false;
         }
     }
 
-    async function fetchSuggestions() {
+    async function getSugerenciasCentros() {
         try {
             const response = await fetch(
-                `http://localhost:8090/centros/buscar/${searchTerm}`
+                `http://localhost:8090/centros/buscar/${terminoBusqueda}`
             );
             const data = await response.json();
-            suggestions = data;
-            showSuggestions = true;
+            sugerenciasCentros = data;
+            mostrarSugerencias = true;
         } catch (error) {
-            suggestions = [];
+            sugerenciasCentros = [];
         }
     }
 
-    function handleClickOutside(event) {
+    function handleClickFueraComponente(event) {
         // Check if the click event originated from within the component
         if (
-            event.target.closest(".search-container") === null &&
-            showSuggestions
+            event.target.closest(".contenedor-buscador") === null &&
+            mostrarSugerencias
         ) {
-            showSuggestions = false;
+            mostrarSugerencias = false;
         }
     }
 
     function handleLink() {
-        showSuggestions = false;
-        document.querySelector(".search-container input").value = "";
-        suggestions = [];
-        searchTerm = "";
+        mostrarSugerencias = false;
+        document.querySelector(".contenedor-buscador input").value = "";
+        sugerenciasCentros = [];
+        terminoBusqueda = "";
     }
 
     // Add event listener for click events outside the component
     onMount(() => {
-        document.addEventListener("click", handleClickOutside);
+        document.addEventListener("click", handleClickFueraComponente);
     });
 
     // Clean up the event listener on component destruction
     onDestroy(() => {
-        document.removeEventListener("click", handleClickOutside);
+        document.removeEventListener("click", handleClickFueraComponente);
     });
 </script>
 
-<div class="search-container">
+<div class="contenedor-buscador">
     <input
         type="text"
         class="form-control"
         on:input={handleInput}
-        on:click={() => (showSuggestions = true)}
+        on:click={() => (mostrarSugerencias = true)}
         {placeholder}
     />
-    {#if showSuggestions}
+    {#if mostrarSugerencias}
         <ul>
-            {#if suggestions.length > 0}
-                {#each suggestions as suggestion}
+            {#if sugerenciasCentros.length > 0}
+                {#each sugerenciasCentros as sugerencia}
                     <li>
                         <Link
-                            to={`/centro/${suggestion.id}`}
-                            on:click={handleLink}>{suggestion.nombre}</Link
+                            to={`/centro/${sugerencia.id}`}
+                            on:click={handleLink}>{sugerencia.nombre}</Link
                         >
                     </li>
                 {/each}
-            {:else if suggestions.length === 0 && searchTerm.length > 0}
+            {:else if sugerenciasCentros.length === 0 && terminoBusqueda.length > 0}
                 <li class="sin-sugerencias">No hay sugerencias</li>
             {/if}
         </ul>
@@ -113,8 +113,7 @@
 
     li {
         cursor: pointer;
-        font-size: 16px;
-        padding: 8px;
+        padding: 6px 8px;
     }
 
     li:hover:not(.sin-sugerencias) {
@@ -123,6 +122,11 @@
 
     li.sin-sugerencias {
         cursor: default;
+    }
+
+    :global(.contenedor-buscador ul li a) {
+        display: block;
+        text-decoration: none;
     }
 
     @media (min-width: 992px) {
