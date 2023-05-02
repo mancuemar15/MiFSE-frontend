@@ -6,13 +6,15 @@
     export let centros;
     export let centrosFiltrados = [];
 
+    let tiposTrabajoFinResidencia = [];
+    let tiposGuardiasFindesFestivos = [];
+
     let especialidades = [];
     let especialidadesSeleccionadas = [];
     let comunidades = [];
     let comunidadesSeleccionadas = [];
-
-    let tiposTrabajoFinResidencia = [];
-    let tiposGuardiasFindesFestivos = [];
+    let necesidadCoche = null;
+    let diasVacacionesSeleccionados = [0, 30];
 
     const getTiposTrabajoFinResidencia = async () => {
         const response = await fetch(`http://localhost:8090/tipos-trabajos`);
@@ -29,18 +31,7 @@
         getTiposGuardiasFindesFestivos();
     });
 
-    let options = [
-        "Czechia",
-        "Germany",
-        "Spainnnnnnnnnnnnnnnnnnnnnnn",
-        "France",
-        "Italy",
-        "Poland",
-    ];
-
     let labelAsValue = false;
-
-    let selection = [];
 
     function cumpleFiltros(centro) {
         const cumpleEspecialidades =
@@ -65,7 +56,9 @@
 
     $: if (centros) {
         especialidades = [];
+        // especialidadesSeleccionadas = [];
         comunidades = [];
+        // comunidadesSeleccionadas = [];
         centros.forEach((centro) => {
             const especialidad = {
                 id: centro.especialidad.id,
@@ -132,30 +125,40 @@
     //     return especialidadSeleccionada && comunidadSeleccionada;
     // });
 
-    // $: centrosFiltrados = centros.filter((centro) => {
-    //     const cumpleEspecialidades =
-    //         especialidadesSeleccionadas.length === 0 ||
-    //         especialidadesSeleccionadas.some((especialidad) => {
-    //             return (
-    //                 JSON.stringify(centro.especialidad) ===
-    //                 JSON.stringify(especialidad)
-    //             );
-    //         });
-    //     const cumpleComunidades =
-    //         comunidadesSeleccionadas.length === 0 ||
-    //         comunidadesSeleccionadas.some((comunidad) => {
-    //             return (
-    //                 JSON.stringify(
-    //                     centro.centro.localidad.provincia.autonomia
-    //                 ) === JSON.stringify(comunidad)
-    //             );
-    //         });
-    //     return cumpleEspecialidades && cumpleComunidades;
-    // });
-
     $: centrosFiltrados = centros.filter((centro) => {
-        return cumpleFiltros(centro);
+        const cumpleEspecialidades =
+            especialidadesSeleccionadas.length === 0 ||
+            especialidadesSeleccionadas.some((especialidad) => {
+                return (
+                    JSON.stringify(centro.especialidad) ===
+                    JSON.stringify(especialidad)
+                );
+            });
+        const cumpleComunidades =
+            comunidadesSeleccionadas.length === 0 ||
+            comunidadesSeleccionadas.some((comunidad) => {
+                return (
+                    JSON.stringify(
+                        centro.centro.localidad.provincia.autonomia
+                    ) === JSON.stringify(comunidad)
+                );
+            });
+        const cumpleNecesidadCoche =
+            necesidadCoche === null || centro.necesidadCoche === necesidadCoche;
+        const cumpleDiasVacaciones =
+            centro.numeroDiasVacaciones >= diasVacacionesSeleccionados[0] &&
+            centro.numeroDiasVacaciones <= diasVacacionesSeleccionados[1];
+        return (
+            cumpleEspecialidades &&
+            cumpleComunidades &&
+            cumpleNecesidadCoche &&
+            cumpleDiasVacaciones
+        );
     });
+
+    // $: centrosFiltrados = centros.filter((centro) => {
+    //     return cumpleFiltros(centro);
+    // });
 </script>
 
 <div class="filtros">
@@ -187,20 +190,38 @@
         <div class="form-check">
             <input
                 class="form-check-input"
-                type="checkbox"
-                value="0"
-                id="flexCheckDefault"
+                type="radio"
+                name="necesidad-coche"
+                id="radio-necesidad-coche-no"
+                on:click={() => (necesidadCoche = false)}
             />
-            <label class="form-check-label" for="flexCheckDefault"> No </label>
+            <label class="form-check-label" for="radio-necesidad-coche-no">
+                No
+            </label>
         </div>
         <div class="form-check">
             <input
                 class="form-check-input"
-                type="checkbox"
-                value="1"
-                id="flexCheckChecked"
+                type="radio"
+                name="necesidad-coche"
+                id="radio-necesidad-coche-si"
+                on:click={() => (necesidadCoche = true)}
             />
-            <label class="form-check-label" for="flexCheckChecked"> Sí </label>
+            <label class="form-check-label" for="radio-necesidad-coche-si">
+                Sí
+            </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="necesidad-coche"
+                id="radio-necesidad-coche-nulo"
+                on:click={() => (necesidadCoche = null)}
+            />
+            <label class="form-check-label" for="radio-necesidad-coche-nulo">
+                Indiferente
+            </label>
         </div>
     </div>
     <div class="filtro border-bottom">
@@ -229,18 +250,18 @@
                 class="form-check-input"
                 type="checkbox"
                 value="0"
-                id="flexCheckDefault"
+                id="check-clases-no"
             />
-            <label class="form-check-label" for="flexCheckDefault"> No </label>
+            <label class="form-check-label" for="check-clases-no"> No </label>
         </div>
         <div class="form-check">
             <input
                 class="form-check-input"
                 type="checkbox"
                 value="1"
-                id="flexCheckChecked"
+                id="check-clases-si"
             />
-            <label class="form-check-label" for="flexCheckChecked"> Sí </label>
+            <label class="form-check-label" for="check-clases-si"> Sí </label>
         </div>
     </div>
     <div class="filtro border-bottom">
@@ -250,18 +271,18 @@
                 class="form-check-input"
                 type="checkbox"
                 value="0"
-                id="flexCheckDefault"
+                id="check-examenes-no"
             />
-            <label class="form-check-label" for="flexCheckDefault"> No </label>
+            <label class="form-check-label" for="check-examenes-no"> No </label>
         </div>
         <div class="form-check">
             <input
                 class="form-check-input"
                 type="checkbox"
                 value="1"
-                id="flexCheckChecked"
+                id="check-examenes-si"
             />
-            <label class="form-check-label" for="flexCheckChecked"> Sí </label>
+            <label class="form-check-label" for="check-examenes-si"> Sí </label>
         </div>
     </div>
     <div class="filtro border-bottom">
@@ -278,6 +299,9 @@
             first="label"
             last="label"
             id="range-dias-vacaciones"
+            on:stop={(e) => {
+                diasVacacionesSeleccionados = e.detail.values;
+            }}
         />
     </div>
     <div class="filtro border-bottom">
@@ -338,18 +362,22 @@
                 class="form-check-input"
                 type="checkbox"
                 value="0"
-                id="flexCheckDefault"
+                id="check-rotaciones-externas-no"
             />
-            <label class="form-check-label" for="flexCheckDefault"> No </label>
+            <label class="form-check-label" for="check-rotaciones-externas-no">
+                No
+            </label>
         </div>
         <div class="form-check">
             <input
                 class="form-check-input"
                 type="checkbox"
                 value="1"
-                id="flexCheckChecked"
+                id="check-rotaciones-externas-si"
             />
-            <label class="form-check-label" for="flexCheckChecked"> Sí </label>
+            <label class="form-check-label" for="check-rotaciones-externas-si">
+                Sí
+            </label>
         </div>
     </div>
     <div class="filtro">
@@ -365,6 +393,7 @@
             all={false}
             first="label"
             last="label"
+            suffix="€"
             id="range-sueldo"
         />
     </div>
