@@ -1,6 +1,5 @@
 <script>
     import BotonUltimasPosiciones from "./BotonUltimasPosiciones.svelte";
-    import Footer from "./Footer.svelte";
     import TablaUltimasPosiciones from "./TablaUltimasPosiciones.svelte";
     import TituloPagina from "./TituloPagina.svelte";
 
