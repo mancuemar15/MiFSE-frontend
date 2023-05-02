@@ -78,6 +78,23 @@ form label {
   font-family: "Nunito", sans-serif;
 }
 
+.rangeSlider>.rangeHandle>.rangeNub {
+  background-color: #4154f1 !important;
+}
+
+.rangeSlider>.rangeHandle>.rangeFloat {
+  background-color: #4154f1 !important;
+}
+
+.rangeSlider>.rangeBar {
+  background-color: #4154f1 !important;
+}
+
+.rangeSlider>.rangePips>.pip>.pipVal {
+  font-weight: normal !important;
+  top: 0.4em !important;
+}
+
 @media (min-width: 768px) {
   .header-seccion p {
     font-size: 38px;

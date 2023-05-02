@@ -17,8 +17,10 @@
     "@ernane/svelte-star-rating": "^1.1.2",
     "bootstrap-icons": "^1.10.5",
     "leaflet": "^1.9.3",
+    "svelecte": "^3.16.0",
     "svelte-modals": "^1.2.1",
     "svelte-navigator": "^3.2.2",
-    "svelte-notifications": "^0.9.98"
+    "svelte-notifications": "^0.9.98",
+    "svelte-range-slider-pips": "^2.1.1"
   }
 }
