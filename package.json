@@ -17,7 +17,6 @@
     "@ernane/svelte-star-rating": "^1.1.2",
     "bootstrap-icons": "^1.10.5",
     "leaflet": "^1.9.3",
-    "svelte-google-maps": "^0.2.0",
     "svelte-modals": "^1.2.1",
     "svelte-navigator": "^3.2.2",
     "svelte-notifications": "^0.9.98"
