@@ -95,6 +95,14 @@ form label {
   top: 0.4em !important;
 }
 
+.sv-dropdown {
+  bottom: auto !important;
+}
+
+.svelecte-control .has-multiSelection .sv-item-content {
+  white-space: break-spaces !important;
+}
+
 @media (min-width: 768px) {
   .header-seccion p {
     font-size: 38px;

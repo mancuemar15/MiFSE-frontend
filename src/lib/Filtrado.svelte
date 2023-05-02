@@ -14,13 +14,13 @@
     };
 
     let centros = [];
+    let centrosFiltrados = [];
 
     const getCentros = async () => {
         const response = await fetch(
             `http://localhost:8090/especialidades-centros/${nombre}`
         );
         centros = await response.json();
-        console.log("terminado");
     };
 
     onMount(() => {
@@ -40,13 +40,13 @@
     <div class="container">
         <div class="row gy-4">
             <div class="col-lg-4">
-                <Filtros {centros} />
+                <Filtros {centros} bind:centrosFiltrados />
             </div>
             <div class="col-lg-8 border">
-                {#each centros as centro}
-                <div class="my-2">
-                    <span>{centro.centro.nombre}</span>
-                </div>
+                {#each centrosFiltrados as centro}
+                    <div class="my-2">
+                        <span>{centro.centro.nombre}</span>
+                    </div>
                 {/each}
             </div>
         </div>

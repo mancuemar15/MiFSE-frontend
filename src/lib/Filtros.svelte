@@ -4,6 +4,12 @@
     import { onMount } from "svelte";
 
     export let centros;
+    export let centrosFiltrados = [];
+
+    let especialidades = [];
+    let especialidadesSeleccionadas = [];
+    let comunidades = [];
+    let comunidadesSeleccionadas = [];
 
     let tiposTrabajoFinResidencia = [];
     let tiposGuardiasFindesFestivos = [];
@@ -35,7 +41,121 @@
     let labelAsValue = false;
 
     let selection = [];
-    let value = ["Czechia", "Germany"];
+
+    function cumpleFiltros(centro) {
+        const cumpleEspecialidades =
+            especialidadesSeleccionadas.length === 0 ||
+            especialidadesSeleccionadas.some((especialidad) => {
+                return (
+                    JSON.stringify(centro.especialidad) ===
+                    JSON.stringify(especialidad)
+                );
+            });
+        const cumpleComunidades =
+            comunidadesSeleccionadas.length === 0 ||
+            comunidadesSeleccionadas.some((comunidad) => {
+                return (
+                    JSON.stringify(
+                        centro.centro.localidad.provincia.autonomia
+                    ) === JSON.stringify(comunidad)
+                );
+            });
+        return cumpleEspecialidades && cumpleComunidades;
+    }
+
+    $: if (centros) {
+        especialidades = [];
+        comunidades = [];
+        centros.forEach((centro) => {
+            const especialidad = {
+                id: centro.especialidad.id,
+                nombre: centro.especialidad.nombre,
+            };
+            const comunidad = {
+                id: centro.centro.localidad.provincia.autonomia.id,
+                nombre: centro.centro.localidad.provincia.autonomia.nombre,
+            };
+            if (
+                !especialidades.some(
+                    (e) => JSON.stringify(e) === JSON.stringify(especialidad)
+                )
+            ) {
+                especialidades.push(especialidad);
+            }
+            if (
+                !comunidades.some(
+                    (c) => JSON.stringify(c) === JSON.stringify(comunidad)
+                )
+            ) {
+                comunidades.push(comunidad);
+            }
+        });
+    }
+
+    // $: centrosFiltrados = centros.filter((centro) => {
+    //     return (
+    //         especialidadesSeleccionadas.some((especialidad) => {
+    //             return (
+    //                 JSON.stringify(centro.especialidad) ===
+    //                 JSON.stringify(especialidad)
+    //             );
+    //         }) &&
+    //         comunidadesSeleccionadas.some((comunidad) => {
+    //             return (
+    //                 JSON.stringify(
+    //                     centro.centro.localidad.provincia.autonomia
+    //                 ) === JSON.stringify(comunidad)
+    //             );
+    //         })
+    //     );
+    // });
+
+    // $: centrosFiltrados = centros.filter((centro) => {
+    //     // Filtrar por especialidades seleccionadas
+    //     const especialidadesDelCentro = {
+    //         id: centro.especialidad.id,
+    //         nombre: centro.especialidad.nombre,
+    //     };
+    //     const especialidadSeleccionada = especialidadesSeleccionadas.some(
+    //         (e) => JSON.stringify(e) === JSON.stringify(especialidadesDelCentro)
+    //     );
+
+    //     // Filtrar por comunidades seleccionadas
+    //     const comunidadDelCentro = {
+    //         id: centro.centro.localidad.provincia.autonomia.id,
+    //         nombre: centro.centro.localidad.provincia.autonomia.nombre,
+    //     };
+    //     const comunidadSeleccionada = comunidadesSeleccionadas.some(
+    //         (c) => JSON.stringify(c) === JSON.stringify(comunidadDelCentro)
+    //     );
+
+    //     return especialidadSeleccionada && comunidadSeleccionada;
+    // });
+
+    // $: centrosFiltrados = centros.filter((centro) => {
+    //     const cumpleEspecialidades =
+    //         especialidadesSeleccionadas.length === 0 ||
+    //         especialidadesSeleccionadas.some((especialidad) => {
+    //             return (
+    //                 JSON.stringify(centro.especialidad) ===
+    //                 JSON.stringify(especialidad)
+    //             );
+    //         });
+    //     const cumpleComunidades =
+    //         comunidadesSeleccionadas.length === 0 ||
+    //         comunidadesSeleccionadas.some((comunidad) => {
+    //             return (
+    //                 JSON.stringify(
+    //                     centro.centro.localidad.provincia.autonomia
+    //                 ) === JSON.stringify(comunidad)
+    //             );
+    //         });
+    //     return cumpleEspecialidades && cumpleComunidades;
+    // });
+
+    $: centrosFiltrados = centros.filter((centro) => {
+        return cumpleFiltros(centro);
+    });
 </script>
 
 <div class="filtros">
@@ -43,10 +163,9 @@
     <div class="filtro border-bottom pt-0">
         <h4>Especialidades</h4>
         <Svelecte
-            {options}
+            options={especialidades}
             {labelAsValue}
-            bind:readSelection={selection}
-            bind:value
+            bind:readSelection={especialidadesSeleccionadas}
             multiple
             highlightFirstItem={false}
             placeholder="Selecciona una o varias"
@@ -55,10 +174,9 @@
     <div class="filtro border-bottom">
         <h4>Comunidades</h4>
         <Svelecte
-            {options}
+            options={comunidades}
             {labelAsValue}
-            bind:readSelection={selection}
-            bind:value
+            bind:readSelection={comunidadesSeleccionadas}
             multiple
             highlightFirstItem={false}
             placeholder="Selecciona una o varias"
@@ -70,7 +188,6 @@
             {options}
             {labelAsValue}
             bind:readSelection={selection}
-            bind:value
             multiple
             highlightFirstItem={false}
             placeholder="Selecciona una o varias"
