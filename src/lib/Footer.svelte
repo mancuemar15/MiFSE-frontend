@@ -1,6 +1,36 @@
 <script>
     import { Link } from "svelte-navigator";
     import logoMifse from "../assets/logo-mifse.svg";
+
+    const opcionesFooter = [
+        {
+            titulo: "Links útiles",
+            enlaces: [
+                { texto: "Inicio", ruta: "/" },
+                { texto: "Valores", ruta: "/" },
+                { texto: "Características", ruta: "/" },
+                { texto: "FAQs", ruta: "/" },
+                { texto: "Contacto", ruta: "/" },
+                { texto: "Últimas posiciones", ruta: "/ultimas-posiciones" },
+                {
+                    texto: "Política de privacidad",
+                    ruta: "/politica-privacidad",
+                },
+            ],
+        },
+        {
+            titulo: "Haz tu lista",
+            enlaces: [
+                { texto: "Biología", ruta: "/lista/biologia" },
+                { texto: "Enfermería", ruta: "/lista/enfermeria" },
+                { texto: "Farmacia", ruta: "/lista/farmacia" },
+                { texto: "Física", ruta: "/lista/fisica" },
+                { texto: "Medicina", ruta: "/lista/medicina" },
+                { texto: "Psicología", ruta: "/lista/psicologia" },
+                { texto: "Química", ruta: "/lista/quimica" },
+            ],
+        },
+    ];
 </script>
 
 <footer id="footer" class="footer">
@@ -24,77 +54,19 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 col-xl-2 col-6 footer-links">
-                    <h4>Links útiles</h4>
-                    <ul>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/">Inicio</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/">Valores</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/">Características</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/">FAQs</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/">Contacto</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/ultimas-posiciones"
-                                >Últimas posiciones</Link
-                            >
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/politica-privacidad"
-                                >Política de privacidad</Link
-                            >
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-md-3 col-xl-2 col-6 footer-links">
-                    <h4>Haz tu lista</h4>
-                    <ul>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/biologia">Biologia</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/enfermeria">Enfermería</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/farmacia">Farmacia</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/fisica">Física</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/medicina">Medicina</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/psicologia">Psicología</Link>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right" />
-                            <Link to="/lista/quimica">Química</Link>
-                        </li>
-                    </ul>
-                </div>
+                {#each opcionesFooter as opcion}
+                    <div class="col-md-3 col-xl-2 col-6 footer-links">
+                        <h4>{opcion.titulo}</h4>
+                        <ul>
+                            {#each opcion.enlaces as enlace}
+                                <li>
+                                    <i class="bi bi-chevron-right" />
+                                    <Link to={enlace.ruta}>{enlace.texto}</Link>
+                                </li>
+                            {/each}
+                        </ul>
+                    </div>
+                {/each}
             </div>
         </div>
     </div>
