@@ -183,17 +183,6 @@
         />
     </div>
     <div class="filtro border-bottom">
-        <h4>Provincias</h4>
-        <Svelecte
-            {options}
-            {labelAsValue}
-            bind:readSelection={selection}
-            multiple
-            highlightFirstItem={false}
-            placeholder="Selecciona una o varias"
-        />
-    </div>
-    <div class="filtro border-bottom">
         <h4>Necesidad de coche</h4>
         <div class="form-check">
             <input
