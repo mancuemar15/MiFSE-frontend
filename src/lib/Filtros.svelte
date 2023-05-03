@@ -1,4 +1,5 @@
 <script>
+    //@ts-nocheck
     import RangeSlider from "svelte-range-slider-pips";
     import Svelecte from "svelecte";
     import { onMount } from "svelte";
@@ -8,13 +9,22 @@
 
     let tiposTrabajoFinResidencia = [];
     let tiposGuardiasFindesFestivos = [];
-
     let especialidades = [];
-    let especialidadesSeleccionadas = [];
     let comunidades = [];
-    let comunidadesSeleccionadas = [];
     let necesidadCoche = null;
+    let hayClases = null;
+    let hayExamenes = null;
+    let hayRotacionesExternas = null;
+
+    let especialidadesSeleccionadas = [];
+    let comunidadesSeleccionadas = [];
+    let valoracionesSeleccionadas = [0, 5];
     let diasVacacionesSeleccionados = [0, 30];
+    let tiposTrabajoFinResidenciaSeleccionados = [];
+    let tiposGuardiasFindesFestivosSeleccionados = [];
+    let diasLibreDisposicionSeleccionados = [0, 7];
+    let numerosGuardiasMesSeleccionados = [0, 10];
+    let sueldosSeleccionados = [1000, 2000];
 
     const getTiposTrabajoFinResidencia = async () => {
         const response = await fetch(`http://localhost:8090/tipos-trabajos`);
@@ -33,27 +43,17 @@
 
     let labelAsValue = false;
 
-    function cumpleFiltros(centro) {
-        const cumpleEspecialidades =
-            especialidadesSeleccionadas.length === 0 ||
-            especialidadesSeleccionadas.some((especialidad) => {
-                return (
-                    JSON.stringify(centro.especialidad) ===
-                    JSON.stringify(especialidad)
+    function handleTipoTrabajoFinResidenciaSeleccionado(event) {
+        const tipoTrabajo = parseInt(event.target.value);
+        if (event.target.checked) {
+            tiposTrabajoFinResidenciaSeleccionados.push(tipoTrabajo);
+        } else {
+            tiposTrabajoFinResidenciaSeleccionados =
+                tiposTrabajoFinResidenciaSeleccionados.filter(
+                    (tipo) => tipo !== tipoTrabajo
                 );
-            });
-        const cumpleComunidades =
-            comunidadesSeleccionadas.length === 0 ||
-            comunidadesSeleccionadas.some((comunidad) => {
-                return (
-                    JSON.stringify(
-                        centro.centro.localidad.provincia.autonomia
-                    ) === JSON.stringify(comunidad)
-                );
-            });
-        return cumpleEspecialidades && cumpleComunidades;
+        }
     }
-
     $: if (centros) {
         especialidades = [];
         // especialidadesSeleccionadas = [];
@@ -85,46 +85,6 @@
         });
     }
 
-    // $: centrosFiltrados = centros.filter((centro) => {
-    //     return (
-    //         especialidadesSeleccionadas.some((especialidad) => {
-    //             return (
-    //                 JSON.stringify(centro.especialidad) ===
-    //                 JSON.stringify(especialidad)
-    //             );
-    //         }) &&
-    //         comunidadesSeleccionadas.some((comunidad) => {
-    //             return (
-    //                 JSON.stringify(
-    //                     centro.centro.localidad.provincia.autonomia
-    //                 ) === JSON.stringify(comunidad)
-    //             );
-    //         })
-    //     );
-    // });
-
-    // $: centrosFiltrados = centros.filter((centro) => {
-    //     // Filtrar por especialidades seleccionadas
-    //     const especialidadesDelCentro = {
-    //         id: centro.especialidad.id,
-    //         nombre: centro.especialidad.nombre,
-    //     };
-    //     const especialidadSeleccionada = especialidadesSeleccionadas.some(
-    //         (e) => JSON.stringify(e) === JSON.stringify(especialidadesDelCentro)
-    //     );
-
-    //     // Filtrar por comunidades seleccionadas
-    //     const comunidadDelCentro = {
-    //         id: centro.centro.localidad.provincia.autonomia.id,
-    //         nombre: centro.centro.localidad.provincia.autonomia.nombre,
-    //     };
-    //     const comunidadSeleccionada = comunidadesSeleccionadas.some(
-    //         (c) => JSON.stringify(c) === JSON.stringify(comunidadDelCentro)
-    //     );
-
-    //     return especialidadSeleccionada && comunidadSeleccionada;
-    // });
-
     $: centrosFiltrados = centros.filter((centro) => {
         const cumpleEspecialidades =
             especialidadesSeleccionadas.length === 0 ||
@@ -143,22 +103,68 @@
                     ) === JSON.stringify(comunidad)
                 );
             });
+        const cumpleValoraciones =
+            centro.centro.valoracionMedia >= valoracionesSeleccionadas[0] &&
+            centro.centro.valoracionMedia <= valoracionesSeleccionadas[1];
         const cumpleNecesidadCoche =
             necesidadCoche === null || centro.necesidadCoche === necesidadCoche;
+        const cumpleHayClases =
+            hayClases === null || centro.hayClases === hayClases;
+        const cumpleHayExamenes =
+            hayExamenes === null || centro.hayExamenes === hayExamenes;
+        const cumpleHayRotacionesExternas =
+            hayRotacionesExternas === null ||
+            centro.hayRotacionesExternas === hayRotacionesExternas;
+        const cumpleTipoTrabajoFinResidencia =
+            tiposTrabajoFinResidenciaSeleccionados.length === 0 ||
+            tiposTrabajoFinResidenciaSeleccionados.every((valor) => !valor) ||
+            tiposTrabajoFinResidenciaSeleccionados.some(
+                (estaSeleccionado, index) => {
+                    return estaSeleccionado
+                        ? index === centro.tipoGuardiasFindesFestivos.id
+                        : false;
+                }
+            );
+        const cumpleTipoGuardiasFindesFestivos =
+            tiposGuardiasFindesFestivosSeleccionados.length === 0 ||
+            tiposGuardiasFindesFestivosSeleccionados.every((valor) => !valor) ||
+            tiposGuardiasFindesFestivosSeleccionados.some(
+                (estaSeleccionado, index) => {
+                    return estaSeleccionado
+                        ? index === centro.tipoGuardiasFindesFestivos.id
+                        : false;
+                }
+            );
         const cumpleDiasVacaciones =
             centro.numeroDiasVacaciones >= diasVacacionesSeleccionados[0] &&
             centro.numeroDiasVacaciones <= diasVacacionesSeleccionados[1];
+        const cumpleDiasLibreDispocision =
+            centro.numeroDiasLibreDisposicion >=
+                diasLibreDisposicionSeleccionados[0] &&
+            centro.numeroDiasLibreDisposicion <=
+                diasLibreDisposicionSeleccionados[1];
+        const cumpleNumerosGuardiasMes =
+            centro.numeroGuardiasMes >= numerosGuardiasMesSeleccionados[0] &&
+            centro.numeroGuardiasMes <= numerosGuardiasMesSeleccionados[1];
+        const cumpleSueldos =
+            centro.sueldo >= sueldosSeleccionados[0] &&
+            centro.sueldo <= sueldosSeleccionados[1];
         return (
             cumpleEspecialidades &&
             cumpleComunidades &&
+            cumpleValoraciones &&
             cumpleNecesidadCoche &&
-            cumpleDiasVacaciones
+            cumpleHayClases &&
+            cumpleHayExamenes &&
+            cumpleHayRotacionesExternas &&
+            cumpleDiasVacaciones &&
+            cumpleTipoTrabajoFinResidencia &&
+            cumpleDiasLibreDispocision &&
+            cumpleNumerosGuardiasMes &&
+            cumpleSueldos &&
+            cumpleTipoGuardiasFindesFestivos
         );
     });
-
-    // $: centrosFiltrados = centros.filter((centro) => {
-    //     return cumpleFiltros(centro);
-    // });
 </script>
 
 <div class="filtros">
@@ -186,12 +192,28 @@
         />
     </div>
     <div class="filtro border-bottom">
+        <h4>Valoración del centro</h4>
+        <RangeSlider
+            range
+            step={0.5}
+            min={0}
+            max={5}
+            values={[0, 5]}
+            float={true}
+            pips
+            all={false}
+            first="label"
+            last="label"
+            id="range-valoracion-centro"
+        />
+    </div>
+    <div class="filtro border-bottom">
         <h4>Necesidad de coche</h4>
         <div class="form-check">
             <input
                 class="form-check-input"
                 type="radio"
-                name="necesidad-coche"
+                name="necesidadCoche"
                 id="radio-necesidad-coche-no"
                 on:click={() => (necesidadCoche = false)}
             />
@@ -203,7 +225,7 @@
             <input
                 class="form-check-input"
                 type="radio"
-                name="necesidad-coche"
+                name="necesidadCoche"
                 id="radio-necesidad-coche-si"
                 on:click={() => (necesidadCoche = true)}
             />
@@ -215,11 +237,132 @@
             <input
                 class="form-check-input"
                 type="radio"
-                name="necesidad-coche"
+                name="necesidadCoche"
                 id="radio-necesidad-coche-nulo"
                 on:click={() => (necesidadCoche = null)}
             />
             <label class="form-check-label" for="radio-necesidad-coche-nulo">
+                Indiferente
+            </label>
+        </div>
+    </div>
+
+    <div class="filtro border-bottom">
+        <h4>Clases</h4>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayClases"
+                value="0"
+                id="radio-clases-no"
+                on:click={() => (hayClases = false)}
+            />
+            <label class="form-check-label" for="radio-clases-no"> No </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayClases"
+                value="1"
+                id="radio-clases-si"
+                on:click={() => (hayClases = true)}
+            />
+            <label class="form-check-label" for="radio-clases-si"> Sí </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayClases"
+                id="radio-clases-nulo"
+                on:click={() => (hayClases = null)}
+            />
+            <label class="form-check-label" for="radio-clases-nulo"
+                >Indiferente</label
+            >
+        </div>
+    </div>
+    <div class="filtro border-bottom">
+        <h4>Exámenes</h4>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayExamenes"
+                value="0"
+                id="radio-examenes-no"
+                on:click={() => (hayExamenes = false)}
+            />
+            <label class="form-check-label" for="radio-examenes-no"> No </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayExamenes"
+                value="1"
+                id="radio-examenes-si"
+                on:click={() => (hayExamenes = true)}
+            />
+            <label class="form-check-label" for="radio-examenes-si"> Sí </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayExamenes"
+                value=""
+                id="radio-examenes-nulo"
+                on:click={() => (hayExamenes = null)}
+            />
+            <label class="form-check-label" for="radio-examenes-nulo">
+                Indiferente
+            </label>
+        </div>
+    </div>
+    <div class="filtro border-bottom">
+        <h4>Rotaciones externas</h4>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayRotacionesExternas"
+                value="0"
+                id="radio-rotaciones-externas-no"
+                on:click={() => (hayRotacionesExternas = false)}
+            />
+            <label class="form-check-label" for="radio-rotaciones-externas-no">
+                No
+            </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayRotacionesExternas"
+                value="1"
+                id="radio-rotaciones-externas-si"
+                on:click={() => (hayRotacionesExternas = true)}
+            />
+            <label class="form-check-label" for="radio-rotaciones-externas-si">
+                Sí
+            </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="hayRotacionesExternas"
+                value=""
+                id="radio-rotaciones-externas-nulo"
+                on:click={() => (hayRotacionesExternas = null)}
+            />
+            <label
+                class="form-check-label"
+                for="radio-rotaciones-externas-nulo"
+            >
                 Indiferente
             </label>
         </div>
@@ -232,6 +375,9 @@
                     class="form-check-input"
                     type="checkbox"
                     value={tipoTrabajoFinResidencia.id}
+                    bind:checked={tiposTrabajoFinResidenciaSeleccionados[
+                        tipoTrabajoFinResidencia.id
+                    ]}
                     id="check-tipo-trabajo-{tipoTrabajoFinResidencia.id}"
                 />
                 <label
@@ -242,48 +388,6 @@
                 </label>
             </div>
         {/each}
-    </div>
-    <div class="filtro border-bottom">
-        <h4>Clases</h4>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                value="0"
-                id="check-clases-no"
-            />
-            <label class="form-check-label" for="check-clases-no"> No </label>
-        </div>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                value="1"
-                id="check-clases-si"
-            />
-            <label class="form-check-label" for="check-clases-si"> Sí </label>
-        </div>
-    </div>
-    <div class="filtro border-bottom">
-        <h4>Exámenes</h4>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                value="0"
-                id="check-examenes-no"
-            />
-            <label class="form-check-label" for="check-examenes-no"> No </label>
-        </div>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                value="1"
-                id="check-examenes-si"
-            />
-            <label class="form-check-label" for="check-examenes-si"> Sí </label>
-        </div>
     </div>
     <div class="filtro border-bottom">
         <h4>Días de vacaciones</h4>
@@ -318,6 +422,9 @@
             first="label"
             last="label"
             id="range-dias-libre-disposicion"
+            on:stop={(e) => {
+                diasLibreDisposicionSeleccionados = e.detail.values;
+            }}
         />
     </div>
     <div class="filtro border-bottom">
@@ -334,6 +441,9 @@
             first="label"
             last="label"
             id="range-numero-guardias"
+            on:stop={(e) => {
+                numerosGuardiasMesSeleccionados = e.detail.values;
+            }}
         />
     </div>
     <div class="filtro border-bottom">
@@ -344,6 +454,9 @@
                     class="form-check-input"
                     type="checkbox"
                     value={tipoGuardia.id}
+                    bind:checked={tiposGuardiasFindesFestivosSeleccionados[
+                        tipoGuardia.id
+                    ]}
                     id="check-tipo-guardia-{tipoGuardia.id}"
                 />
                 <label
@@ -355,31 +468,7 @@
             </div>
         {/each}
     </div>
-    <div class="filtro border-bottom">
-        <h4>Rotaciones externas</h4>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                value="0"
-                id="check-rotaciones-externas-no"
-            />
-            <label class="form-check-label" for="check-rotaciones-externas-no">
-                No
-            </label>
-        </div>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                value="1"
-                id="check-rotaciones-externas-si"
-            />
-            <label class="form-check-label" for="check-rotaciones-externas-si">
-                Sí
-            </label>
-        </div>
-    </div>
+
     <div class="filtro">
         <h4>Sueldo</h4>
         <RangeSlider
@@ -395,6 +484,9 @@
             last="label"
             suffix="€"
             id="range-sueldo"
+            on:stop={(e) => {
+                sueldosSeleccionados = e.detail.values;
+            }}
         />
     </div>
 </div>
@@ -411,21 +503,6 @@
         margin-bottom: 20px;
         padding-bottom: 20px;
         border-bottom: 1px solid #eee;
-    }
-
-    .filtros ul {
-        list-style: none;
-        margin-bottom: 0;
-        font-size: 15px;
-        padding-left: 8%;
-    }
-
-    .filtros > ul {
-        padding: 0;
-    }
-
-    .filtros ul li + li {
-        margin-top: 10px;
     }
 
     .filtro {

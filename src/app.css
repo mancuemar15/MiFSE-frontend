@@ -97,6 +97,7 @@ form label {
 
 .sv-dropdown {
   bottom: auto !important;
+  z-index: 100 !important;
 }
 
 .svelecte-control .has-multiSelection .sv-item-content {
