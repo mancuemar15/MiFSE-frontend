@@ -555,7 +555,6 @@
             box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
             position: relative;
             display: block;
-            transition: 1s;
             z-index: 15 !important;
         }
 
