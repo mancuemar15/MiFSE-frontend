@@ -74,6 +74,16 @@ section {
   color: #4154f1 !important;
 }
 
+.bloque-usuario-no-login>p {
+  font-size: 16px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.bloque-usuario-no-login .botones-usuario-anonimo {
+  gap: 15px;
+}
+
 form label {
   font-family: "Nunito", sans-serif;
 }

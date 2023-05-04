@@ -3,9 +3,10 @@
     import RangeSlider from "svelte-range-slider-pips";
     import Svelecte from "svelecte";
     import { onMount } from "svelte";
+    import { centrosFiltrados, centrosSeleccionados } from "./store";
 
     export let centros;
-    export let centrosFiltrados = [];
+    export let titulacion;
 
     let tiposTrabajoFinResidencia = [];
     let tiposGuardiasFindesFestivos = [];
@@ -43,17 +44,6 @@
 
     let labelAsValue = false;
 
-    function handleTipoTrabajoFinResidenciaSeleccionado(event) {
-        const tipoTrabajo = parseInt(event.target.value);
-        if (event.target.checked) {
-            tiposTrabajoFinResidenciaSeleccionados.push(tipoTrabajo);
-        } else {
-            tiposTrabajoFinResidenciaSeleccionados =
-                tiposTrabajoFinResidenciaSeleccionados.filter(
-                    (tipo) => tipo !== tipoTrabajo
-                );
-        }
-    }
     $: if (centros) {
         especialidades = [];
         // especialidadesSeleccionadas = [];
@@ -85,7 +75,7 @@
         });
     }
 
-    $: centrosFiltrados = centros.filter((centro) => {
+    $: $centrosFiltrados = centros.filter((centro) => {
         const cumpleEspecialidades =
             especialidadesSeleccionadas.length === 0 ||
             especialidadesSeleccionadas.some((especialidad) => {
@@ -149,6 +139,14 @@
         const cumpleSueldos =
             centro.sueldo >= sueldosSeleccionados[0] &&
             centro.sueldo <= sueldosSeleccionados[1];
+        const estaSeleccionado = $centrosSeleccionados[titulacion].some(
+            (centroSeleccionado) => {
+                return (
+                    JSON.stringify(centroSeleccionado) ===
+                    JSON.stringify(centro)
+                );
+            }
+        );
         return (
             cumpleEspecialidades &&
             cumpleComunidades &&
@@ -162,7 +160,8 @@
             cumpleDiasLibreDispocision &&
             cumpleNumerosGuardiasMes &&
             cumpleSueldos &&
-            cumpleTipoGuardiasFindesFestivos
+            cumpleTipoGuardiasFindesFestivos &&
+            !estaSeleccionado
         );
     });
 </script>
