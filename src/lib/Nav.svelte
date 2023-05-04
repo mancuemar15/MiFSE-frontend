@@ -67,6 +67,7 @@
             aria-controls="contenidoNavbar"
             aria-expanded="false"
             aria-label="Cambiar navegación"
+            class:collapsed={$location.pathname.includes("/")}
         >
             <span class="toggler-icon linea-superior" />
             <span class="toggler-icon linea-media" />
@@ -75,6 +76,7 @@
         <div
             class="collapse navbar-collapse justify-content-lg-between"
             id="contenidoNavbar"
+            class:show={!$location.pathname.includes("/")}
         >
             <ul class="navbar-nav pt-2 px-3 pb-0 mx-3 mt-4 mb-0 my-lg-0 p-lg-0">
                 {#each opcionesNav as opcionNav}
@@ -335,7 +337,7 @@
         .navbar .dropdown:hover > ul {
             opacity: 1;
             top: 85%;
-            visibility: visible;
+            visibility: visible !important;
         }
 
         .dropdown-usuario:hover > ul {
