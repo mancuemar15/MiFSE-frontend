@@ -164,10 +164,30 @@
             !estaSeleccionado
         );
     });
+
+    function abrirMenuFiltros() {
+        const filtros = document.querySelector(".filtros");
+        filtros.classList.add("d-block");
+    }
+
+    function cerrarMenuFiltros() {
+        const filtros = document.querySelector(".filtros");
+        filtros.classList.remove("d-block");
+    }
 </script>
 
-<div class="filtros">
-    <h3>Filtros</h3>
+<div class="text-center d-lg-none">
+    <button class="boton-azul" on:click={abrirMenuFiltros}>Filtros</button>
+</div>
+<div class="filtros pt-2">
+    <div
+        id="cabecera-menu-movil"
+        class="d-flex justify-content-between d-lg-none sticky-top bg-white pt-4"
+    >
+        <h3>Filtros</h3>
+        <button class="btn-close" on:click={cerrarMenuFiltros} />
+    </div>
+    <h3 class="d-none d-lg-block">Filtros</h3>
     <div class="filtro border-bottom pt-0">
         <h4>Especialidades</h4>
         <Svelecte
@@ -491,17 +511,26 @@
 </div>
 
 <style>
+    #cabecera-menu-movil {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
     .filtros {
         padding: 30px;
-        box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+        position: absolute;
+        background-color: white;
+        z-index: 30;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: none;
     }
 
     .filtros h3 {
         font-size: 22px;
         font-weight: 700;
-        margin-bottom: 20px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #eee;
     }
 
     .filtro {
@@ -518,5 +547,22 @@
     .form-check-label {
         font-size: 15px;
         font-weight: 400;
+    }
+
+    @media (min-width: 992px) {
+        .filtros {
+            padding-top: 30px !important;
+            box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+            position: relative;
+            display: block;
+            transition: 1s;
+            z-index: 15 !important;
+        }
+
+        .filtros h3 {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
     }
 </style>

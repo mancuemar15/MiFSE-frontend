@@ -225,6 +225,10 @@
         transition: 0.25s;
     }
 
+    .fixed-top {
+        z-index: 20 !important;
+    }
+
     :global(.navbar a, .navbar button) {
         font-family: "Nunito", sans-serif;
         font-size: 16px;
@@ -328,7 +332,7 @@
             display: block;
             position: absolute;
             top: calc(100% + 30px);
-            z-index: 50;
+            z-index: 100;
             opacity: 0;
             visibility: hidden;
             transition: 0.3s;
