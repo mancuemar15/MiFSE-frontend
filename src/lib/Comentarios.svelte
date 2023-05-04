@@ -68,18 +68,23 @@
                     >
                 </form>
             {:else}
-                <p>Para poder comentar debes iniciar sesión o registrarte.</p>
-                <div
-                    class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
-                >
-                    <button
-                        class="btn btn-primary boton-azul"
-                        on:click={abrirModalInicioSesion}>Iniciar sesión</button
+                <div class="bloque-usuario-no-login">
+                    <p>
+                        Para poder comentar debes iniciar sesión o registrarte.
+                    </p>
+                    <div
+                        class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
                     >
-                    <button
-                        class="btn btn-primary boton-azul"
-                        on:click={abrirModalRegistro}>Registrarse</button
-                    >
+                        <button
+                            class="btn btn-primary boton-azul"
+                            on:click={abrirModalInicioSesion}
+                            >Iniciar sesión</button
+                        >
+                        <button
+                            class="btn btn-primary boton-azul"
+                            on:click={abrirModalRegistro}>Registrarse</button
+                        >
+                    </div>
                 </div>
             {/if}
         </div>
@@ -129,9 +134,5 @@
 
     .blog-comments .reply-form .form-group {
         margin-bottom: 25px;
-    }
-
-    .botones-usuario-anonimo {
-        gap: 15px;
     }
 </style>
