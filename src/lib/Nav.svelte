@@ -242,7 +242,7 @@
             .navbar *[className="activo"],
             .navbar li:hover > a
         ),
-    .navbar button:hover,
+    .navbar button:not(.boton-empezar):hover,
     .navbar button.activo {
         color: #4154f1 !important;
     }
