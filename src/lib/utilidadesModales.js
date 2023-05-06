@@ -1,6 +1,7 @@
 import { closeModal, openModal } from "svelte-modals";
 import ModalRegistro from "./ModalRegistro.svelte";
 import ModalInicioSesion from "./ModalInicioSesion.svelte";
+import ModalLista from "./ModalLista.svelte";
 
 function abrirModalRegistro() {
     openModal(ModalRegistro, {
@@ -20,4 +21,8 @@ function abrirModalInicioSesion() {
     });
 }
 
-export { abrirModalRegistro, abrirModalInicioSesion };
+function abrirModalLista(lista) {
+    openModal(ModalLista, { lista });
+}
+
+export { abrirModalRegistro, abrirModalInicioSesion, abrirModalLista };

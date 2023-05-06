@@ -2,13 +2,18 @@
     import { onMount } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Filtros from "./Filtros.svelte";
+    import { getNotificationsContext } from "svelte-notifications";
     import { usuario, centrosFiltrados, centrosSeleccionados } from "./store";
+    import { get } from "svelte/store";
     import {
         abrirModalInicioSesion,
+        abrirModalLista,
         abrirModalRegistro,
     } from "./utilidadesModales";
 
     export let nombre;
+
+    const { addNotification } = getNotificationsContext();
 
     const titulacionesConTildes = {
         biologia: "biología",
@@ -62,6 +67,32 @@
                 );
             }
         );
+    }
+
+    async function guardarLista() {
+        $usuario = await $usuario;
+        const preferencias = $centrosSeleccionados[nombre].map(
+            (c, posicion) => {
+                return {
+                    especialidadCentro: {
+                        especialidad: { id: c.especialidad.id },
+                        centro: { id: c.centro.id },
+                    },
+                    numero: posicion + 1,
+                };
+            }
+        );
+
+        const lista = {
+            residente: {
+                id: $usuario.id,
+            },
+            fechaCreacion: new Date().toJSON(),
+            fechaActualizacion: new Date().toJSON(),
+            preferencias: preferencias,
+        };
+
+        abrirModalLista(lista);
     }
 </script>
 
@@ -226,7 +257,12 @@
                         <div class="col-12 text-center">
                             <div class="mt-3">
                                 {#if $usuario}
-                                    <button type="button" class="btn boton-azul"
+                                    <button
+                                        type="button"
+                                        class="btn boton-azul"
+                                        disabled={$centrosSeleccionados[nombre]
+                                            .length === 0}
+                                        on:click={guardarLista}
                                         >Guardar lista</button
                                     >
                                 {:else}
