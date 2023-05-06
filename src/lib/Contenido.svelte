@@ -6,6 +6,7 @@
     import { Modals } from "svelte-modals";
     import { fade } from "svelte/transition";
     import Filtrado from "./Filtrado.svelte";
+    import Preferencias from "./Preferencias.svelte";
 </script>
 
 <main>
@@ -13,6 +14,7 @@
     <Route path="/ultimas-posiciones" component={UltimasPosiciones} />
     <Route path="/centro/:id" component={Centro} />
     <Route path="/lista/:nombre" component={Filtrado} />
+    <Route path="/preferencias/lista/:id" component={Preferencias} />
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
