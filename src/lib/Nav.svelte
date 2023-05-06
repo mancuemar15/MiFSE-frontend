@@ -93,7 +93,7 @@
                             <button
                                 id="lista-dropdown"
                                 class="nav-link dropdown-toggle border-0 bg-white"
-                                class:activo={$location.pathname.includes(
+                                class:activo={$location.pathname.startsWith(
                                     "/lista"
                                 )}
                                 type="button"
