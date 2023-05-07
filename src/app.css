@@ -114,9 +114,42 @@ form label {
   white-space: break-spaces !important;
 }
 
+#grabbed {
+  cursor:grabbing !important;
+}
+
+.dragdroplist {}
+
+/* entire component */
+.dragdroplist>.list>div.item {
+}
+
+/* list item */
+.dragdroplist div.buttons>button.down {}
+
+/* move down button */
+.dragdroplist div.content {
+  width: inherit !important;
+}
+
+/* text/html contents of item */
+.dragdroplist div.buttons button {
+  font-family: revert !important;
+  font-size: revert !important;
+  line-height: revert !important;
+}
+
+.dragdroplist div.content p {
+  margin-top: revert !important;
+}
+
 @media (min-width: 768px) {
   .header-seccion p {
     font-size: 38px;
     line-height: 42px;
+  }
+  .dragdroplist div.buttons {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
   }
 }

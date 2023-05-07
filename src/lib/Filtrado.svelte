@@ -2,9 +2,7 @@
     import { onMount } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Filtros from "./Filtros.svelte";
-    import { getNotificationsContext } from "svelte-notifications";
     import { usuario, centrosFiltrados, centrosSeleccionados } from "./store";
-    import { get } from "svelte/store";
     import {
         abrirModalInicioSesion,
         abrirModalLista,
@@ -12,8 +10,6 @@
     } from "./utilidadesModales";
 
     export let nombre;
-
-    const { addNotification } = getNotificationsContext();
 
     const titulacionesConTildes = {
         biologia: "biología",
