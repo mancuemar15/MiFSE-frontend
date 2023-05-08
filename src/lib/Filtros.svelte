@@ -46,9 +46,7 @@
 
     $: if (centros) {
         especialidades = [];
-        // especialidadesSeleccionadas = [];
         comunidades = [];
-        // comunidadesSeleccionadas = [];
         centros.forEach((centro) => {
             const especialidad = {
                 id: centro.especialidad.id,
