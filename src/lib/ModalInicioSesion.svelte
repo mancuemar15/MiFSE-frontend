@@ -24,7 +24,7 @@
             },
             body: JSON.stringify(datos),
         })
-            .then((response) => {
+            .then(async (response) => {
                 if (response.ok) {
                     addNotification({
                         text: "Inicio de sesión correcto",
@@ -32,7 +32,8 @@
                         type: "success",
                         removeAfter: 4000,
                     });
-                    iniciarSesion(response.json());
+                    const usuario = await response.json();
+                    iniciarSesion(usuario);
                     closeModal();
                 } else {
                     addNotification({
