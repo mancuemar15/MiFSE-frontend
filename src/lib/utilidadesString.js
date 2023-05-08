@@ -1,5 +1,9 @@
-function capitalizar(frase) {
-  return frase.charAt(0).toUpperCase() + frase.slice(1).toLowerCase();
+function capitalizar(cadena) {
+  return cadena.charAt(0).toUpperCase() + cadena.slice(1).toLowerCase();
 }
 
-export { capitalizar };
+function quitarAcentos(cadena) {
+  return cadena.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+export { capitalizar, quitarAcentos };
