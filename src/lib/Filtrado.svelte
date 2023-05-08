@@ -3,14 +3,18 @@
     import TituloPagina from "./TituloPagina.svelte";
     import Filtros from "./Filtros.svelte";
     import { usuario, centrosFiltrados, centrosSeleccionados } from "./store";
+    import { getNotificationsContext } from "svelte-notifications";
+    import { navigate } from "svelte-navigator";
     import {
         abrirModalInicioSesion,
         abrirModalLista,
         abrirModalRegistro,
     } from "./utilidadesModales";
 
-    export let nombre;
+    export let titulacion;
+    export let id;
 
+    const { addNotification } = getNotificationsContext();
     const titulacionesConTildes = {
         biologia: "biología",
         enfermeria: "enfermería",
@@ -21,27 +25,39 @@
 
     let centros = [];
 
-    const getCentros = async () => {
+    const getCentrosPorTitulacion = async () => {
         const response = await fetch(
-            `http://localhost:8090/especialidades-centros/${nombre}`
+            `http://localhost:8090/especialidades-centros/${titulacion}`
         );
         centros = await response.json();
     };
 
+    const getCentrosSeleccionadosPorIdLista = async () => {
+        const response = await fetch(
+            `http://localhost:8090/especialidades-centros/lista/${id}`
+        );
+        $centrosSeleccionados[titulacion] = await response.json();
+    };
+
     onMount(() => {
-        getCentros();
-        $centrosSeleccionados[nombre] = $centrosSeleccionados[nombre] || [];
+        if (id) {
+            getCentrosSeleccionadosPorIdLista();
+        }
+        getCentrosPorTitulacion();
+        $centrosSeleccionados[titulacion] =
+            $centrosSeleccionados[titulacion] || [];
     });
 
-    $: if (nombre) {
-        getCentros();
-        $centrosSeleccionados[nombre] = $centrosSeleccionados[nombre] || [];
+    $: if (titulacion) {
+        getCentrosPorTitulacion();
+        $centrosSeleccionados[titulacion] =
+            $centrosSeleccionados[titulacion] || [];
     }
 
     function agregarCentro(e, centro) {
         e.target.checked = false;
-        $centrosSeleccionados[nombre] = [
-            ...$centrosSeleccionados[nombre],
+        $centrosSeleccionados[titulacion] = [
+            ...$centrosSeleccionados[titulacion],
             centro,
         ];
         $centrosFiltrados = $centrosFiltrados.filter((c) => {
@@ -55,19 +71,19 @@
     function quitarCentro(e, centro) {
         e.target.checked = true;
         $centrosFiltrados = [...$centrosFiltrados, centro];
-        $centrosSeleccionados[nombre] = $centrosSeleccionados[nombre].filter(
-            (c) => {
-                return (
-                    c.centro.id !== centro.centro.id ||
-                    c.especialidad.id !== centro.especialidad.id
-                );
-            }
-        );
+        $centrosSeleccionados[titulacion] = $centrosSeleccionados[
+            titulacion
+        ].filter((c) => {
+            return (
+                c.centro.id !== centro.centro.id ||
+                c.especialidad.id !== centro.especialidad.id
+            );
+        });
     }
 
     async function guardarLista() {
         $usuario = await $usuario;
-        const preferencias = $centrosSeleccionados[nombre].map(
+        const preferencias = $centrosSeleccionados[titulacion].map(
             (c, posicion) => {
                 return {
                     especialidadCentro: {
@@ -79,33 +95,63 @@
             }
         );
 
-        const lista = {
+        let lista = {
             residente: {
                 id: $usuario.id,
             },
-            fechaCreacion: new Date().toJSON(),
             fechaActualizacion: new Date().toJSON(),
             preferencias: preferencias,
         };
 
-        abrirModalLista(lista);
+        if (!id) {
+            lista.fechaCreacion = new Date().toJSON();
+            abrirModalLista(lista);
+        } else {
+            lista.id = parseInt(id);
+            console.log(lista);
+            const response = await fetch(`http://localhost:8090/listas`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(lista),
+            });
+            if (response.ok) {
+                addNotification({
+                    text: "La lista de centros se ha guardado correctamente",
+                    position: "top-right",
+                    type: "success",
+                    removeAfter: 4000,
+                });
+                const respuesta = await response.json();
+                navigate(`/preferencias/lista/${respuesta.id}`);
+            } else {
+                addNotification({
+                    text: "Ha ocurrido un error al guardar la lista de centros",
+                    position: "top-right",
+                    type: "error",
+                    removeAfter: 4000,
+                });
+            }
+        }
     }
+    $: console.log("centrosSeleccionados", $centrosSeleccionados[titulacion]);
 </script>
 
-{#key nombre}
+{#key titulacion}
     <TituloPagina
         seccion="Lista"
-        titulo="Lista de {titulacionesConTildes[nombre] || nombre}"
+        titulo="Lista de {titulacionesConTildes[titulacion] || titulacion}"
     />
     <section class="filtrado">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4">
-                    <Filtros {centros} titulacion={nombre} />
+                    <Filtros {centros} {titulacion} />
                 </div>
                 <div class="col-lg-8">
                     <div class="row gy-2">
-                        {#await getCentros()}
+                        {#await getCentrosPorTitulacion()}
                             <div class="col-12 text-center">
                                 <div
                                     class="spinner-border text-primary"
@@ -186,30 +232,33 @@
                                     Centros seleccionados
                                 </h3>
                             </div>
-                            {#if $centrosSeleccionados[nombre].length > 0}
-                                {#each $centrosSeleccionados[nombre] as centro}
-                                    <div class="col-12 centro-seleccionado p-0">
+                            {#if $centrosSeleccionados[titulacion].length > 0}
+                                {#each $centrosSeleccionados[titulacion] as especialidadCentro}
+                                    <div
+                                        class="col-12 especialidadCentro-seleccionado p-0"
+                                    >
                                         <div class="blog-author">
                                             <div
                                                 class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between"
                                             >
                                                 <label
                                                     class="form-check-label"
-                                                    for="check-{centro
+                                                    for="check-{especialidadCentro
                                                         .especialidad
-                                                        .id}-{centro.centro.id}"
+                                                        .id}-{especialidadCentro
+                                                        .centro.id}"
                                                 >
                                                     <div class="text-start">
                                                         <h4>
-                                                            {centro.centro
-                                                                .nombre}
+                                                            {especialidadCentro
+                                                                .centro.nombre}
                                                         </h4>
                                                         <div
                                                             class="social-links"
                                                         >
                                                             <span
                                                                 class="text-muted fst-italic"
-                                                                >{centro
+                                                                >{especialidadCentro
                                                                     .especialidad
                                                                     .nombre}</span
                                                             >
@@ -220,19 +269,19 @@
                                                     <input
                                                         class="form-check-input"
                                                         type="checkbox"
-                                                        value="{centro
+                                                        value="{especialidadCentro
                                                             .especialidad
-                                                            .id}-{centro.centro
-                                                            .id}"
-                                                        id="check-{centro
+                                                            .id}-{especialidadCentro
+                                                            .centro.id}"
+                                                        id="check-{especialidadCentro
                                                             .especialidad
-                                                            .id}-{centro.centro
-                                                            .id}"
+                                                            .id}-{especialidadCentro
+                                                            .centro.id}"
                                                         checked
                                                         on:change={(e) =>
                                                             quitarCentro(
                                                                 e,
-                                                                centro
+                                                                especialidadCentro
                                                             )}
                                                     />
                                                 </div>
@@ -256,8 +305,9 @@
                                     <button
                                         type="button"
                                         class="btn boton-azul"
-                                        disabled={$centrosSeleccionados[nombre]
-                                            .length === 0}
+                                        disabled={$centrosSeleccionados[
+                                            titulacion
+                                        ].length === 0}
                                         on:click={guardarLista}
                                         >Guardar lista</button
                                     >
@@ -316,23 +366,23 @@
     }
 
     .centro,
-    .centro-seleccionado {
+    .especialidadCentro-seleccionado {
         cursor: pointer;
         transition: 0.4s;
     }
 
     .centro:hover,
-    .centro-seleccionado:hover {
+    .especialidadCentro-seleccionado:hover {
         transform: scale(1.01);
     }
 
     .centro label,
-    .centro-seleccionado label {
+    .especialidadCentro-seleccionado label {
         width: 100% !important;
         cursor: pointer;
     }
 
-    .centro-seleccionado {
+    .especialidadCentro-seleccionado {
         background-color: rgba(163, 189, 234, 0.3) !important;
     }
 

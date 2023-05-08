@@ -1,5 +1,5 @@
 <script>
-    import { useNavigate } from "svelte-navigator";
+    import { navigate } from "svelte-navigator";
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
     import { getNotificationsContext } from "svelte-notifications";
@@ -9,7 +9,6 @@
     export let lista;
 
     const { addNotification } = getNotificationsContext();
-    const navigate = useNavigate();
 
     function guardarLista(event) {
         event.preventDefault();

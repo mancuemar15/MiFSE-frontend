@@ -13,7 +13,8 @@
     <Route path="/" component={Inicio} />
     <Route path="/ultimas-posiciones" component={UltimasPosiciones} />
     <Route path="/centro/:id" component={Centro} />
-    <Route path="/lista/:nombre" component={Filtrado} />
+    <Route path="/lista/:titulacion" component={Filtrado} />
+    <Route path="/lista/:titulacion/:id" component={Filtrado} />
     <Route path="/preferencias/lista/:id" component={Preferencias} />
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />

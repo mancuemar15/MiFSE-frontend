@@ -80,7 +80,7 @@ section {
   color: #6c757d;
 }
 
-.bloque-usuario-no-login .botones-usuario-anonimo {
+.botones-usuario-anonimo {
   gap: 15px;
 }
 
@@ -115,24 +115,13 @@ form label {
 }
 
 #grabbed {
-  cursor:grabbing !important;
+  cursor: grabbing !important;
 }
 
-.dragdroplist {}
-
-/* entire component */
-.dragdroplist>.list>div.item {
-}
-
-/* list item */
-.dragdroplist div.buttons>button.down {}
-
-/* move down button */
 .dragdroplist div.content {
   width: inherit !important;
 }
 
-/* text/html contents of item */
 .dragdroplist div.buttons button {
   font-family: revert !important;
   font-size: revert !important;
@@ -148,6 +137,7 @@ form label {
     font-size: 38px;
     line-height: 42px;
   }
+
   .dragdroplist div.buttons {
     margin-left: 10px !important;
     margin-right: 10px !important;
