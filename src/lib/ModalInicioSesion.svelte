@@ -1,7 +1,7 @@
 <script>
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
-    import { usuario } from "./store";
+    import { iniciarSesion } from "./store";
     import { getNotificationsContext } from "svelte-notifications";
     import { closeModal } from "svelte-modals";
 
@@ -10,7 +10,7 @@
 
     const { addNotification } = getNotificationsContext();
 
-    function iniciarSesion(event) {
+    function enviarFormularioInicioSesion(event) {
         event.preventDefault();
         const formulario = event.target;
         const email = formulario.email.value;
@@ -32,7 +32,7 @@
                         type: "success",
                         removeAfter: 4000,
                     });
-                    $usuario = response.json();
+                    iniciarSesion(response.json());
                     closeModal();
                 } else {
                     addNotification({
@@ -83,7 +83,7 @@
                 <div class="modal-body">
                     <form
                         class="formulario-inicio-sesion"
-                        on:submit={iniciarSesion}
+                        on:submit={enviarFormularioInicioSesion}
                     >
                         <div class="row gy-3 gy-lg-4">
                             <div class="col-12 mt-0">

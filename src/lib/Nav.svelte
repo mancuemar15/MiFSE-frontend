@@ -2,7 +2,7 @@
     import { Link, useLocation } from "svelte-navigator";
     import mifseLogo from "../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
-    import { usuario } from "./store";
+    import { usuario, cerrarSesion } from "./store";
     import { abrirModalRegistro } from "./utilidadesModales";
 
     const opcionesNav = [
@@ -48,10 +48,6 @@
             navElement.classList.remove("navbar-scrolled");
         }
     });
-
-    function cerrarSesion() {
-        usuario.set(null);
-    }
 </script>
 
 <nav class="navbar navbar-expand-lg fixed-top">
