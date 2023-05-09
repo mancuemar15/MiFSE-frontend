@@ -8,6 +8,8 @@
     import Filtrado from "./Filtrado.svelte";
     import Preferencias from "./Preferencias.svelte";
     import Perfil from "./Perfil.svelte";
+    import RutaPrivada from "./RutaPrivada.svelte";
+    import NotFound from "./NotFound.svelte";
 </script>
 
 <main>
@@ -15,10 +17,17 @@
     <Route path="/ultimas-posiciones" component={UltimasPosiciones} />
     <Route path="/centro/:id" component={Centro} />
     <Route path="/lista/:titulacion" component={Filtrado} />
-    <Route path="/lista/:titulacion/:id" component={Filtrado} />
-    <Route path="/preferencias/lista/:id" component={Preferencias} />
-    <Route path="/perfil/*datos-personales" component={Perfil} />
+    <RutaPrivada path="/preferencias/lista/:id" let:params>
+        <Preferencias id={params.id} />
+    </RutaPrivada>
+    <RutaPrivada path="/perfil/*datos-personales">
+        <Perfil />
+    </RutaPrivada>
+    <RutaPrivada path="/lista/:titulacion/:id" let:params>
+        <Filtrado titulacion={params.titulacion} id={params.id} />
+    </RutaPrivada>
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
+    <Route path="*" component={NotFound} />
 </main>
