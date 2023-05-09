@@ -2,6 +2,8 @@
     import imagenInnovacion from "../assets/valores-innovacion.png";
     import imagenColaboracion from "../assets/valores-colaboracion.png";
     import imagenSatisfaccion from "../assets/valores-satisfaccion.png";
+
+    // export let registerFocus;
 </script>
 
 <section id="valores" class="valores">
