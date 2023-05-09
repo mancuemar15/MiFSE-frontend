@@ -2,6 +2,7 @@ import { closeModal, openModal } from "svelte-modals";
 import ModalRegistro from "./ModalRegistro.svelte";
 import ModalInicioSesion from "./ModalInicioSesion.svelte";
 import ModalLista from "./ModalLista.svelte";
+import ModalBorrarCuenta from "./ModalBorrarCuenta.svelte";
 
 function abrirModalRegistro() {
     openModal(ModalRegistro, {
@@ -25,4 +26,8 @@ function abrirModalLista(lista) {
     openModal(ModalLista, { lista });
 }
 
-export { abrirModalRegistro, abrirModalInicioSesion, abrirModalLista };
+function abrirModalBorrarCuenta() {
+    openModal(ModalBorrarCuenta);
+}
+
+export { abrirModalRegistro, abrirModalInicioSesion, abrirModalLista, abrirModalBorrarCuenta };

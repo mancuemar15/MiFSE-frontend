@@ -4,6 +4,7 @@
     import { Link } from "svelte-navigator";
 
     let listas = [];
+    let listasEditandose = [];
 
     const getListas = async () => {
         const url = `http://localhost:8090/listas/residente/${$usuario.id}`;
@@ -15,7 +16,6 @@
     onMount(() => {
         getListas();
     });
-    let editandoLista = [];
 
     const eliminarLista = (idLista) => {
         fetch(`http://localhost:8090/listas/${idLista}`, {
@@ -33,12 +33,12 @@
 
     const editarNombreLista = (idLista) => {
         document.getElementById(`nombre-lista-${idLista}`).disabled = false;
-        editandoLista[idLista] = true;
+        listasEditandose[idLista] = true;
     };
 
     const cambiarNombreLista = (idLista) => {
         document.getElementById(`nombre-lista-${idLista}`).disabled = true;
-        editandoLista[idLista] = false;
+        listasEditandose[idLista] = false;
         const lista = listas.find((l) => l.id === idLista);
         lista.nombre = document.getElementById(`nombre-lista-${idLista}`).value;
         fetch(`http://localhost:8090/listas`, {
@@ -61,8 +61,8 @@
 
 <div class="row gy-2">
     {#if listas.length === 0}
-        <div class="col-12">
-            <p class="text-center">No tienes listas creadas</p>
+        <div class="col-12 text-center">
+            <h3 class="text-center">No tienes listas creadas</h3>
         </div>
     {:else}
         {#each listas as lista}
@@ -79,7 +79,7 @@
                         />
                     </h4>
                     <div class="d-flex align-items-end botones ps-2">
-                        {#if editandoLista[lista.id]}
+                        {#if listasEditandose[lista.id]}
                             <button
                                 class="text-decoration-none bg-transparent border-0 d-flex"
                                 on:click={cambiarNombreLista(lista.id)}
@@ -171,5 +171,10 @@
 
     .material-symbols-outlined {
         font-variation-settings: "FILL" 1;
+    }
+
+    h3 {
+        color: #012970;
+        font-weight: 700;
     }
 </style>

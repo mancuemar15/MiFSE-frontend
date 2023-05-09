@@ -36,7 +36,7 @@
         const contrasena = formulario.contrasena.value;
         const titulacion = formulario.titulacion.value;
         const tipoResidente = formulario.tipoResidente.value;
-        const url = "http://localhost:8090/residentes";
+        const url = "http://localhost:8090/usuarios";
         const datos = {
             nombre,
             apellido1,
@@ -44,8 +44,8 @@
             email,
             contrasena,
             fechaAlta: new Date().toJSON(),
-            titulacion: { id: titulacion },
-            tipoResidente: { id: tipoResidente },
+            titulacion: { id: parseInt(titulacion) },
+            tipoResidente: { id: parseInt(tipoResidente) },
             tipoUsuario: { id: 2 },
         };
         console.log(JSON.stringify(datos));
