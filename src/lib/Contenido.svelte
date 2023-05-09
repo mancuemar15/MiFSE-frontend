@@ -29,5 +29,5 @@
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
-    <Route path="*" component={NotFound} />
+    <Route component={NotFound} />
 </main>
