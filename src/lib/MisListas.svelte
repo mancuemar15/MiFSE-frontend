@@ -1,0 +1,175 @@
+<script>
+    import { onMount } from "svelte";
+    import { usuario } from "./store";
+    import { Link } from "svelte-navigator";
+
+    let listas = [];
+
+    const getListas = async () => {
+        const url = `http://localhost:8090/listas/residente/${$usuario.id}`;
+        const response = await fetch(url);
+        listas = await response.json();
+        console.log(listas);
+    };
+
+    onMount(() => {
+        getListas();
+    });
+    let editandoLista = [];
+
+    const eliminarLista = (idLista) => {
+        fetch(`http://localhost:8090/listas/${idLista}`, {
+            method: "DELETE",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                getListas();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
+    const editarNombreLista = (idLista) => {
+        document.getElementById(`nombre-lista-${idLista}`).disabled = false;
+        editandoLista[idLista] = true;
+    };
+
+    const cambiarNombreLista = (idLista) => {
+        document.getElementById(`nombre-lista-${idLista}`).disabled = true;
+        editandoLista[idLista] = false;
+        const lista = listas.find((l) => l.id === idLista);
+        lista.nombre = document.getElementById(`nombre-lista-${idLista}`).value;
+        fetch(`http://localhost:8090/listas`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(lista),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                getListas();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+</script>
+
+<div class="row gy-2">
+    {#if listas.length === 0}
+        <div class="col-12">
+            <p class="text-center">No tienes listas creadas</p>
+        </div>
+    {:else}
+        {#each listas as lista}
+            <div class="col-12 lista">
+                <div class="d-flex align-items-center">
+                    <h4 class="flex-grow-1 m-0">
+                        <input
+                            type="text"
+                            class="w-100"
+                            name="nombreLista{lista.id}"
+                            id="nombre-lista-{lista.id}"
+                            value={lista.nombre}
+                            disabled
+                        />
+                    </h4>
+                    <div class="d-flex align-items-end botones ps-2">
+                        {#if editandoLista[lista.id]}
+                            <button
+                                class="text-decoration-none bg-transparent border-0 d-flex"
+                                on:click={cambiarNombreLista(lista.id)}
+                            >
+                                <span
+                                    class="material-symbols-outlined azul icono-guardado"
+                                >
+                                    save
+                                </span>
+                            </button>
+                        {:else}
+                            <button
+                                class="text-decoration-none bg-transparent border-0 d-flex"
+                                on:click={editarNombreLista(lista.id)}
+                            >
+                                <span
+                                    class="material-symbols-outlined azul icono py-1"
+                                >
+                                    edit
+                                </span>
+                            </button>
+                        {/if}
+                        <Link
+                            to={`/preferencias/lista/${lista.id}`}
+                            class="text-decoration-none d-flex align-items-end"
+                        >
+                            <i
+                                class="material-symbols-outlined azul icono-grande"
+                            >
+                                edit_note
+                            </i>
+                        </Link>
+                        <button
+                            class="text-decoration-none bg-transparent border-0"
+                            on:click={eliminarLista(lista.id)}
+                            ><i
+                                class="fa-solid fa-trash-can link-danger"
+                            /></button
+                        >
+                    </div>
+                </div>
+            </div>
+        {/each}
+    {/if}
+</div>
+
+<style>
+    .lista {
+        padding: 15px 20px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .lista input {
+        color: #012970 !important;
+        font-weight: 500;
+        border: none;
+        background-color: transparent;
+        outline: none !important;
+    }
+
+    .lista input:enabled {
+        border-bottom: 1px solid #012970 !important;
+    }
+
+    .botones {
+        gap: 10px;
+        font-size: 25px !important;
+    }
+
+    .botones .azul {
+        color: #012970 !important;
+    }
+
+    .botones .azul:hover {
+        color: #4154f1 !important;
+    }
+
+    .icono {
+        font-size: 28px !important;
+    }
+
+    .icono-grande {
+        font-size: 37px !important;
+    }
+
+    .icono-guardado {
+        font-size: 30px !important;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: "FILL" 1;
+    }
+</style>
