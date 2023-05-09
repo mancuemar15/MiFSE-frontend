@@ -138,7 +138,13 @@
                                 <a class="dropdown-item" href="#">Mensajes</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Perfil</a>
+                                <Link
+                                    class="dropdown-item"
+                                    to="perfil/datos-personales"
+                                    {getProps}
+                                >
+                                    Perfil
+                                </Link>
                             </li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
