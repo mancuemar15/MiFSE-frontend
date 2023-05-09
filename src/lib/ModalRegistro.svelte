@@ -304,12 +304,14 @@
                                     {/each}
                                 </select>
                             </div>
-                            <div class="col-12 text-end">
+                            <div
+                                class="col-12 d-flex align-items-center justify-content-end cambio-modal"
+                            >
+                                <span>¿Ya tienes cuenta?</span>
                                 <button
                                     type="button"
-                                    class="btn btn-link pe-0"
-                                    on:click={abrirOtra}
-                                    >Ya estoy registrado, iniciar sesión</button
+                                    class="btn btn-link px-0 ps-1"
+                                    on:click={abrirOtra}>Inicia sesión</button
                                 >
                             </div>
 
@@ -366,6 +368,10 @@
 
     .formulario-inicio-sesion input:focus {
         border-color: #4154f1;
+    }
+
+    .cambio-modal {
+        font-family: "Nunito", sans-serif;
     }
 
     @media (min-width: 425px) {

@@ -115,12 +115,12 @@
                                     required
                                 />
                             </div>
-                            <div class="col-12 text-end">
+                            <div class="col-12 d-flex align-items-center justify-content-end cambio-modal">
+                                <span>¿No tienes cuenta?</span>
                                 <button
                                     type="button"
-                                    class="btn btn-link pe-0"
-                                    on:click={abrirOtra}
-                                    >No estoy registrado, registrarme</button
+                                    class="btn btn-link px-0 ps-1"
+                                    on:click={abrirOtra}>Regístrate</button
                                 >
                             </div>
 
@@ -173,6 +173,10 @@
         box-shadow: none;
         font-size: 14px;
         border-radius: 0;
+    }
+
+    .cambio-modal {
+        font-family: "Nunito", sans-serif;
     }
 
     .formulario-inicio-sesion input:focus {
