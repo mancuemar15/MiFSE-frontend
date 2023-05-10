@@ -176,5 +176,6 @@
     h3 {
         color: #012970;
         font-weight: 700;
+        outline: transparent !important;
     }
 </style>
