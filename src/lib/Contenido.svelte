@@ -5,7 +5,7 @@
     import Centro from "./Centro.svelte";
     import { Modals } from "svelte-modals";
     import { fade } from "svelte/transition";
-    import Filtrado from "./Filtrado.svelte";
+    import Lista from "./Lista.svelte";
     import Preferencias from "./Preferencias.svelte";
     import Perfil from "./Perfil.svelte";
     import RutaPrivada from "./RutaPrivada.svelte";
@@ -16,7 +16,7 @@
     <Route path="/" component={Inicio} />
     <Route path="/ultimas-posiciones" component={UltimasPosiciones} />
     <Route path="/centro/:id" component={Centro} />
-    <Route path="/lista/:titulacion" component={Filtrado} />
+    <Route path="/lista/:titulacion" component={Lista} />
     <RutaPrivada path="/preferencias/lista/:id" let:params>
         <Preferencias id={params.id} />
     </RutaPrivada>
@@ -24,10 +24,10 @@
         <Perfil />
     </RutaPrivada>
     <RutaPrivada path="/lista/:titulacion/:id" let:params>
-        <Filtrado titulacion={params.titulacion} id={params.id} />
+        <Lista titulacion={params.titulacion} id={params.id} />
     </RutaPrivada>
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
-    <Route component={NotFound} />
+    <Route path="*" component={NotFound} />
 </main>

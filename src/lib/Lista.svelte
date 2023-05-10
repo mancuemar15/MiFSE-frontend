@@ -5,6 +5,7 @@
     import { usuario, centrosFiltrados, centrosSeleccionados } from "./store";
     import { getNotificationsContext } from "svelte-notifications";
     import { navigate } from "svelte-navigator";
+    import { redireccionarNotFound } from "./utilidadesLinks";
     import {
         abrirModalInicioSesion,
         abrirModalLista,
@@ -29,6 +30,9 @@
         const response = await fetch(
             `http://localhost:8090/especialidades-centros/${titulacion}`
         );
+        if (!response.ok) {
+            redireccionarNotFound();
+        }
         centros = await response.json();
     };
 
@@ -36,7 +40,17 @@
         const response = await fetch(
             `http://localhost:8090/especialidades-centros/lista/${id}`
         );
-        $centrosSeleccionados[titulacion] = await response.json();
+        console.log(response.status);
+        if (!response.ok) {
+            redireccionarNotFound();
+        } else {
+            const centrosSeleccionados = await response.json();
+            console.log(centrosSeleccionados);
+            // if (!$usuario.id === centrosSeleccionados.residente.id) {
+            //     redireccionarNotFound();
+            // }
+        }
+        $centrosSeleccionados[titulacion] = centros;
     };
 
     onMount(() => {
