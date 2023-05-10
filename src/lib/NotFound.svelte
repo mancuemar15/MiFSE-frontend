@@ -1,6 +1,6 @@
 <script>
     import imagen404 from "../assets/404.png";
-    import { Link } from "svelte-navigator";
+    import { Link, navigate } from "svelte-navigator";
 </script>
 
 <section id="banner" class="banner d-flex align-items-center">
@@ -13,10 +13,11 @@
                 <h2>Oops! No hemos encontrado la página que buscas</h2>
                 <div>
                     <div class="text-center text-lg-start">
-                        <Link
-                            to="/"
+                        <button
                             class="btn boton-volver-not-found d-inline-flex align-items-center justify-content-center align-self-center"
-                            ><i class="bi bi-arrow-left" />Volver</Link
+                            on:click={() => {
+                                navigate(-1);
+                            }}><i class="bi bi-arrow-left" />Volver</button
                         >
                     </div>
                 </div>
@@ -51,7 +52,7 @@
         font-size: 22px;
     }
 
-    :global(.boton-volver-not-found) {
+    .boton-volver-not-found {
         margin-top: 30px;
         line-height: 0;
         padding: 15px 40px !important;
@@ -66,19 +67,19 @@
         letter-spacing: 1px;
     }
 
-    :global(.boton-volver-not-found:hover) {
+    .boton-volver-not-found:hover {
         color: #fff;
         background: #4154f1;
         box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
     }
 
-    :global(.boton-volver-not-found i) {
+    .boton-volver-not-found i {
         margin-right: 5px;
         font-size: 18px;
         transition: 0.3s;
     }
 
-    :global(.boton-volver-not-found:hover i) {
+    .boton-volver-not-found:hover i {
         transform: translateX(-5px);
     }
 
