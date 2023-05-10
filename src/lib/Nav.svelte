@@ -140,6 +140,15 @@
                             <li>
                                 <Link
                                     class="dropdown-item"
+                                    to="perfil/mis-listas"
+                                    {getProps}
+                                >
+                                    Mis listas
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    class="dropdown-item"
                                     to="perfil/datos-personales"
                                     {getProps}
                                 >
@@ -148,10 +157,10 @@
                             </li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <a
+                                <button
                                     class="dropdown-item"
-                                    href="#"
-                                    on:click={cerrarSesion}>Cerrar sesión</a
+                                    on:click={cerrarSesion}
+                                    >Cerrar sesión</button
                                 >
                             </li>
                         </ul>
