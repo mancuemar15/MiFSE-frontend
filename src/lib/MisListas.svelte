@@ -32,14 +32,17 @@
     };
 
     const editarNombreLista = (idLista) => {
+        // @ts-ignore
         document.getElementById(`nombre-lista-${idLista}`).disabled = false;
         listasEditandose[idLista] = true;
     };
 
     const cambiarNombreLista = (idLista) => {
+        // @ts-ignore
         document.getElementById(`nombre-lista-${idLista}`).disabled = true;
         listasEditandose[idLista] = false;
         const lista = listas.find((l) => l.id === idLista);
+        // @ts-ignore
         lista.nombre = document.getElementById(`nombre-lista-${idLista}`).value;
         fetch(`http://localhost:8090/listas`, {
             method: "PUT",
@@ -82,7 +85,9 @@
                         {#if listasEditandose[lista.id]}
                             <button
                                 class="text-decoration-none bg-transparent border-0 d-flex"
-                                on:click={cambiarNombreLista(lista.id)}
+                                on:click={() => {
+                                    cambiarNombreLista(lista.id);
+                                }}
                             >
                                 <span
                                     class="material-symbols-outlined azul icono-guardado"
@@ -93,7 +98,9 @@
                         {:else}
                             <button
                                 class="text-decoration-none bg-transparent border-0 d-flex"
-                                on:click={editarNombreLista(lista.id)}
+                                on:click={() => {
+                                    editarNombreLista(lista.id);
+                                }}
                             >
                                 <span
                                     class="material-symbols-outlined azul icono py-1"
@@ -114,7 +121,9 @@
                         </Link>
                         <button
                             class="text-decoration-none bg-transparent border-0"
-                            on:click={eliminarLista(lista.id)}
+                            on:click={() => {
+                                eliminarLista(lista.id);
+                            }}
                             ><i
                                 class="fa-solid fa-trash-can link-danger"
                             /></button
