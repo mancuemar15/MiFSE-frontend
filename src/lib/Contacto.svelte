@@ -1,4 +1,8 @@
 <script>
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 </script>
 
 <section id="contacto" class="contacto">
@@ -13,7 +17,8 @@
                 <form class="formulario-contacto">
                     <div class="row gy-3 gy-lg-4">
                         <div class="col-md-6">
-                            <label for="nombre" class="form-label obligatorio">Nombre</label
+                            <label for="nombre" class="form-label obligatorio"
+                                >Nombre</label
                             >
                             <input
                                 type="text"
@@ -25,7 +30,9 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="email" class="form-label obligatorio">Email</label>
+                            <label for="email" class="form-label obligatorio"
+                                >Email</label
+                            >
                             <input
                                 type="email"
                                 id="email"
@@ -36,7 +43,8 @@
                         </div>
 
                         <div class="col-md-12">
-                            <label for="asunto" class="form-label obligatorio">Asunto</label
+                            <label for="asunto" class="form-label obligatorio"
+                                >Asunto</label
                             >
                             <input
                                 type="text"
@@ -67,7 +75,9 @@
                                 Your message has been sent. Thank you!
                             </div> -->
 
-                            <button type="submit" class="boton-azul">Enviar</button>
+                            <button type="submit" class="boton-azul"
+                                >Enviar</button
+                            >
                         </div>
                     </div>
                 </form>

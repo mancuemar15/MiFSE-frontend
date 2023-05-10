@@ -2,6 +2,10 @@
     import { onMount } from "svelte";
     import { usuario } from "./store";
     import { Link } from "svelte-navigator";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     let listas = [];
     let listasEditandose = [];
@@ -22,12 +26,12 @@
             method: "DELETE",
         })
             .then((response) => response.json())
-            .then((data) => {
-                console.log("Success:", data);
+            .then(() => {
+                anadirNotificacionError("Error al eliminar la lista");
                 getListas();
             })
-            .catch((error) => {
-                console.error("Error:", error);
+            .catch(() => {
+                anadirNotificacionExito("Lista eliminada correctamente");
             });
     };
 

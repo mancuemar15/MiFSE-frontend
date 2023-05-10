@@ -2,13 +2,14 @@
     import { navigate } from "svelte-navigator";
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
-    import { getNotificationsContext } from "svelte-notifications";
     import { closeModal } from "svelte-modals";
     import { usuario, cerrarSesion } from "./store";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     export let isOpen;
-
-    const { addNotification } = getNotificationsContext();
 
     const borrarCuenta = (e) => {
         e.preventDefault();
@@ -20,30 +21,18 @@
             body: JSON.stringify({ contrasena: e.target.contrasena.value }),
         })
             .then((response) => {
-                console.log(response.json());
-                if (response.status === 200) {
-                    console.log("cuenta borrada");
-                    addNotification({
-                        text: "La cuenta se ha borrado correctamente",
-                        position: "top-right",
-                        type: "success",
-                        removeAfter: 4000,
-                    });
-                    closeModal();
-                    cerrarSesion();
-                    navigate("/");
-                } else if (response.status === 401) {
-                    console.log("contraseña incorrecta");
-                    addNotification({
-                        text: "La contraseña no es correcta",
-                        position: "top-right",
-                        type: "error",
-                        removeAfter: 4000,
-                    });
+                if (response.status === 401) {
+                    anadirNotificacionError("Contraseña incorrecta");
                 }
             })
+            .then(() => {
+                anadirNotificacionExito("Cuenta borrada correctamente");
+                closeModal();
+                cerrarSesion();
+                navigate("/");
+            })
             .catch((error) => {
-                console.error("Error:", error);
+                anadirNotificacionError("Error al borrar la cuenta");
             });
     };
 </script>

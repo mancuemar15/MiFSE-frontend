@@ -9,7 +9,6 @@
     export let id;
 
     let imagenCentro = `/img/centro/centro.jpg`;
-
     let centro = {};
     let especialidadesPorTitulacion = [];
 

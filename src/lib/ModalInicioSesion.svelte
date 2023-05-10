@@ -2,13 +2,14 @@
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
     import { iniciarSesion } from "./store";
-    import { getNotificationsContext } from "svelte-notifications";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
     import { closeModal } from "svelte-modals";
 
     export let isOpen;
     export let abrirOtra;
-
-    const { addNotification } = getNotificationsContext();
 
     function enviarFormularioInicioSesion(event) {
         event.preventDefault();
@@ -24,33 +25,17 @@
             },
             body: JSON.stringify(datos),
         })
-            .then(async (response) => {
-                if (response.ok) {
-                    addNotification({
-                        text: "Inicio de sesión correcto",
-                        position: "top-right",
-                        type: "success",
-                        removeAfter: 4000,
-                    });
-                    const usuario = await response.json();
-                    iniciarSesion(usuario);
-                    closeModal();
-                } else {
-                    addNotification({
-                        text: "Inicio de sesión incorrecto, compruebe sus credenciales",
-                        position: "top-right",
-                        type: "error",
-                        removeAfter: 4000,
-                    });
-                }
+            .then((response) => response.json())
+            .then((data) => {
+                anadirNotificacionExito("Inicio de sesión correcto");
+                const usuario = data;
+                iniciarSesion(usuario);
+                closeModal();
             })
             .catch(() => {
-                addNotification({
-                    text: "Se ha producido un error al iniciar sesión",
-                    position: "top-right",
-                    type: "error",
-                    removeAfter: 4000,
-                });
+                anadirNotificacionError(
+                    "Se ha producido un error al iniciar sesión"
+                );
             });
     }
 </script>
@@ -115,7 +100,9 @@
                                     required
                                 />
                             </div>
-                            <div class="col-12 d-flex align-items-center justify-content-end cambio-modal">
+                            <div
+                                class="col-12 d-flex align-items-center justify-content-end cambio-modal"
+                            >
                                 <span>¿No tienes cuenta?</span>
                                 <button
                                     type="button"

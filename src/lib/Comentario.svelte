@@ -17,7 +17,7 @@
     <div class="d-flex">
         <div>
             <h5>
-                <a href="">{escribirNombreResidente()}</a>
+                <button class="btn btn-link">{escribirNombreResidente()}</button>
             </h5>
             <p class="subtitulo my-2">
                 {new Date(comentario.fecha).toLocaleDateString()} - {capitalizar(
@@ -40,7 +40,7 @@
         margin-bottom: 2px;
     }
 
-    .comment h5 a {
+    .comment h5 button {
         font-family: "Nunito", sans-serif !important;
         text-decoration: none;
         font-weight: bold;
@@ -48,7 +48,7 @@
         transition: 0.3s;
     }
 
-    .comment h5 a:hover {
+    .comment h5 button:hover {
         color: #4154f1;
     }
 

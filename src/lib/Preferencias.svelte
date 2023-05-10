@@ -3,14 +3,14 @@
     import DragDrop from "svelte-dragdroplist";
     import { onMount } from "svelte";
     import { navigate } from "svelte-navigator";
-    import { getNotificationsContext } from "svelte-notifications";
     import { quitarAcentos } from "./utilidadesString";
     import { redireccionarNotFound } from "./utilidadesLinks";
-
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     export let id;
-
-    const { addNotification } = getNotificationsContext();
 
     let lista = {};
     let preferenciasArrastrables = [];
@@ -71,30 +71,16 @@
             },
             body: JSON.stringify(lista),
         })
-            .then((response) => {
-                if (response.ok) {
-                    addNotification({
-                        text: "Se han guardado las preferencias correctamente",
-                        position: "top-right",
-                        type: "success",
-                        removeAfter: 4000,
-                    });
-                } else {
-                    addNotification({
-                        text: "No se han podido guardar las preferencias",
-                        position: "top-right",
-                        type: "error",
-                        removeAfter: 4000,
-                    });
-                }
+            .then((response) => response.json())
+            .then(() => {
+                anadirNotificacionExito(
+                    "Se han guardado las preferencias correctamente"
+                );
             })
             .catch(() => {
-                addNotification({
-                    text: "No se han podido guardar las preferencias",
-                    position: "top-right",
-                    type: "error",
-                    removeAfter: 4000,
-                });
+                anadirNotificacionError(
+                    "Ha ocurrido un error al guardar las preferencias"
+                );
             });
     }
 

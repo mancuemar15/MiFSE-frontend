@@ -1,13 +1,14 @@
 <script>
-    import { Link } from "svelte-navigator";
+    import { Link, useNavigate } from "svelte-navigator";
     import logoMifse from "../assets/logo-mifse.svg";
 
+    const navigate = useNavigate();
     const opcionesFooter = [
         {
             titulo: "Links útiles",
             enlaces: [
                 { texto: "Inicio", ruta: "/" },
-                { texto: "Valores", ruta: "/" },
+                { texto: "Valores", ruta: "/#valores" },
                 { texto: "Características", ruta: "/" },
                 { texto: "FAQs", ruta: "/" },
                 { texto: "Contacto", ruta: "/" },
@@ -61,6 +62,12 @@
                             {#each opcion.enlaces as enlace}
                                 <li>
                                     <i class="bi bi-chevron-right" />
+                                    <!-- <button
+                                        class="btn btn-link"
+                                        on:click={() => {
+                                            navigate(enlace.ruta);
+                                        }}>{enlace.texto}</button
+                                    > -->
                                     <Link to={enlace.ruta}>{enlace.texto}</Link>
                                 </li>
                             {/each}

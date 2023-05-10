@@ -3,13 +3,14 @@
     import { quintOut } from "svelte/easing";
     import { onMount } from "svelte";
     import { capitalizar } from "./utilidadesString";
-    import { getNotificationsContext } from "svelte-notifications";
     import { closeModal } from "svelte-modals";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     export let isOpen;
     export let abrirOtra;
-
-    const { addNotification } = getNotificationsContext();
 
     let titulaciones = [];
     let tiposResidente = [];
@@ -57,37 +58,18 @@
             body: JSON.stringify(datos),
         })
             .then((response) => {
-                if (response.ok) {
-                    addNotification({
-                        text: "Registro completado con éxito",
-                        position: "top-right",
-                        type: "success",
-                        removeAfter: 4000,
-                    });
-                    closeModal();
-                } else if (response.status === 409) {
-                    addNotification({
-                        text: "Ya existe un usuario con ese email",
-                        position: "top-right",
-                        type: "error",
-                        removeAfter: 4000,
-                    });
-                } else {
-                    addNotification({
-                        text: "No se ha podido registrar el usuario",
-                        position: "top-right",
-                        type: "error",
-                        removeAfter: 4000,
-                    });
+                if (response.status === 409) {
+                    anadirNotificacionError(
+                        "Ya existe un usuario con ese email"
+                    );
                 }
             })
+            .then(() => {
+                anadirNotificacionExito("Registro completado con éxito");
+                closeModal();
+            })
             .catch(() => {
-                addNotification({
-                    text: "Ha ocurrido un error inesperado",
-                    position: "top-right",
-                    type: "error",
-                    removeAfter: 4000,
-                });
+                anadirNotificacionError("No se ha podido registrar el usuario");
             });
     }
 

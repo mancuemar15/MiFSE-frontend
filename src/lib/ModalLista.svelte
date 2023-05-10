@@ -2,13 +2,14 @@
     import { navigate } from "svelte-navigator";
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
-    import { getNotificationsContext } from "svelte-notifications";
     import { closeModal } from "svelte-modals";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     export let isOpen;
     export let lista;
-
-    const { addNotification } = getNotificationsContext();
 
     function guardarLista(event) {
         event.preventDefault();
@@ -22,33 +23,18 @@
             },
             body: JSON.stringify(lista),
         })
-            .then(async (response) => {
-                if (response.status === 201) {
-                    addNotification({
-                        text: "La lista de centros se ha guardado correctamente",
-                        position: "top-right",
-                        type: "success",
-                        removeAfter: 4000,
-                    });
-                    closeModal();
-                    const respuesta = await response.json();
-                    navigate(`/preferencias/lista/${respuesta.id}`);
-                } else {
-                    addNotification({
-                        text: "Ha ocurrido un error al guardar la lista de centros",
-                        position: "top-right",
-                        type: "error",
-                        removeAfter: 4000,
-                    });
-                }
+            .then((response) => response.json())
+            .then((data) => {
+                anadirNotificacionExito(
+                    "La lista de centros se ha guardado correctamente"
+                );
+                closeModal();
+                navigate(`/preferencias/lista/${data.id}`);
             })
             .catch(() => {
-                addNotification({
-                    text: "Ha ocurrido un error al guardar la lista de centros",
-                    position: "top-right",
-                    type: "error",
-                    removeAfter: 4000,
-                });
+                anadirNotificacionError(
+                    "Ha ocurrido un error al guardar la lista de centros"
+                );
             });
     }
 </script>

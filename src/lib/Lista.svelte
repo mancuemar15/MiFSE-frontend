@@ -2,10 +2,14 @@
     import { onMount } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Filtros from "./Filtros.svelte";
+    import CentroFiltrado from "./CentroFiltrado.svelte";
     import { usuario, centrosFiltrados, centrosSeleccionados } from "./store";
-    import { getNotificationsContext } from "svelte-notifications";
     import { navigate } from "svelte-navigator";
     import { redireccionarNotFound } from "./utilidadesLinks";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
     import {
         abrirModalInicioSesion,
         abrirModalLista,
@@ -15,7 +19,6 @@
     export let titulacion;
     export let id;
 
-    const { addNotification } = getNotificationsContext();
     const titulacionesConTildes = {
         biologia: "biología",
         enfermeria: "enfermería",
@@ -66,33 +69,6 @@
             $centrosSeleccionados[titulacion] || [];
     }
 
-    function agregarCentro(e, centro) {
-        e.target.checked = false;
-        $centrosSeleccionados[titulacion] = [
-            ...$centrosSeleccionados[titulacion],
-            centro,
-        ];
-        $centrosFiltrados = $centrosFiltrados.filter((c) => {
-            return (
-                c.centro.id !== centro.centro.id ||
-                c.especialidad.id !== centro.especialidad.id
-            );
-        });
-    }
-
-    function quitarCentro(e, centro) {
-        e.target.checked = true;
-        $centrosFiltrados = [...$centrosFiltrados, centro];
-        $centrosSeleccionados[titulacion] = $centrosSeleccionados[
-            titulacion
-        ].filter((c) => {
-            return (
-                c.centro.id !== centro.centro.id ||
-                c.especialidad.id !== centro.especialidad.id
-            );
-        });
-    }
-
     async function guardarLista() {
         $usuario = await $usuario;
         const preferencias = $centrosSeleccionados[titulacion].map(
@@ -129,21 +105,15 @@
                 body: JSON.stringify(lista),
             });
             if (response.ok) {
-                addNotification({
-                    text: "La lista de centros se ha guardado correctamente",
-                    position: "top-right",
-                    type: "success",
-                    removeAfter: 4000,
-                });
+                anadirNotificacionExito(
+                    "La lista de centros se ha guardado correctamente"
+                );
                 const respuesta = await response.json();
                 navigate(`/preferencias/lista/${respuesta.id}`);
             } else {
-                addNotification({
-                    text: "Ha ocurrido un error al guardar la lista de centros",
-                    position: "top-right",
-                    type: "error",
-                    removeAfter: 4000,
-                });
+                anadirNotificacionError(
+                    "Ha ocurrido un error al guardar la lista de centros"
+                );
             }
         }
     }
@@ -186,7 +156,8 @@
                             {:else}
                                 {#each $centrosFiltrados as centro}
                                     <div class="col-12 centro p-0">
-                                        <div class="blog-author">
+                                        <CentroFiltrado {centro} {titulacion} />
+                                        <!-- <div class="blog-author">
                                             <div
                                                 class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between"
                                             >
@@ -233,7 +204,7 @@
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 {/each}
                             {/if}
@@ -248,7 +219,11 @@
                                     <div
                                         class="col-12 especialidadCentro-seleccionado p-0"
                                     >
-                                        <div class="blog-author">
+                                        <CentroFiltrado
+                                            {especialidadCentro}
+                                            {titulacion}
+                                        />
+                                        <!-- <div class="blog-author">
                                             <div
                                                 class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between"
                                             >
@@ -297,7 +272,7 @@
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 {/each}
                             {:else}
@@ -358,52 +333,9 @@
         padding-top: 40px;
     }
 
-    .blog-author {
-        padding: 15px 20px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .blog-author h4 {
-        font-weight: 600;
-        font-size: 22px;
-        margin-bottom: 0px;
-        padding: 0;
-        color: #012970;
-    }
-
     h3 {
         color: #012970;
         font-weight: 700;
-    }
-
-    .centro,
-    .especialidadCentro-seleccionado {
-        cursor: pointer;
-        transition: 0.4s;
-    }
-
-    .centro:hover,
-    .especialidadCentro-seleccionado:hover {
-        transform: scale(1.01);
-    }
-
-    .centro label,
-    .especialidadCentro-seleccionado label {
-        width: 100% !important;
-        cursor: pointer;
-    }
-
-    .especialidadCentro-seleccionado {
-        background-color: rgba(163, 189, 234, 0.3) !important;
-    }
-
-    .form-check-input:focus {
-        box-shadow: none !important;
-    }
-
-    .form-check-input:not(:checked):focus {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e") !important;
-        border: 1px solid rgba(0, 0, 0, 0.25) !important;
     }
 
     button:disabled {

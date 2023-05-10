@@ -1,5 +1,9 @@
 <script>
     import { usuario } from "./store";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     let editando = false;
 
@@ -29,14 +33,13 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify($usuario),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Success:", data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+        }).then((response) => {
+            if (!response.ok) {
+                anadirNotificacionError("Error al guardar el nuevo dato");
+            } else {
+                anadirNotificacionExito("Dato guardado correctamente");
+            }
+        });
     };
 </script>
 
