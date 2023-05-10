@@ -40,12 +40,10 @@
         const response = await fetch(
             `http://localhost:8090/especialidades-centros/lista/${id}`
         );
-        console.log(response.status);
         if (!response.ok) {
             redireccionarNotFound();
         } else {
             const centrosSeleccionados = await response.json();
-            console.log(centrosSeleccionados);
             // if (!$usuario.id === centrosSeleccionados.residente.id) {
             //     redireccionarNotFound();
             // }
@@ -149,7 +147,6 @@
             }
         }
     }
-    $: console.log("centrosSeleccionados", $centrosSeleccionados[titulacion]);
 </script>
 
 {#key titulacion}

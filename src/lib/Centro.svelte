@@ -4,6 +4,7 @@
     import Mapa from "./Mapa.svelte";
     import Comentarios from "./Comentarios.svelte";
     import { capitalizar } from "./utilidadesString";
+    import { redireccionarNotFound } from "./utilidadesLinks";
 
     export let id;
 
@@ -14,6 +15,9 @@
 
     const getCentro = async () => {
         const response = await fetch(`http://localhost:8090/centros/${id}`);
+        if (!response.ok) {
+            redireccionarNotFound();
+        }
         centro = await response.json();
     };
 

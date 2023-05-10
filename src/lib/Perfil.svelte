@@ -3,9 +3,8 @@
     import DatosPersonales from "./DatosPersonales.svelte";
     import MisListas from "./MisListas.svelte";
     import BorrarCuenta from "./BorrarCuenta.svelte";
-    import { Router, Route, Link, useLocation } from "svelte-navigator";
-
-    const location = useLocation();
+    import { Router, Route, Link } from "svelte-navigator";
+    import { redireccionarNotFound } from "./utilidadesLinks";
 
     const opcionesMenuPerfil = [
         {
@@ -35,10 +34,6 @@
             return { className: "activo" };
         }
     }
-
-    $: titulo = opcionesMenuPerfil.find(
-        (opcion) => opcion.ruta === $location.pathname.split("/")[2]
-    ).nombre;
 </script>
 
 <TituloPagina seccion="perfil" {titulo} />
@@ -55,7 +50,9 @@
                                     class="col-12 text-decoration-none border-bottom opcion-menu-perfil d-flex bg-transparent py-3"
                                     {getProps}
                                 >
-                                    <i class="{opcion.icono} d-flex justify-content-center" />
+                                    <i
+                                        class="{opcion.icono} d-flex justify-content-center"
+                                    />
                                     <h3>{opcion.nombre}</h3>
                                 </Link>
                             {/each}
@@ -65,16 +62,16 @@
             </div>
             <div class="col-lg-7 contenido-perfil">
                 <Router>
-                    <Route
-                        path="datos-personales"
-                        component={DatosPersonales}
-                    />
+                    <Route path="datos-personales">
+                        <DatosPersonales />
+                    </Route>
                     <Route path="mis-listas">
                         <MisListas />
                     </Route>
                     <Route path="borrar-cuenta">
                         <BorrarCuenta />
                     </Route>
+                    <Route>{redireccionarNotFound()}</Route>
                 </Router>
             </div>
         </div>
@@ -92,7 +89,6 @@
 
     :global(.opcion-menu-perfil) {
         padding: 10px 5px;
-        /* padding: 15px 20px; */
     }
 
     :global(.opcion-menu-perfil:nth-last-child(1)) {

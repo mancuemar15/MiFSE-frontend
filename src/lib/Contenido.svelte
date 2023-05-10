@@ -17,14 +17,14 @@
     <Route path="/ultimas-posiciones" component={UltimasPosiciones} />
     <Route path="/centro/:id" component={Centro} />
     <Route path="/lista/:titulacion" component={Lista} />
+    <RutaPrivada path="/lista/:titulacion/:id" let:params>
+        <Lista titulacion={params.titulacion} id={params.id} />
+    </RutaPrivada>
     <RutaPrivada path="/preferencias/lista/:id" let:params>
         <Preferencias id={params.id} />
     </RutaPrivada>
     <RutaPrivada path="/perfil/*datos-personales">
         <Perfil />
-    </RutaPrivada>
-    <RutaPrivada path="/lista/:titulacion/:id" let:params>
-        <Lista titulacion={params.titulacion} id={params.id} />
     </RutaPrivada>
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />

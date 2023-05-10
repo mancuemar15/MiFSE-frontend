@@ -5,6 +5,8 @@
     import { navigate } from "svelte-navigator";
     import { getNotificationsContext } from "svelte-notifications";
     import { quitarAcentos } from "./utilidadesString";
+    import { redireccionarNotFound } from "./utilidadesLinks";
+
 
     export let id;
 
@@ -17,6 +19,9 @@
     const getLista = async () => {
         const url = `http://localhost:8090/listas/${id}`;
         const response = await fetch(url);
+        if (!response.ok) {
+            redireccionarNotFound();
+        }
         lista = await response.json();
         preferenciasArrastrables = await getPreferenciasArrastrables(lista);
         console.log(preferenciasArrastrables);

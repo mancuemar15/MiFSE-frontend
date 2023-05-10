@@ -1,6 +1,6 @@
 <script>
     import imagen404 from "../assets/404.png";
-    import { Link, navigate } from "svelte-navigator";
+    import { navigate } from "svelte-navigator";
 </script>
 
 <section id="banner" class="banner d-flex align-items-center">
