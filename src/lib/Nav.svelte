@@ -135,7 +135,13 @@
                             class="dropdown-menu dropdown-menu-end text-small border-0"
                         >
                             <li>
-                                <a class="dropdown-item" href="#">Mensajes</a>
+                                <Link
+                                    class="dropdown-item"
+                                    to="mensajes"
+                                    {getProps}
+                                >
+                                    Mensajes
+                                </Link>
                             </li>
                             <li>
                                 <Link

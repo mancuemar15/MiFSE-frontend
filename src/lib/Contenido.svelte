@@ -10,6 +10,7 @@
     import Perfil from "./Perfil.svelte";
     import RutaPrivada from "./RutaPrivada.svelte";
     import NotFound from "./NotFound.svelte";
+    import Mensajes from "./Mensajes.svelte";
 </script>
 
 <main>
@@ -25,6 +26,9 @@
     </RutaPrivada>
     <RutaPrivada path="/perfil/*datos-personales">
         <Perfil />
+    </RutaPrivada>
+    <RutaPrivada path="/mensajes">
+        <Mensajes />
     </RutaPrivada>
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
