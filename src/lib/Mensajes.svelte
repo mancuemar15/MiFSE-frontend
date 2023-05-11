@@ -9,12 +9,14 @@
     } from "./utilidadesNotificaciones";
 
     let usuariosConMensajesIntercambiados = [];
+    let usuariosFiltrados = [];
     let conversacion = [];
 
     const getUsuariosConMensajesIntercambiados = async () => {
         const url = `http://localhost:8090/mensajes/usuarios/${$usuario.id}`;
         const response = await fetch(url);
         usuariosConMensajesIntercambiados = await response.json();
+        usuariosFiltrados = await usuariosConMensajesIntercambiados;
     };
 
     onMount(() => {
@@ -92,6 +94,14 @@
             }
         });
     };
+
+    const filtrarUsuarios = (e) => {
+        usuariosFiltrados = usuariosConMensajesIntercambiados.filter((u) =>
+            `${u.nombre} ${u.apellido1} ${u.apellido2 ?? ""}`
+                .toLowerCase()
+                .includes(e.target.value.toLowerCase())
+        );
+    };
 </script>
 
 <TituloPagina seccion="mensajes" titulo="Mensajes" />
@@ -100,19 +110,20 @@
         <div class="card h-100 rounded-0 pb-0">
             <div class="row h-100 g-0">
                 <div class="col-12 col-lg-5 col-xl-3 border-end usuarios">
-                    <div class="px-4">
+                    <div class="px-4 border-bottom">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <input
                                     type="text"
                                     class="form-control my-3"
                                     placeholder="Buscar usuario"
+                                    on:input={filtrarUsuarios}
                                 />
                             </div>
                         </div>
                     </div>
                     <ul>
-                        {#each usuariosConMensajesIntercambiados as usuarioConMensajeIntercambiado}
+                        {#each usuariosFiltrados as usuarioConMensajeIntercambiado}
                             <li class="border-top border-bottom">
                                 <button
                                     class="list-group-item-action border-0 bg-transparent"
@@ -125,11 +136,12 @@
                                             usuarioConMensajeIntercambiado.id
                                         );
                                     }}
-                                >
-                                    {usuarioConMensajeIntercambiado.nombre}{" "}
-                                    {usuarioConMensajeIntercambiado.apellido1}{" "}
-                                    {usuarioConMensajeIntercambiado.apellido2 ??
-                                        ""}
+                                    ><span>
+                                        {usuarioConMensajeIntercambiado.nombre}{" "}
+                                        {usuarioConMensajeIntercambiado.apellido1}{" "}
+                                        {usuarioConMensajeIntercambiado.apellido2 ??
+                                            ""}</span
+                                    >
                                 </button>
                             </li>
                         {/each}
@@ -239,8 +251,18 @@
 
     .usuarios ul li button:hover,
     .usuarios ul li button.activo {
-        color: #4154f1 !important;
-        transform: translateX(5px);
+        background-color: #012970 !important;
+    }
+
+    .usuarios ul li button span {
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+    .usuarios ul li button:hover span,
+    .usuarios ul li button.activo span {
+        transform: translateX(10px);
+        color: white !important;
     }
 
     .mensajes {
