@@ -17,7 +17,7 @@
     <div class="d-flex">
         <div>
             <h5>
-                <button class="btn btn-link">{escribirNombreResidente()}</button>
+                <button class="btn btn-link p-0">{escribirNombreResidente()}</button>
             </h5>
             <p class="subtitulo my-2">
                 {new Date(comentario.fecha).toLocaleDateString()} - {capitalizar(

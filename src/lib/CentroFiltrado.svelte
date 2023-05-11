@@ -65,7 +65,7 @@
         </div>
     </div>
 {:else}
-    <div class="centro">
+    <div class="centro seleccionado">
         <div
             class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between"
         >
@@ -115,24 +115,21 @@
         color: #012970;
     }
 
-    .centro,
-    .especialidadCentro-seleccionado {
+    .centro {
         cursor: pointer;
         transition: 0.4s;
     }
 
-    .centro:hover,
-    .especialidadCentro-seleccionado:hover {
+    .centro:hover {
         transform: scale(1.01);
     }
 
-    .centro label,
-    .especialidadCentro-seleccionado label {
+    .centro label {
         width: 100% !important;
         cursor: pointer;
     }
 
-    .especialidadCentro-seleccionado {
+    .seleccionado {
         background-color: rgba(163, 189, 234, 0.3) !important;
     }
 

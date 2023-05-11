@@ -28,6 +28,7 @@
     };
 
     let centros = [];
+    let lista = {};
 
     const getCentrosPorTitulacion = async () => {
         const response = await fetch(
@@ -39,24 +40,35 @@
         centros = await response.json();
     };
 
-    const getCentrosSeleccionadosPorIdLista = async () => {
-        const response = await fetch(
-            `http://localhost:8090/especialidades-centros/lista/${id}`
-        );
-        if (!response.ok) {
+    // const getCentrosSeleccionadosPorIdLista = async () => {
+    //     const response = await fetch(
+    //         `http://localhost:8090/especialidades-centros/lista/${id}`
+    //     );
+    //     if (!response.ok) {
+    //         redireccionarNotFound();
+    //         return;
+    //     }
+    //     // if (!$usuario.id === centrosSeleccionados.residente.id) {
+    //     //     redireccionarNotFound();
+    //     // }
+    //     $centrosSeleccionados[titulacion] = await response.json();
+    // };
+
+    const getLista = async () => {
+        const response = await fetch(`http://localhost:8090/listas/${id}`);
+        lista = await response.json();
+        console.log(lista);
+        if (!response.ok || !($usuario.id === lista.residente.id)) {
             redireccionarNotFound();
-        } else {
-            const centrosSeleccionados = await response.json();
-            // if (!$usuario.id === centrosSeleccionados.residente.id) {
-            //     redireccionarNotFound();
-            // }
         }
-        $centrosSeleccionados[titulacion] = centros;
+        $centrosSeleccionados[titulacion] = lista.preferencias.map(
+            (p) => p.especialidadCentro
+        );
     };
 
     onMount(() => {
         if (id) {
-            getCentrosSeleccionadosPorIdLista();
+            getLista();
         }
         getCentrosPorTitulacion();
         $centrosSeleccionados[titulacion] =
@@ -70,7 +82,6 @@
     }
 
     async function guardarLista() {
-        $usuario = await $usuario;
         const preferencias = $centrosSeleccionados[titulacion].map(
             (c, posicion) => {
                 return {
@@ -83,20 +94,13 @@
             }
         );
 
-        let lista = {
-            residente: {
-                id: $usuario.id,
-            },
-            fechaActualizacion: new Date().toJSON(),
-            preferencias: preferencias,
-        };
+        lista.fechaActualizacion = new Date().toJSON();
+        lista.preferencias = preferencias;
 
         if (!id) {
             lista.fechaCreacion = new Date().toJSON();
             abrirModalLista(lista);
         } else {
-            lista.id = parseInt(id);
-            console.log(lista);
             const response = await fetch(`http://localhost:8090/listas`, {
                 method: "PUT",
                 headers: {

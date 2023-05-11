@@ -17,7 +17,7 @@
     let titulacion = "";
 
     const getLista = async () => {
-        const url = `http://localhost:8090/listas/${id}`;
+        const url = `http://localhost:8090/listas/${id}/preferencias`;
         const response = await fetch(url);
         if (!response.ok) {
             redireccionarNotFound();
@@ -26,7 +26,7 @@
         preferenciasArrastrables = await getPreferenciasArrastrables(lista);
         console.log(preferenciasArrastrables);
         titulacion =
-            await lista.preferencias[0].especialidadCentro.especialidad.titulacion.nombre.toLowerCase();
+            lista.preferencias[0].especialidadCentro.especialidad.titulacion.nombre.toLowerCase();
     };
 
     const getPreferenciasArrastrables = async (lista) => {

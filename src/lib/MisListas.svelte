@@ -56,12 +56,16 @@
             body: JSON.stringify(lista),
         })
             .then((response) => response.json())
-            .then((data) => {
-                console.log("Success:", data);
+            .then(() => {
+                anadirNotificacionExito(
+                    "Nombre de la lista cambiado correctamente"
+                );
                 getListas();
             })
             .catch((error) => {
-                console.error("Error:", error);
+                anadirNotificacionError(
+                    "Error al cambiar el nombre de la lista"
+                );
             });
     };
 </script>
