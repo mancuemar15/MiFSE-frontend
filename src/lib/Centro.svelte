@@ -25,6 +25,7 @@
             `http://localhost:8090/especialidades/centro/${id}`
         );
         const especialidades = await response.json();
+        console.log(especialidades);
         agruparEspecialidadesPorTitulacion(especialidades);
     };
 
