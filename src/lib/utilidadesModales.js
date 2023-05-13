@@ -3,6 +3,7 @@ import ModalRegistro from "./ModalRegistro.svelte";
 import ModalInicioSesion from "./ModalInicioSesion.svelte";
 import ModalLista from "./ModalLista.svelte";
 import ModalBorrarCuenta from "./ModalBorrarCuenta.svelte";
+import ModalRegistroAdmin from "./ModalRegistroAdmin.svelte";
 
 function abrirModalRegistro() {
     openModal(ModalRegistro, {
@@ -30,4 +31,8 @@ function abrirModalBorrarCuenta() {
     openModal(ModalBorrarCuenta);
 }
 
-export { abrirModalRegistro, abrirModalInicioSesion, abrirModalLista, abrirModalBorrarCuenta };
+function abrirModalRegistroAdmin() {
+    openModal(ModalRegistroAdmin);
+}
+
+export { abrirModalRegistro, abrirModalInicioSesion, abrirModalLista, abrirModalBorrarCuenta, abrirModalRegistroAdmin };
