@@ -37,7 +37,7 @@
         const contrasena = formulario.contrasena.value;
         const titulacion = formulario.titulacion.value;
         const tipoResidente = formulario.tipoResidente.value;
-        const url = "http://localhost:8090/usuarios";
+        const url = "http://localhost:8090/residentes/registro";
         const datos = {
             nombre,
             apellido1,

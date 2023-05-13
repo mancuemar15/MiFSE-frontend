@@ -11,6 +11,7 @@
     import RutaPrivada from "./RutaPrivada.svelte";
     import NotFound from "./NotFound.svelte";
     import Mensajes from "./Mensajes.svelte";
+    import Usuarios from "./Usuarios.svelte";
 </script>
 
 <main>
@@ -30,6 +31,7 @@
     <RutaPrivada path="/mensajes">
         <Mensajes />
     </RutaPrivada>
+    <Route path="/gestion-usuarios" component={Usuarios} />
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
