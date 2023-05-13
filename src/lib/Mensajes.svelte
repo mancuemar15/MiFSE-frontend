@@ -7,7 +7,6 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
-    import imagenConversacion from "../assets/conversacion_2.png";
 
     let usuariosConMensajesIntercambiados = [];
     let usuariosFiltrados = [];
@@ -159,7 +158,6 @@
                                         class="d-flex flex-column align-items-center justify-content-center sin-mensajes"
                                     >
                                         <h3>Selecciona una conversación</h3>
-                                        <!-- <img src={imagenConversacion} class="img-fluid" alt="" /> -->
                                     </div>
                                 </div>
                             {:else}
