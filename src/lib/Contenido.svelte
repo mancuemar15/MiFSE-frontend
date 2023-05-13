@@ -31,9 +31,17 @@
     <RutaPrivada path="/mensajes">
         <Mensajes />
     </RutaPrivada>
-    <Route path="/gestion-usuarios" component={Usuarios} />
+    <RutaPrivada path="/gestion-usuarios">
+        <Usuarios />
+    </RutaPrivada>
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
     <Route component={NotFound} />
 </main>
+
+<style>
+    main {
+        min-height: calc(100vh - 82px - 469.8px);
+    }
+</style>
