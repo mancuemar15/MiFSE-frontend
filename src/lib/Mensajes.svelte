@@ -7,6 +7,7 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import imagenConversacion from "../assets/conversacion_2.png";
 
     let usuariosConMensajesIntercambiados = [];
     let usuariosFiltrados = [];
@@ -155,9 +156,10 @@
                             {#if conversacion.length === 0}
                                 <div class="col-12 p-0 d-none d-lg-block">
                                     <div
-                                        class="d-flex align-items-center justify-content-center sin-mensajes"
+                                        class="d-flex flex-column align-items-center justify-content-center sin-mensajes"
                                     >
                                         <h3>Selecciona una conversación</h3>
+                                        <!-- <img src={imagenConversacion} class="img-fluid" alt="" /> -->
                                     </div>
                                 </div>
                             {:else}
@@ -227,6 +229,10 @@
 </section>
 
 <style>
+    img {
+        max-width: 600px;
+    }
+
     #mensajes {
         padding-top: 40px;
     }
@@ -277,8 +283,27 @@
             height: calc(450px + 69.8px + 70.4px) !important;
         }
 
+        .sin-mensajes::before {
+            content: "";
+            background-image: url("../assets/conversacion_2.png");
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 30%;
+        }
+
         .mensajes {
-            height: 450px !important;
+            height: 442.8px !important;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        
+        .sin-mensajes::before {
+            background-size: 350px;
         }
     }
 </style>
