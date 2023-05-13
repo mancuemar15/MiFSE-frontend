@@ -3,10 +3,11 @@
     import ProtectorRutaPrivada from "./ProtectorRutaPrivada.svelte";
 
     export let path;
+    export let tipoUsuario = 2;
 </script>
 
 <Route {path} let:params let:location let:navigate>
-    <ProtectorRutaPrivada>
+    <ProtectorRutaPrivada {tipoUsuario}>
         <slot {params} {location} {navigate} />
     </ProtectorRutaPrivada>
 </Route>

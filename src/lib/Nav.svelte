@@ -161,6 +161,17 @@
                                     Perfil
                                 </Link>
                             </li>
+                            {#if $usuario.tipoUsuario.id == 1}
+                                <li>
+                                    <Link
+                                        class="dropdown-item"
+                                        to="gestion-usuarios"
+                                        {getProps}
+                                    >
+                                        Gestión de usuarios
+                                    </Link>
+                                </li>
+                            {/if}
                             <li><hr class="dropdown-divider" /></li>
                             <li>
                                 <button

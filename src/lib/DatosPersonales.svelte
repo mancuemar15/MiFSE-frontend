@@ -46,13 +46,15 @@
         tipo="password"
         nombreInput="contrasena"
     />
-    <DatoPersonal
-        nombre="Tipo de residente"
-        bind:valor={$usuario.tipoResidente}
-        tipo="select"
-        nombreInput="tipoResidente"
-        opcionesSelect={tiposResidentes}
-    />
+    {#if $usuario.tipoResidente}
+        <DatoPersonal
+            nombre="Tipo de residente"
+            bind:valor={$usuario.tipoResidente}
+            tipo="select"
+            nombreInput="tipoResidente"
+            opcionesSelect={tiposResidentes}
+        />
+    {/if}
 </div>
 
 <style>

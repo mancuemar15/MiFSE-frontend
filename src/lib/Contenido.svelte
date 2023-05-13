@@ -31,7 +31,7 @@
     <RutaPrivada path="/mensajes">
         <Mensajes />
     </RutaPrivada>
-    <RutaPrivada path="/gestion-usuarios">
+    <RutaPrivada path="/gestion-usuarios" tipoUsuario={1}>
         <Usuarios />
     </RutaPrivada>
     <Modals>
