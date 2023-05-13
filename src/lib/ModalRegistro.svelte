@@ -49,7 +49,6 @@
             tipoResidente: { id: parseInt(tipoResidente) },
             tipoUsuario: { id: 2 },
         };
-        console.log(JSON.stringify(datos));
         fetch(url, {
             method: "POST",
             headers: {

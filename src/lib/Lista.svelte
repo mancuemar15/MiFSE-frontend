@@ -57,7 +57,6 @@
     const getLista = async () => {
         const response = await fetch(`http://localhost:8090/listas/${id}`);
         lista = await response.json();
-        console.log(lista);
         if (!response.ok || !($usuario.id === lista.residente.id)) {
             redireccionarNotFound();
         }

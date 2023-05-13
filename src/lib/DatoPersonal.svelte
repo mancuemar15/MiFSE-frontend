@@ -26,7 +26,6 @@
             u[nombreInput] = document.getElementById(nombreInput).value;
             return u;
         });
-        console.log($usuario);
         fetch(`http://localhost:8090/usuarios`, {
             method: "PUT",
             headers: {

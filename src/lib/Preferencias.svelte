@@ -24,7 +24,6 @@
         }
         lista = await response.json();
         preferenciasArrastrables = await getPreferenciasArrastrables(lista);
-        console.log(preferenciasArrastrables);
         titulacion =
             lista.preferencias[0].especialidadCentro.especialidad.titulacion.nombre.toLowerCase();
     };

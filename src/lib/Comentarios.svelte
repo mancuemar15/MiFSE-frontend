@@ -24,8 +24,6 @@
     function enviarComentario(event) {
         event.preventDefault();
         const comentario = event.target.comentario.value.trim();
-        console.log(event.target.elements[0].value);
-        console.log(comentario);
         event.target.reset();
     }
 </script>

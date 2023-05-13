@@ -29,7 +29,6 @@
             fechaAlta: new Date().toJSON(),
             tipoUsuario: { id: 1 },
         };
-        console.log(datos);
         fetch(url, {
             method: "POST",
             headers: {

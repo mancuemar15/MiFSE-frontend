@@ -14,7 +14,6 @@
         const url = `http://localhost:8090/listas/residente/${$usuario.id}`;
         const response = await fetch(url);
         listas = await response.json();
-        console.log(listas);
     };
 
     onMount(() => {
