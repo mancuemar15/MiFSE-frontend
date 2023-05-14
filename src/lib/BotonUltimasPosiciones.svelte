@@ -1,6 +1,10 @@
 <script>
+    import { getContext } from "svelte";
+
     export let titulacion;
     export let actualizarDatos;
+
+    const URL = getContext("URL");
 
     async function obtenerDatos() {
         try {
@@ -9,11 +13,9 @@
                 .replace(/[\u0300-\u036f]/g, "")
                 .toLowerCase();
             const respuesta = await fetch(
-                `http://localhost:8090/ultimas-posiciones/${nombreTitulacion}`,
+                `${URL.ultimasPosiciones}/${nombreTitulacion}`,
                 {
                     method: "GET",
-                    headers: { "Access-Control-Allow-Origin": "*" },
-                    mode: "cors",
                 }
             );
             const datos = await respuesta.json();

@@ -1,8 +1,11 @@
 <script>
-    import { onMount, onDestroy } from "svelte";
+    import { onMount, onDestroy, getContext } from "svelte";
     import { Link } from "svelte-navigator";
 
     export let placeholder = "Buscar...";
+
+    const URL = getContext("URL");
+
     let terminoBusqueda = "";
     let sugerenciasCentros = [];
     let mostrarSugerencias = false;
@@ -20,7 +23,7 @@
     async function getSugerenciasCentros() {
         try {
             const response = await fetch(
-                `http://localhost:8090/centros/buscar/${terminoBusqueda}`
+                `${URL.centrosSugerencias}/${terminoBusqueda}`
             );
             const data = await response.json();
             sugerenciasCentros = data;

@@ -10,9 +10,12 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import { getContext } from "svelte";
 
     export let idCentro;
     export let comentarios = [];
+
+    const URL = getContext("URL");
 
     let configuracionEstrellas = {
         countStars: 5,
@@ -40,7 +43,7 @@
                 valoracion: configuracionEstrellas.score,
                 fecha: new Date().toJSON(),
             };
-            fetch(`http://localhost:8090/comentarios`, {
+            fetch(URL.comentarios, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,7 +78,7 @@
     };
 
     const borrarComentario = (idComentario) => {
-        fetch(`http://localhost:8090/comentarios/${idComentario}`, {
+        fetch(`${URL.comentarios}/${idComentario}`, {
             method: "DELETE",
         })
             .then((response) => {

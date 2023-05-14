@@ -1,10 +1,13 @@
 <script>
+    import { getContext } from "svelte";
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
         anadirNotificacionCargando,
         eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
+
+    const URL = getContext("URL");
 
     const enviarFormulario = (event) => {
         event.preventDefault();
@@ -20,7 +23,7 @@
         const idNotificacion = anadirNotificacionCargando(
             "Enviando mensaje..."
         );
-        fetch("http://localhost:8090/contacto", {
+        fetch(URL.contacto, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

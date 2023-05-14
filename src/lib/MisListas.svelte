@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import { usuario } from "./store";
     import { Link } from "svelte-navigator";
     import {
@@ -7,11 +7,13 @@
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
 
+    const URL = getContext("URL");
+
     let listas = [];
     let listasEditandose = [];
 
     const getListas = async () => {
-        const url = `http://localhost:8090/listas/residente/${$usuario.id}`;
+        const url = `${URL.listas}/residente/${$usuario.id}`;
         const response = await fetch(url);
         listas = await response.json();
     };
@@ -21,7 +23,7 @@
     });
 
     const eliminarLista = (idLista) => {
-        fetch(`http://localhost:8090/listas/${idLista}`, {
+        fetch(`${URL.listas}/${idLista}`, {
             method: "DELETE",
         })
             .then((response) => response.json())
@@ -47,7 +49,7 @@
         const lista = listas.find((l) => l.id === idLista);
         // @ts-ignore
         lista.nombre = document.getElementById(`nombre-lista-${idLista}`).value;
-        fetch(`http://localhost:8090/listas`, {
+        fetch(URL.listas, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 <script>
     import TituloPagina from "./TituloPagina.svelte";
     import DragDrop from "svelte-dragdroplist";
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import { navigate } from "svelte-navigator";
     import { quitarAcentos } from "./utilidadesString";
     import { redireccionarNotFound } from "./utilidadesLinks";
@@ -12,12 +12,14 @@
 
     export let id;
 
+    const URL = getContext("URL");
+
     let lista = {};
     let preferenciasArrastrables = [];
     let titulacion = "";
 
     const getLista = async () => {
-        const url = `http://localhost:8090/listas/${id}/preferencias`;
+        const url = `${URL.listas}/${id}/preferencias`;
         const response = await fetch(url);
         if (!response.ok) {
             redireccionarNotFound();
@@ -63,7 +65,7 @@
     }
 
     function guardarPreferencias() {
-        fetch(`http://localhost:8090/listas`, {
+        fetch(URL.listas, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

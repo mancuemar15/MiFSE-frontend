@@ -7,18 +7,20 @@
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
     import { closeModal } from "svelte-modals";
+    import { getContext } from "svelte";
 
     export let isOpen;
     export let abrirOtra;
+
+    const URL = getContext("URL");
 
     function enviarFormularioInicioSesion(event) {
         event.preventDefault();
         const formulario = event.target;
         const email = formulario.email.value;
         const contrasena = formulario.contrasena.value;
-        const url = "http://localhost:8090/usuarios/login";
         const datos = { email, contrasena };
-        fetch(url, {
+        fetch(`${URL.usuarios}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

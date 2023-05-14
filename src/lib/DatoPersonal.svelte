@@ -1,4 +1,5 @@
 <script>
+    import { getContext } from "svelte";
     import { usuario } from "./store";
     import {
         anadirNotificacionExito,
@@ -6,6 +7,7 @@
     } from "./utilidadesNotificaciones";
 
     let editando = false;
+    const URL = getContext("URL");
 
     export let nombre;
     export let valor;
@@ -26,7 +28,7 @@
             u[nombreInput] = document.getElementById(nombreInput).value;
             return u;
         });
-        fetch(`http://localhost:8090/usuarios`, {
+        fetch(URL.usuarios, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

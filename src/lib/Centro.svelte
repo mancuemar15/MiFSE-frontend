@@ -1,5 +1,5 @@
 <script>
-    import { onMount, afterUpdate } from "svelte";
+    import { onMount, afterUpdate, getContext } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Mapa from "./Mapa.svelte";
     import Comentarios from "./Comentarios.svelte";
@@ -8,13 +8,15 @@
 
     export let id;
 
+    const URL = getContext("URL");
+
     let imagenCentro = `/img/centro/centro.jpg`;
     let centro = {};
     let especialidadesPorTitulacion = [];
     let numeroAnteriorComentarios = 0;
 
     const getCentro = async () => {
-        const response = await fetch(`http://localhost:8090/centros/${id}`);
+        const response = await fetch(`${URL.centros}/${id}`);
         if (!response.ok) {
             redireccionarNotFound();
         }
@@ -23,9 +25,7 @@
     };
 
     const getEspecialidadesPorTitulacion = async () => {
-        const response = await fetch(
-            `http://localhost:8090/especialidades/centro/${id}`
-        );
+        const response = await fetch(`${URL.especialidadesCentro}/${id}`);
         const especialidades = await response.json();
         agruparEspecialidadesPorTitulacion(especialidades);
     };

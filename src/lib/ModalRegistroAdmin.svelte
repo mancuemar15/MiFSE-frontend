@@ -6,8 +6,11 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import { getContext } from "svelte";
 
     export let isOpen;
+
+    const URL = getContext("URL");
 
     function registrarResidente(event) {
         event.preventDefault();
@@ -19,7 +22,6 @@
             : null;
         const email = formulario.email.value;
         const contrasena = formulario.contrasena.value;
-        const url = "http://localhost:8090/administradores/registro";
         const datos = {
             nombre,
             apellido1,
@@ -29,7 +31,7 @@
             fechaAlta: new Date().toJSON(),
             tipoUsuario: { id: 1 },
         };
-        fetch(url, {
+        fetch(`${URL.administradores}/registro`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

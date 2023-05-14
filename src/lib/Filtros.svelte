@@ -8,6 +8,8 @@
     export let centros;
     export let titulacion;
 
+    const URL = getContext("URL");
+
     let tiposTrabajoFinResidencia = [];
     let tiposGuardiasFindesFestivos = [];
     let especialidades = [];
@@ -28,12 +30,12 @@
     let sueldosSeleccionados = [1000, 2000];
 
     const getTiposTrabajoFinResidencia = async () => {
-        const response = await fetch(`http://localhost:8090/tipos-trabajos`);
+        const response = await fetch(URL.tiposTrabajos);
         tiposTrabajoFinResidencia = await response.json();
     };
 
     const getTiposGuardiasFindesFestivos = async () => {
-        const response = await fetch(`http://localhost:8090/tipos-guardias`);
+        const response = await fetch(URL.tiposGuardias);
         tiposGuardiasFindesFestivos = await response.json();
     };
 

@@ -1,7 +1,7 @@
 <script>
     import { fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import { capitalizar } from "./utilidadesString";
     import { closeModal } from "svelte-modals";
     import {
@@ -12,16 +12,18 @@
     export let isOpen;
     export let abrirOtra;
 
+    const URL = getContext("URL");
+
     let titulaciones = [];
     let tiposResidente = [];
 
     const getTitulaciones = async () => {
-        const response = await fetch("http://localhost:8090/titulaciones");
+        const response = await fetch(URL.titulaciones);
         titulaciones = await response.json();
     };
 
     const getTiposResidente = async () => {
-        const response = await fetch("http://localhost:8090/tipos-residentes");
+        const response = await fetch(URL.tiposResidentes);
         tiposResidente = await response.json();
     };
 
@@ -37,7 +39,6 @@
         const contrasena = formulario.contrasena.value;
         const titulacion = formulario.titulacion.value;
         const tipoResidente = formulario.tipoResidente.value;
-        const url = "http://localhost:8090/residentes/registro";
         const datos = {
             nombre,
             apellido1,
@@ -49,7 +50,7 @@
             tipoResidente: { id: parseInt(tipoResidente) },
             tipoUsuario: { id: 2 },
         };
-        fetch(url, {
+        fetch(`${URL.residentes}/registro`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -8,12 +8,15 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import { getContext } from "svelte";
 
     export let isOpen;
 
+    const URL = getContext("URL");
+
     const borrarCuenta = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:8090/usuarios/${$usuario.id}`, {
+        fetch(`${URL.usuarios}/${$usuario.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

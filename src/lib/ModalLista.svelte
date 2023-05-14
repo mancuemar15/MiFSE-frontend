@@ -7,19 +7,21 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import { getContext } from "svelte";
 
     export let isOpen;
     export let lista;
+
+    const URL = getContext("URL");
 
     function guardarLista(event) {
         event.preventDefault();
         lista.nombre = event.target.nombreLista.value;
 
-        fetch("http://localhost:8090/listas", {
+        fetch(URL.listas, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // Authorization: $usuario.token,
             },
             body: JSON.stringify(lista),
         })

@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Filtros from "./Filtros.svelte";
     import CentroFiltrado from "./CentroFiltrado.svelte";
@@ -19,6 +19,8 @@
     export let titulacion;
     export let id;
 
+    const URL = getContext("URL");
+
     const titulacionesConTildes = {
         biologia: "biología",
         enfermeria: "enfermería",
@@ -32,7 +34,7 @@
 
     const getCentrosPorTitulacion = async () => {
         const response = await fetch(
-            `http://localhost:8090/especialidades-centros/${titulacion}`
+            `${URL.especialidadesCentros}/${titulacion}`
         );
         if (!response.ok) {
             redireccionarNotFound();
@@ -40,22 +42,8 @@
         centros = await response.json();
     };
 
-    // const getCentrosSeleccionadosPorIdLista = async () => {
-    //     const response = await fetch(
-    //         `http://localhost:8090/especialidades-centros/lista/${id}`
-    //     );
-    //     if (!response.ok) {
-    //         redireccionarNotFound();
-    //         return;
-    //     }
-    //     // if (!$usuario.id === centrosSeleccionados.residente.id) {
-    //     //     redireccionarNotFound();
-    //     // }
-    //     $centrosSeleccionados[titulacion] = await response.json();
-    // };
-
     const getLista = async () => {
-        const response = await fetch(`http://localhost:8090/listas/${id}`);
+        const response = await fetch(`${URL.listas}/${id}`);
         lista = await response.json();
         if (!response.ok || !($usuario.id === lista.residente.id)) {
             redireccionarNotFound();
@@ -100,7 +88,7 @@
             lista.fechaCreacion = new Date().toJSON();
             abrirModalLista(lista);
         } else {
-            const response = await fetch(`http://localhost:8090/listas`, {
+            const response = await fetch(URL.listas, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

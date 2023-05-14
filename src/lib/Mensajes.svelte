@@ -2,7 +2,7 @@
     import Mensaje from "./Mensaje.svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import { usuario } from "./store";
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
@@ -10,13 +10,14 @@
     import { useLocation } from "svelte-navigator";
 
     const location = useLocation();
+    const URL = getContext("URL");
 
     let usuariosConMensajesIntercambiados = [];
     let usuariosFiltrados = [];
     let mensajes = [];
 
     const getUsuariosConMensajesIntercambiados = async () => {
-        const url = `http://localhost:8090/mensajes/usuarios/${$usuario.id}`;
+        const url = `${URL.mensajes}/usuarios/${$usuario.id}`;
         const response = await fetch(url);
         usuariosConMensajesIntercambiados = await response.json();
         usuariosFiltrados = await usuariosConMensajesIntercambiados;
@@ -30,7 +31,7 @@
     });
 
     const getConversacion = async (idUsuario) => {
-        const url = `http://localhost:8090/mensajes/usuarios/${$usuario.id}/${idUsuario}`;
+        const url = `${URL.mensajes}/usuarios/${$usuario.id}/${idUsuario}`;
         const response = await fetch(url);
         if (response.status === 200) {
             mensajes = await response.json();
@@ -96,7 +97,7 @@
             receptor: { id: idReceptor },
             fechaEnvio: new Date().toJSON(),
         };
-        fetch(`http://localhost:8090/mensajes`, {
+        fetch(URL.mensajes, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

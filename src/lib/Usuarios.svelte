@@ -1,18 +1,19 @@
 <script>
     import TituloPagina from "./TituloPagina.svelte";
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
     import { abrirModalRegistroAdmin } from "./utilidadesModales";
 
+    const URL = getContext("URL");
+
     let usuarios = [];
     let usuariosFiltrados = [];
 
     const getUsuarios = async () => {
-        const url = `http://localhost:8090/usuarios`;
-        const response = await fetch(url);
+        const response = await fetch(URL.usuarios);
         usuarios = await response.json();
         usuariosFiltrados = await usuarios;
     };
@@ -34,7 +35,7 @@
     });
 
     const bloquearUsuario = (idUsuario) => {
-        fetch(`http://localhost:8090/usuarios/bloquear/${idUsuario}`, {
+        fetch(`${URL.usuarios}/bloquear/${idUsuario}`, {
             method: "PUT",
         })
             .then((response) => response.json())

@@ -1,13 +1,14 @@
 <script>
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import DatoPersonal from "./DatoPersonal.svelte";
     import { usuario } from "./store";
+
+    const URL = getContext("URL");
 
     let tiposResidentes = [];
 
     const getTiposResidente = async () => {
-        const url = `http://localhost:8090/tipos-residentes`;
-        const response = await fetch(url);
+        const response = await fetch(URL.tiposResidentes);
         tiposResidentes = await response.json();
     };
 
