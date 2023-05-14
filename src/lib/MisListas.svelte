@@ -1,5 +1,5 @@
 <script>
-    import { getContext, onMount } from "svelte";
+    import { afterUpdate, getContext, onMount } from "svelte";
     import { usuario } from "./store";
     import { Link } from "svelte-navigator";
     import {
@@ -13,9 +13,12 @@
     let listasEditandose = [];
 
     const getListas = async () => {
-        const url = `${URL.listas}/residente/${$usuario.id}`;
-        const response = await fetch(url);
-        listas = await response.json();
+        const response = await fetch(`${URL.listas}/residente/${$usuario.id}`);
+        if (response.status === 200) {
+            listas = await response.json();
+        } else {
+            listas = [];
+        }
     };
 
     onMount(() => {
@@ -26,10 +29,13 @@
         fetch(`${URL.listas}/${idLista}`, {
             method: "DELETE",
         })
-            .then((response) => response.json())
-            .then(() => {
-                anadirNotificacionError("Error al eliminar la lista");
-                getListas();
+            .then((response) => {
+                if (!response.ok) {
+                    anadirNotificacionError("Error al eliminar la lista");
+                } else {
+                    anadirNotificacionExito("Lista eliminada correctamente");
+                    getListas();
+                }
             })
             .catch(() => {
                 anadirNotificacionExito("Lista eliminada correctamente");
@@ -63,7 +69,7 @@
                 );
                 getListas();
             })
-            .catch((error) => {
+            .catch(() => {
                 anadirNotificacionError(
                     "Error al cambiar el nombre de la lista"
                 );
