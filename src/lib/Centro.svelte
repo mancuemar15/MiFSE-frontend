@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, afterUpdate } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
     import Mapa from "./Mapa.svelte";
     import Comentarios from "./Comentarios.svelte";
@@ -11,6 +11,7 @@
     let imagenCentro = `/img/centro/centro.jpg`;
     let centro = {};
     let especialidadesPorTitulacion = [];
+    let numeroAnteriorComentarios = 0;
 
     const getCentro = async () => {
         const response = await fetch(`http://localhost:8090/centros/${id}`);
@@ -18,6 +19,7 @@
             redireccionarNotFound();
         }
         centro = await response.json();
+        numeroAnteriorComentarios = await centro.comentarios.length;
     };
 
     const getEspecialidadesPorTitulacion = async () => {
@@ -31,6 +33,16 @@
     onMount(() => {
         getCentro();
         getEspecialidadesPorTitulacion();
+    });
+
+    afterUpdate(() => {
+        if (
+            centro.comentarios &&
+            centro.comentarios.length !== numeroAnteriorComentarios
+        ) {
+            numeroAnteriorComentarios = centro.comentarios.length;
+            getCentro();
+        }
     });
 
     fetch(`/img/centro/${id}.jpg`)
@@ -72,9 +84,8 @@
                         <h3>Información del centro</h3>
                         <ul>
                             <li>
-                                <strong>Valoración</strong>: {centro.valoracionMedia
-                                    ? centro.valoracionMedia
-                                    : "Sin valoraciones"}
+                                <strong>Valoración</strong>: {centro.valoracionMedia ??
+                                    "Sin valoraciones"}
                             </li>
                             <li>
                                 <strong>Dirección</strong>: {centro.direccion}
@@ -101,7 +112,11 @@
                                     {#each Object.keys(especialidadesPorTitulacion) as titulacion}
                                         <li class="titulacion">
                                             <details>
-                                                <summary>{capitalizar(titulacion)}</summary>
+                                                <summary
+                                                    >{capitalizar(
+                                                        titulacion
+                                                    )}</summary
+                                                >
                                                 <ul
                                                     class="list-group-flush especialidades mt-2"
                                                 >
@@ -109,7 +124,9 @@
                                                         <li>
                                                             <i
                                                                 class="bi bi-chevron-right"
-                                                            />{capitalizar(especialidad)}
+                                                            />{capitalizar(
+                                                                especialidad
+                                                            )}
                                                         </li>
                                                     {/each}
                                                 </ul>
@@ -127,9 +144,9 @@
             </div>
         </div>
     </section>
-    {#key centro}
-        <Mapa latitud={centro.latitud} longitud={centro.longitud} />
-    {/key}
+    <!-- {#key centro} -->
+    <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    <!-- {/key} -->
     <Comentarios bind:comentarios={centro.comentarios} idCentro={centro.id} />
 {:catch error}
     <p>Error: {error.message}</p>
