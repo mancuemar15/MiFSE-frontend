@@ -5,6 +5,7 @@
     import BorrarCuenta from "./BorrarCuenta.svelte";
     import { Router, Route, Link, useLocation } from "svelte-navigator";
     import { redireccionarNotFound } from "./utilidadesLinks";
+    import { usuario } from "./store";
 
     const opcionesMenuPerfil = [
         {
@@ -51,16 +52,29 @@
                     <div class="container-fluid">
                         <div class="row">
                             {#each opcionesMenuPerfil as opcion}
-                                <Link
-                                    to={opcion.ruta}
-                                    class="col-12 text-decoration-none border-bottom opcion-menu-perfil d-flex bg-transparent py-3"
-                                    {getProps}
-                                >
-                                    <i
-                                        class="{opcion.icono} d-flex justify-content-center"
-                                    />
-                                    <h3>{opcion.nombre}</h3>
-                                </Link>
+                                {#if $usuario && $usuario.tipoUsuario.id === 1 && opcion.nombre !== "Mis listas"}
+                                    <Link
+                                        to={opcion.ruta}
+                                        class="col-12 text-decoration-none border-bottom opcion-menu-perfil d-flex bg-transparent py-3"
+                                        {getProps}
+                                    >
+                                        <i
+                                            class="{opcion.icono} d-flex justify-content-center"
+                                        />
+                                        <h3>{opcion.nombre}</h3>
+                                    </Link>
+                                {:else if $usuario && $usuario.tipoUsuario.id === 2}
+                                    <Link
+                                        to={opcion.ruta}
+                                        class="col-12 text-decoration-none border-bottom opcion-menu-perfil d-flex bg-transparent py-3"
+                                        {getProps}
+                                    >
+                                        <i
+                                            class="{opcion.icono} d-flex justify-content-center"
+                                        />
+                                        <h3>{opcion.nombre}</h3>
+                                    </Link>
+                                {/if}
                             {/each}
                         </div>
                     </div>
@@ -77,7 +91,7 @@
                     <Route path="borrar-cuenta">
                         <BorrarCuenta />
                     </Route>
-                    <Route>{redireccionarNotFound()}</Route>
+                    <Route>{redireccionarNotFound}</Route>
                 </Router>
             </div>
         </div>

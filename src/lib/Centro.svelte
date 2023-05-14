@@ -85,7 +85,7 @@
                         <ul>
                             <li>
                                 <strong>Valoración</strong>: {centro.valoracionMedia
-                                    .toFixed(1)
+                                    ?.toFixed(1)
                                     .replace(".", ",") ?? "Sin valoraciones"}
                             </li>
                             <li>

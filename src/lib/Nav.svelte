@@ -150,24 +150,26 @@
                         <ul
                             class="dropdown-menu dropdown-menu-end text-small border-0"
                         >
-                            <li>
-                                <Link
-                                    class="dropdown-item"
-                                    to="mensajes"
-                                    {getProps}
-                                >
-                                    Mensajes
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    class="dropdown-item"
-                                    to="perfil/mis-listas"
-                                    {getProps}
-                                >
-                                    Mis listas
-                                </Link>
-                            </li>
+                            {#if $usuario.tipoUsuario.id === 2}
+                                <li>
+                                    <Link
+                                        class="dropdown-item"
+                                        to="mensajes"
+                                        {getProps}
+                                    >
+                                        Mensajes
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        class="dropdown-item"
+                                        to="perfil/mis-listas"
+                                        {getProps}
+                                    >
+                                        Mis listas
+                                    </Link>
+                                </li>
+                            {/if}
                             <li>
                                 <Link
                                     class="dropdown-item"

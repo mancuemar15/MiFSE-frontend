@@ -5,6 +5,8 @@
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
+        anadirNotificacionCargando,
+        eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
     import { getContext } from "svelte";
 
@@ -31,6 +33,9 @@
             fechaAlta: new Date().toJSON(),
             tipoUsuario: { id: 1 },
         };
+        const idNotificacion = anadirNotificacionCargando(
+            "Registrando usuario"
+        );
         fetch(`${URL.administradores}/registro`, {
             method: "POST",
             headers: {
@@ -46,6 +51,7 @@
                 }
             })
             .then(() => {
+                eliminarNotificacionCargando(idNotificacion);
                 anadirNotificacionExito("Registro completado con éxito");
                 closeModal();
             })

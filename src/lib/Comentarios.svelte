@@ -135,8 +135,10 @@
                             />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary boton-azul"
-                        >Enviar</button
+                    <button
+                        type="submit"
+                        class="btn btn-primary boton-azul"
+                        disabled={$usuario.tipoUsuario.id === 1}>Enviar</button
                     >
                 </form>
             {:else}
