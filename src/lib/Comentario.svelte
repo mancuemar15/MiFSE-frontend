@@ -3,6 +3,7 @@
     import { usuario } from "./store";
     import { navigate } from "svelte-navigator";
     import { abrirModalInicioSesion } from "./utilidadesModales";
+    import { anadirNotificacionInfo } from "./utilidadesNotificaciones";
 
     export let comentario = {};
     export let borrarComentario;
@@ -33,7 +34,7 @@
                         >{escribirNombreResidente(comentario)}</button
                     >
                     <ul class="dropdown-menu">
-                        {#if $usuario}
+                        {#if $usuario && $usuario.verificado}
                             <li>
                                 <button
                                     class="dropdown-item"
@@ -51,7 +52,40 @@
                                     Enviar mensaje
                                 </button>
                             </li>
+                        {:else if $usuario && !$usuario.verificado}
+                            <li>
+                                <button
+                                    class="dropdown-item"
+                                    type="button"
+                                    on:click={() => {
+                                        anadirNotificacionInfo(
+                                            "Verifica tu cuenta para poder enviar mensajes"
+                                        );
+                                    }}
+                                >
+                                    Enviar mensaje
+                                </button>
+                            </li>
+                        {:else if !$usuario}
+                            <li>
+                                <button
+                                    class="dropdown-item"
+                                    type="button"
+                                    on:click={abrirModalInicioSesion}
+                                >
+                                    Enviar mensaje
+                                </button>
+                            </li>
                         {:else}
+                            <li>
+                                <button
+                                    class="dropdown-item"
+                                    type="button"
+                                    on:click={abrirModalInicioSesion}
+                                >
+                                    Enviar mensaje
+                                </button>
+                            </li>
                             <li>
                                 <button
                                     class="dropdown-item"

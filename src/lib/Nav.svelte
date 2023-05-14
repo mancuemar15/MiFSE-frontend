@@ -98,17 +98,33 @@
                             >
                                 {opcionNav.texto}
                             </button>
-                            <ul class="dropdown-menu border-0 my-2">
+                            <ul
+                                class="dropdown-menu border-0 my-2 menu-usuario"
+                            >
                                 {#each opcionNav.enlaces as enlace}
-                                    <li>
-                                        <Link
-                                            class="dropdown-item py-2"
-                                            to="{opcionNav.ruta}/{enlace.ruta}"
-                                            {getProps}
-                                        >
-                                            {enlace.texto}
-                                        </Link>
-                                    </li>
+                                    {#if $usuario && $usuario.tipoUsuario.id === 2}
+                                        {#if $usuario.titulacion.nombre == enlace.texto.toUpperCase()}
+                                            <li>
+                                                <Link
+                                                    class="dropdown-item py-2"
+                                                    to="{opcionNav.ruta}/{enlace.ruta}"
+                                                    {getProps}
+                                                >
+                                                    {enlace.texto}
+                                                </Link>
+                                            </li>
+                                        {/if}
+                                    {:else}
+                                        <li>
+                                            <Link
+                                                class="dropdown-item py-2"
+                                                to="{opcionNav.ruta}/{enlace.ruta}"
+                                                {getProps}
+                                            >
+                                                {enlace.texto}
+                                            </Link>
+                                        </li>
+                                    {/if}
                                 {/each}
                             </ul>
                         </li>

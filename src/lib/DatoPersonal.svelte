@@ -25,10 +25,22 @@
         editando = false;
         document.getElementById(nombreInput).disabled = true;
         usuario.update((u) => {
-            u[nombreInput] = document.getElementById(nombreInput).value;
+            if (nombreInput === "tipoResidente") {
+                u[nombreInput] = {
+                    id: parseInt(document.getElementById(nombreInput).value),
+                };
+            } else {
+                u[nombreInput] = document.getElementById(nombreInput).value;
+            }
             return u;
         });
-        fetch(URL.usuarios, {
+        let url = "";
+        if ($usuario.tipoUsuario.id === 1) {
+            url = URL.administradores;
+        } else if ($usuario.tipoUsuario.id === 2) {
+            url = URL.residentes;
+        }
+        fetch(url, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

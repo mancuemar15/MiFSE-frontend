@@ -45,7 +45,7 @@
     const getLista = async () => {
         const response = await fetch(`${URL.listas}/${id}`);
         lista = await response.json();
-        if (!response.ok || !($usuario.id === lista.residente.id)) {
+        if ($usuario.id !== lista.residente.id) {
             redireccionarNotFound();
         }
         $centrosSeleccionados[titulacion] = lista.preferencias.map(
@@ -81,6 +81,7 @@
             }
         );
 
+        lista.residente = { id: $usuario.id };
         lista.fechaActualizacion = new Date().toJSON();
         lista.preferencias = preferencias;
 
@@ -214,56 +215,6 @@
                                             {especialidadCentro}
                                             {titulacion}
                                         />
-                                        <!-- <div class="blog-author">
-                                            <div
-                                                class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between"
-                                            >
-                                                <label
-                                                    class="form-check-label"
-                                                    for="check-{especialidadCentro
-                                                        .especialidad
-                                                        .id}-{especialidadCentro
-                                                        .centro.id}"
-                                                >
-                                                    <div class="text-start">
-                                                        <h4>
-                                                            {especialidadCentro
-                                                                .centro.nombre}
-                                                        </h4>
-                                                        <div
-                                                            class="social-links"
-                                                        >
-                                                            <span
-                                                                class="text-muted fst-italic"
-                                                                >{especialidadCentro
-                                                                    .especialidad
-                                                                    .nombre}</span
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </label>
-                                                <div>
-                                                    <input
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        value="{especialidadCentro
-                                                            .especialidad
-                                                            .id}-{especialidadCentro
-                                                            .centro.id}"
-                                                        id="check-{especialidadCentro
-                                                            .especialidad
-                                                            .id}-{especialidadCentro
-                                                            .centro.id}"
-                                                        checked
-                                                        on:change={(e) =>
-                                                            quitarCentro(
-                                                                e,
-                                                                especialidadCentro
-                                                            )}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 {/each}
                             {:else}
@@ -284,7 +235,8 @@
                                         class="btn boton-azul"
                                         disabled={$centrosSeleccionados[
                                             titulacion
-                                        ].length === 0}
+                                        ].length === 0 ||
+                                            $usuario.tipoUsuario.id === 1}
                                         on:click={guardarLista}
                                         >Guardar lista</button
                                     >

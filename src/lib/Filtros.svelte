@@ -2,7 +2,7 @@
     //@ts-nocheck
     import RangeSlider from "svelte-range-slider-pips";
     import Svelecte, { config } from "svelecte";
-    import { onMount } from "svelte";
+    import { onMount, getContext } from "svelte";
     import { centrosFiltrados, centrosSeleccionados } from "./store";
 
     export let centros;

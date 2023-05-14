@@ -32,4 +32,13 @@ const eliminarNotificacionCargando = (id) => {
     toast.pop(id);
 };
 
-export { anadirNotificacionExito, anadirNotificacionError, anadirNotificacionCargando, eliminarNotificacionCargando };
+const anadirNotificacionInfo = (mensaje) => {
+    toast.push(mensaje, {
+        theme: {
+            '--toastBackground': '#4154f1',
+            '--toastBarBackground': '#012970'
+        }
+    });
+};
+
+export { anadirNotificacionExito, anadirNotificacionError, anadirNotificacionCargando, eliminarNotificacionCargando, anadirNotificacionInfo };

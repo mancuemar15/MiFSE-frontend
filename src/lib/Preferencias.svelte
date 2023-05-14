@@ -26,8 +26,8 @@
         }
         lista = await response.json();
         preferenciasArrastrables = await getPreferenciasArrastrables(lista);
-        titulacion =
-            lista.preferencias[0].especialidadCentro.especialidad.titulacion.nombre.toLowerCase();
+        titulacion = lista.residente.titulacion.nombre.toLowerCase();
+        titulacion = quitarAcentos(titulacion);
     };
 
     const getPreferenciasArrastrables = async (lista) => {
@@ -61,7 +61,7 @@
 
     function anadirCentros() {
         guardarPreferencias();
-        navigate(`/lista/${quitarAcentos(titulacion)}/${id}`);
+        navigate(`/lista/${titulacion}/${id}`);
     }
 
     function guardarPreferencias() {

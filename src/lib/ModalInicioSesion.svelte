@@ -27,12 +27,17 @@
             },
             body: JSON.stringify(datos),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                anadirNotificacionExito("Inicio de sesión correcto");
-                const usuario = data;
-                iniciarSesion(usuario);
-                closeModal();
+            .then(async (response) => {
+                if (response.status === 200) {
+                    anadirNotificacionExito("Inicio de sesión correcto");
+                    const data = await response.json();
+                    iniciarSesion(data);
+                    closeModal();
+                } else {
+                    anadirNotificacionError(
+                        "Se ha producido un error al iniciar sesión"
+                    );
+                }
             })
             .catch(() => {
                 anadirNotificacionError(
