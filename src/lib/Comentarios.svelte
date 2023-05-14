@@ -17,7 +17,7 @@
     let configuracionEstrellas = {
         countStars: 5,
         range: { min: 0, max: 5, step: 0.5 },
-        score: 0.0,
+        showScore: true,
         starConfig: {
             size: 30,
             fillColor: "#F9ED4F",
@@ -29,33 +29,50 @@
 
     const enviarComentario = (event) => {
         event.preventDefault();
-        const comentarioAEnviar = {
-            residente: {
-                id: $usuario.id,
-            },
-            centro: {
-                id: idCentro,
-            },
-            contenido: event.target.comentario.value.trim(),
-            valoracion: configuracionEstrellas.score,
-            fecha: new Date().toJSON(),
-        };
-        fetch(`http://localhost:8090/comentarios`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(comentarioAEnviar),
-        })
-            .then((response) => response.json())
-            .then((comentario) => {
-                anadirNotificacionExito("Comentario guardado correctamente");
-                comentarios = [...comentarios, comentario];
-                event.target.reset();
+        if (comprobarValidezEstrellas(event.target.elements[0])) {
+            const comentarioAEnviar = {
+                residente: {
+                    id: $usuario.id,
+                },
+                centro: {
+                    id: idCentro,
+                },
+                contenido: event.target.comentario.value.trim(),
+                valoracion: configuracionEstrellas.score,
+                fecha: new Date().toJSON(),
+            };
+            fetch(`http://localhost:8090/comentarios`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(comentarioAEnviar),
             })
-            .catch(() => {
-                anadirNotificacionError("Error al guardar el comentario");
-            });
+                .then((response) => response.json())
+                .then((comentario) => {
+                    anadirNotificacionExito(
+                        "Comentario guardado correctamente"
+                    );
+                    comentarios = [...comentarios, comentario];
+                    configuracionEstrellas.score = undefined;
+                    event.target.reset();
+                })
+                .catch(() => {
+                    anadirNotificacionError("Error al guardar el comentario");
+                });
+        }
+    };
+
+    const comprobarValidezEstrellas = (input) => {
+        let esValido = false;
+        if (isNaN(configuracionEstrellas.score)) {
+            input.setCustomValidity("Debes valorar el centro");
+            input.reportValidity();
+        } else {
+            input.setCustomValidity("");
+            esValido = true;
+        }
+        return esValido;
     };
 </script>
 
@@ -76,7 +93,12 @@
                 <form on:submit={enviarComentario} class="text-center">
                     <div class="row">
                         <div class="col form-group">
-                            <StarRatting config={configuracionEstrellas} />
+                            <StarRatting
+                                config={configuracionEstrellas}
+                                on:change={(e) => {
+                                    comprobarValidezEstrellas(e.target);
+                                }}
+                            />
                         </div>
                     </div>
                     <div class="row">
