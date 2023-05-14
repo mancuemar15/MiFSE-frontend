@@ -247,10 +247,6 @@
 </section>
 
 <style>
-    img {
-        max-width: 600px;
-    }
-
     #mensajes {
         padding-top: 40px;
     }
