@@ -30,4 +30,8 @@
         height: 400px;
         width: 100%;
     }
+
+    :global(.leaflet-container) {
+        z-index: 0 !important;
+    }
 </style>
