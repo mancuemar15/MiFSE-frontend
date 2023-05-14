@@ -3,7 +3,7 @@
     import DatosPersonales from "./DatosPersonales.svelte";
     import MisListas from "./MisListas.svelte";
     import BorrarCuenta from "./BorrarCuenta.svelte";
-    import { Router, Route, Link } from "svelte-navigator";
+    import { Router, Route, Link, useLocation } from "svelte-navigator";
     import { redireccionarNotFound } from "./utilidadesLinks";
 
     const opcionesMenuPerfil = [
@@ -26,6 +26,8 @@
 
     let titulo = "";
 
+    const location = useLocation();
+
     function getProps({ location, href, isPartiallyCurrent, isCurrent }) {
         const isActive =
             href === "/" ? isCurrent : isPartiallyCurrent || isCurrent;
@@ -34,6 +36,10 @@
             return { className: "activo" };
         }
     }
+
+    $: titulo = opcionesMenuPerfil.find((opcion) => {
+        return $location.pathname.includes(opcion.ruta);
+    }).nombre;
 </script>
 
 <TituloPagina seccion="perfil" {titulo} />
