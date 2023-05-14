@@ -1,7 +1,7 @@
 <script>
     //@ts-nocheck
     import RangeSlider from "svelte-range-slider-pips";
-    import Svelecte from "svelecte";
+    import Svelecte, { config } from "svelecte";
     import { onMount } from "svelte";
     import { centrosFiltrados, centrosSeleccionados } from "./store";
 
@@ -172,6 +172,11 @@
         const filtros = document.querySelector(".filtros");
         filtros.classList.remove("d-block");
     }
+
+    config.i18n = {
+        empty: "Sin opciones",
+        nomatch: "Sin coincidencias",
+    };
 </script>
 
 <div class="text-center d-lg-none">
