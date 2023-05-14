@@ -18,4 +18,18 @@ const anadirNotificacionError = (mensaje) => {
     });
 };
 
-export { anadirNotificacionExito, anadirNotificacionError };
+const anadirNotificacionCargando = (mensaje) => {
+    return toast.push(mensaje, {
+        initial: 0,
+        dismissable: false,
+        theme: {
+            '--toastBackground': '#4154f1'
+        }
+    })
+};
+
+const eliminarNotificacionCargando = (id) => {
+    toast.pop(id);
+};
+
+export { anadirNotificacionExito, anadirNotificacionError, anadirNotificacionCargando, eliminarNotificacionCargando };

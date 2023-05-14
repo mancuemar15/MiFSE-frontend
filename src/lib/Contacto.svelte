@@ -2,7 +2,43 @@
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
+        anadirNotificacionCargando,
+        eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
+
+    const enviarFormulario = (event) => {
+        event.preventDefault();
+
+        const formulario = event.target;
+
+        const datos = {
+            nombre: formulario.nombre.value,
+            email: formulario.email.value,
+            asunto: formulario.asunto.value,
+            mensaje: formulario.mensaje.value,
+        };
+        const idNotificacion = anadirNotificacionCargando(
+            "Enviando mensaje..."
+        );
+        fetch("http://localhost:8090/contacto", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    eliminarNotificacionCargando(idNotificacion);
+                    anadirNotificacionExito("Mensaje enviado correctamente");
+                    formulario.reset();
+                }
+            })
+            .catch(() => {
+                eliminarNotificacionCargando(idNotificacion);
+                anadirNotificacionError("Error al enviar el mensaje");
+            });
+    };
 </script>
 
 <section id="contacto" class="contacto">
@@ -14,7 +50,7 @@
 
         <div class="row gy-4">
             <div class="col">
-                <form class="formulario-contacto">
+                <form class="formulario-contacto" on:submit={enviarFormulario}>
                     <div class="row gy-3 gy-lg-4">
                         <div class="col-md-6">
                             <label for="nombre" class="form-label obligatorio"
@@ -42,7 +78,7 @@
                             />
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <label for="asunto" class="form-label obligatorio"
                                 >Asunto</label
                             >
@@ -55,7 +91,7 @@
                             />
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <label for="mensaje" class="form-label obligatorio"
                                 >Mensaje</label
                             >
@@ -67,14 +103,7 @@
                                 required
                             />
                         </div>
-
-                        <div class="col-md-12 text-center">
-                            <!-- <div class="loading">Loading</div>
-                            <div class="error-message" />
-                            <div class="sent-message">
-                                Your message has been sent. Thank you!
-                            </div> -->
-
+                        <div class="col-12 text-center">
                             <button type="submit" class="boton-azul"
                                 >Enviar</button
                             >
@@ -93,46 +122,6 @@
         height: 100%;
     }
 
-    /* .formulario-contacto .error-message {
-        display: none;
-        color: #fff;
-        background: #ed3c0d;
-        text-align: left;
-        padding: 15px;
-        margin-bottom: 24px;
-        font-weight: 600;
-    }
-
-    .formulario-contacto .sent-message {
-        display: none;
-        color: #fff;
-        background: #18d26e;
-        text-align: center;
-        padding: 15px;
-        margin-bottom: 24px;
-        font-weight: 600;
-    } */
-
-    /* .formulario-contacto .loading {
-        display: none;
-        background: #fff;
-        text-align: center;
-        padding: 15px;
-        margin-bottom: 24px;
-    }
-
-    .formulario-contacto .loading:before {
-        content: "";
-        display: inline-block;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        margin: 0 10px -6px 0;
-        border: 3px solid #18d26e;
-        border-top-color: #eee;
-        animation: animate-loading 1s linear infinite;
-    } */
-
     .formulario-contacto input,
     .formulario-contacto textarea {
         border-radius: 0;
@@ -149,14 +138,4 @@
     .formulario-contacto textarea {
         padding: 12px 15px;
     }
-
-    /* @keyframes animate-loading {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    } */
 </style>
