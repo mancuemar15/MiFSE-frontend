@@ -145,9 +145,9 @@
             </div>
         </div>
     </section>
-    <!-- {#key centro} -->
-    <Mapa latitud={centro.latitud} longitud={centro.longitud} />
-    <!-- {/key} -->
+    {#key centro}
+        <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+    {/key}
     <Comentarios bind:comentarios={centro.comentarios} idCentro={centro.id} />
 {:catch error}
     <p>Error: {error.message}</p>
