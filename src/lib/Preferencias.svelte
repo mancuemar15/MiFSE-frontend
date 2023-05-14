@@ -77,6 +77,7 @@
                 anadirNotificacionExito(
                     "Se han guardado las preferencias correctamente"
                 );
+                navigate("/perfil/mis-listas");
             })
             .catch(() => {
                 anadirNotificacionError(
