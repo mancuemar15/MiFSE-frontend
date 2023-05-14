@@ -1,4 +1,6 @@
 import { writable } from "svelte/store";
+import { anadirNotificacionExito } from "./utilidadesNotificaciones";
+import { navigate } from "svelte-navigator";
 
 export const centrosFiltrados = writable([]);
 export const centrosSeleccionados = writable([]);
@@ -16,4 +18,6 @@ export function iniciarSesion(usuarioNuevo) {
 export function cerrarSesion() {
     usuario.set(null);
     sessionStorage.removeItem("usuario");
+    anadirNotificacionExito("Sesión cerrada correctamente");
+    navigate("/", { replace: true });
 }
