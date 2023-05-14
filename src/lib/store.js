@@ -16,8 +16,8 @@ export function iniciarSesion(usuarioNuevo) {
 }
 
 export function cerrarSesion() {
+    navigate("/", { replace: true });
     usuario.set(null);
     sessionStorage.removeItem("usuario");
     anadirNotificacionExito("Sesión cerrada correctamente");
-    navigate("/", { replace: true });
 }

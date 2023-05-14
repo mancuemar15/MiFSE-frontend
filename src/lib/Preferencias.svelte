@@ -60,11 +60,11 @@
     }
 
     function anadirCentros() {
-        guardarPreferencias();
+        guardarPreferencias("anadir-centros");
         navigate(`/lista/${titulacion}/${id}`);
     }
 
-    function guardarPreferencias() {
+    function guardarPreferencias(funcionAnterior) {
         fetch(URL.listas, {
             method: "PUT",
             headers: {
@@ -77,7 +77,9 @@
                 anadirNotificacionExito(
                     "Se han guardado las preferencias correctamente"
                 );
-                navigate("/perfil/mis-listas");
+                if (funcionAnterior !== "anadir-centros") {
+                    navigate("/perfil/mis-listas");
+                }
             })
             .catch(() => {
                 anadirNotificacionError(
