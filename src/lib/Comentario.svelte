@@ -1,12 +1,9 @@
 <script>
     import { capitalizar } from "./utilidadesString";
     import { usuario } from "./store";
-    import {
-        anadirNotificacionExito,
-        anadirNotificacionError,
-    } from "./utilidadesNotificaciones";
 
     export let comentario = {};
+    export let borrarComentario;
 
     function escribirNombreResidente() {
         return (
@@ -16,19 +13,6 @@
                 : "")
         );
     }
-
-    const borrarComentario = (idComentario) => {
-        fetch(`http://localhost:8090/comentarios/${idComentario}`, {
-            method: "DELETE",
-        })
-            .then((response) => response.json())
-            .then(() => {
-                anadirNotificacionExito("Comentario eliminado correctamente");
-            })
-            .catch(() => {
-                anadirNotificacionError("Error al eliminar el comentario");
-            });
-    };
 </script>
 
 <div class="comment border-bottom">
@@ -45,7 +29,7 @@
                 )} - {capitalizar(comentario.residente.titulacion.nombre)}
             </p>
         </div>
-        {#if $usuario.tipoUsuario.id === 1}
+        {#if $usuario && $usuario.tipoUsuario.id === 1}
             <button
                 class="btn btn-link link-danger p-0"
                 on:click={() => {

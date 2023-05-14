@@ -73,6 +73,25 @@
         }
         return esValido;
     };
+
+    const borrarComentario = (idComentario) => {
+        fetch(`http://localhost:8090/comentarios/${idComentario}`, {
+            method: "DELETE",
+        })
+            .then((response) => {
+                if (response.ok) {
+                    anadirNotificacionExito(
+                        "Comentario eliminado correctamente"
+                    );
+                    comentarios = comentarios.filter(
+                        (comentario) => comentario.id !== idComentario
+                    );
+                }
+            })
+            .catch(() => {
+                anadirNotificacionError("Error al eliminar el comentario");
+            });
+    };
 </script>
 
 <section class="blog-comments">
@@ -81,7 +100,7 @@
             <h4 class="fw-bold">{comentarios.length} comentarios</h4>
 
             {#each comentarios as comentario}
-                <Comentario {comentario} />
+                <Comentario {comentario} {borrarComentario} />
             {/each}
         {:else}
             <h4 class="fw-bold sin-comentarios">No hay comentarios</h4>
