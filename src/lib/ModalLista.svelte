@@ -8,6 +8,7 @@
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
     import { getContext } from "svelte";
+    import { centrosSeleccionados } from "./store";
 
     export let isOpen;
     export let lista;
@@ -31,6 +32,7 @@
                     "La lista de centros se ha guardado correctamente"
                 );
                 closeModal();
+                $centrosSeleccionados = [];
                 navigate(`/preferencias/lista/${data.id}`);
             })
             .catch(() => {
