@@ -24,7 +24,7 @@
                 (
                     `${u.nombre.toLowerCase()} ` +
                     `${u.apellido1.toLowerCase()} ` +
-                    `${u.apellido2?.toLowerCase()}`
+                    `${u.apellido2 ?? ""}`.toLowerCase()
                 ).includes(texto) || u.email.toLowerCase().includes(texto)
         );
     };
@@ -50,7 +50,7 @@
 
 <TituloPagina seccion="gestión de usuarios" titulo="Usuarios" />
 <section id="usuarios">
-    <div class="container-xl">
+    <div class="container-lg">
         <div class="row justify-content-sm-between gy-2 mb-3">
             <div class="col-12 col-sm-auto order-1 order-sm-0 buscador d-flex">
                 <input
