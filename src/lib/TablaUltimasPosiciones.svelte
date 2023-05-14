@@ -7,6 +7,7 @@
     $: anos = Array.from(
         new Set(ultimasPosiciones.map((pos) => pos.ano))
     ).reverse();
+
     $: ultimasPosicionesFiltradas = ultimasPosiciones.filter(
         (pos) => pos.ano === anoSeleccionado
     );
@@ -33,16 +34,12 @@
                 <tr>
                     <th>Posición</th>
                     <th>Especialidad</th>
-                    <th>Provincia</th>
-                    <th>Centro</th>
                 </tr>
             </thead>
             <tbody>
                 {#each ultimasPosicionesFiltradas as ultimaPosicion}
                     <tr>
                         <td>{ultimaPosicion.numero}</td>
-                        <td>{ultimaPosicion.especialidad.nombre}</td>
-                        <td>{ultimaPosicion.ano}</td>
                         <td>{ultimaPosicion.especialidad.nombre}</td>
                     </tr>
                 {/each}
@@ -52,6 +49,10 @@
 </section>
 
 <style>
+    #tabla-ultimas-posiciones {
+        padding-top: 40px;
+    }
+
     label {
         font-family: "Nunito", sans-serif;
         text-transform: uppercase;

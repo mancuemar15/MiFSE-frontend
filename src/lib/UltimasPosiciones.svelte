@@ -21,23 +21,36 @@
 </script>
 
 <TituloPagina seccion="Últimas posiciones" titulo="Últimas posiciones" />
-<div class="container">
-    <section id="botones-titulaciones" class="pt-5 pb-0">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="mb-4">Selecciona una titulación:</h2>
-            </div>
-            {#each botones as boton}
-                <div class="col text-center">
-                    <BotonUltimasPosiciones
-                        {actualizarDatos}
-                        titulacion={boton.titulacion}
-                    />
+<section id="ultimas-posiciones">
+    <div class="container">
+        <div id="botones-titulaciones">
+            <div class="row gy-3">
+                <div class="col-12">
+                    <h2>Selecciona una titulación:</h2>
                 </div>
-            {/each}
+                {#each botones as boton}
+                    <div class="col text-center">
+                        <BotonUltimasPosiciones
+                            {actualizarDatos}
+                            titulacion={boton.titulacion}
+                        />
+                    </div>
+                {/each}
+            </div>
         </div>
-    </section>
-    {#if datosTabla.length > 0}
-        <TablaUltimasPosiciones ultimasPosiciones={datosTabla} />
-    {/if}
-</div>
+        {#if datosTabla.length > 0}
+            <TablaUltimasPosiciones ultimasPosiciones={datosTabla} />
+        {/if}
+    </div>
+</section>
+
+<style>
+    #ultimas-posiciones {
+        padding-top: 40px;
+    }
+
+    .col {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+</style>

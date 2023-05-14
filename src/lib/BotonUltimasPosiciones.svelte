@@ -24,24 +24,12 @@
     }
 </script>
 
-<button on:click={obtenerDatos}>{titulacion}</button>
+<button class="boton-azul" type="button" on:click={obtenerDatos}
+    >{titulacion}</button
+>
 
 <style>
     button {
-        background-color: #fff;
-        color: #0257ee;
-        font-size: 14px;
-        padding: 6px 14px;
-        margin: 0 6px 8px 0;
-        border: 1px solid #d7e6ff;
-        display: inline-block;
-        transition: 0.3s;
-        min-width: 120px;
-    }
-
-    button:hover {
-        color: #fff;
-        border: 1px solid #4154f1;
-        background: #4154f1;
+        min-width: 142px;
     }
 </style>
