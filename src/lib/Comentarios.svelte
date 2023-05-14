@@ -6,8 +6,14 @@
         abrirModalRegistro,
         abrirModalInicioSesion,
     } from "./utilidadesModales";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
+    export let idCentro;
     export let comentarios = [];
+
     let configuracionEstrellas = {
         countStars: 5,
         range: { min: 0, max: 5, step: 0.5 },
@@ -21,11 +27,36 @@
         },
     };
 
-    function enviarComentario(event) {
+    const enviarComentario = (event) => {
         event.preventDefault();
-        const comentario = event.target.comentario.value.trim();
-        event.target.reset();
-    }
+        const comentarioAEnviar = {
+            residente: {
+                id: $usuario.id,
+            },
+            centro: {
+                id: idCentro,
+            },
+            contenido: event.target.comentario.value.trim(),
+            valoracion: configuracionEstrellas.score,
+            fecha: new Date().toJSON(),
+        };
+        fetch(`http://localhost:8090/comentarios`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(comentarioAEnviar),
+        })
+            .then((response) => response.json())
+            .then((comentario) => {
+                anadirNotificacionExito("Comentario guardado correctamente");
+                comentarios = [...comentarios, comentario];
+                event.target.reset();
+            })
+            .catch(() => {
+                anadirNotificacionError("Error al guardar el comentario");
+            });
+    };
 </script>
 
 <section class="blog-comments">

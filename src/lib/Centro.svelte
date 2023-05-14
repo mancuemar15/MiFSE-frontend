@@ -101,7 +101,7 @@
                                     {#each Object.keys(especialidadesPorTitulacion) as titulacion}
                                         <li class="titulacion">
                                             <details>
-                                                <summary>{titulacion}</summary>
+                                                <summary>{capitalizar(titulacion)}</summary>
                                                 <ul
                                                     class="list-group-flush especialidades mt-2"
                                                 >
@@ -109,7 +109,7 @@
                                                         <li>
                                                             <i
                                                                 class="bi bi-chevron-right"
-                                                            />{especialidad}
+                                                            />{capitalizar(especialidad)}
                                                         </li>
                                                     {/each}
                                                 </ul>
@@ -130,7 +130,7 @@
     {#key centro}
         <Mapa latitud={centro.latitud} longitud={centro.longitud} />
     {/key}
-    <Comentarios comentarios={centro.comentarios} />
+    <Comentarios bind:comentarios={centro.comentarios} idCentro={centro.id} />
 {:catch error}
     <p>Error: {error.message}</p>
 {/await}

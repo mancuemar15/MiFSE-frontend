@@ -1,5 +1,10 @@
 <script>
     import { capitalizar } from "./utilidadesString";
+    import { usuario } from "./store";
+    import {
+        anadirNotificacionExito,
+        anadirNotificacionError,
+    } from "./utilidadesNotificaciones";
 
     export let comentario = {};
 
@@ -11,22 +16,46 @@
                 : "")
         );
     }
+
+    const borrarComentario = (idComentario) => {
+        fetch(`http://localhost:8090/comentarios/${idComentario}`, {
+            method: "DELETE",
+        })
+            .then((response) => response.json())
+            .then(() => {
+                anadirNotificacionExito("Comentario eliminado correctamente");
+            })
+            .catch(() => {
+                anadirNotificacionError("Error al eliminar el comentario");
+            });
+    };
 </script>
 
 <div class="comment border-bottom">
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
         <div>
             <h5>
-                <button class="btn btn-link p-0">{escribirNombreResidente()}</button>
+                <button class="btn btn-link p-0"
+                    >{escribirNombreResidente()}</button
+                >
             </h5>
             <p class="subtitulo my-2">
                 {new Date(comentario.fecha).toLocaleDateString()} - {capitalizar(
                     comentario.residente.tipoResidente.tipo
                 )} - {capitalizar(comentario.residente.titulacion.nombre)}
             </p>
-            <p>{comentario.contenido}</p>
         </div>
+        {#if $usuario.tipoUsuario.id === 1}
+            <button
+                class="btn btn-link link-danger p-0"
+                on:click={() => {
+                    borrarComentario(comentario.id);
+                }}>Eliminar</button
+            >
+        {/if}
     </div>
+
+    <p>{comentario.contenido}</p>
 </div>
 
 <style>
