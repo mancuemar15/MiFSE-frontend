@@ -1,11 +1,13 @@
 <script>
     import { capitalizar } from "./utilidadesString";
     import { usuario } from "./store";
+    import { navigate } from "svelte-navigator";
+    import { abrirModalInicioSesion } from "./utilidadesModales";
 
     export let comentario = {};
     export let borrarComentario;
 
-    function escribirNombreResidente() {
+    function escribirNombreResidente(comentario) {
         return (
             `${comentario.residente.nombre} ${comentario.residente.apellido1}` +
             (comentario.residente.apellido2
@@ -18,11 +20,49 @@
 <div class="comment border-bottom">
     <div class="d-flex justify-content-between">
         <div>
-            <h5>
-                <button class="btn btn-link p-0"
-                    >{escribirNombreResidente()}</button
-                >
-            </h5>
+            {#if $usuario && comentario.residente.id === $usuario.id}
+                <h5 class="mb-0">Tú</h5>
+            {:else}
+                <div class="btn-group dropend">
+                    <button
+                        class="btn btn-link dropdown-toggle p-0"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        >{escribirNombreResidente(comentario)}</button
+                    >
+                    <ul class="dropdown-menu">
+                        {#if $usuario}
+                            <li>
+                                <button
+                                    class="dropdown-item"
+                                    type="button"
+                                    on:click={() => {
+                                        navigate("/mensajes", {
+                                            replace: true,
+                                            state: {
+                                                destinatario:
+                                                    comentario.residente,
+                                            },
+                                        });
+                                    }}
+                                >
+                                    Enviar mensaje
+                                </button>
+                            </li>
+                        {:else}
+                            <li>
+                                <button
+                                    class="dropdown-item"
+                                    type="button"
+                                    on:click={abrirModalInicioSesion}
+                                >
+                                    Enviar mensaje
+                                </button>
+                            </li>
+                        {/if}
+                    </ul>
+                </div>
+            {/if}
             <p class="subtitulo my-2">
                 {new Date(comentario.fecha).toLocaleDateString()} - {capitalizar(
                     comentario.residente.tipoResidente.tipo
@@ -48,25 +88,25 @@
         position: relative;
     }
 
+    .comment button,
     .comment h5 {
         font-size: 16px;
-        margin-bottom: 2px;
-    }
-
-    .comment h5 button {
         font-family: "Nunito", sans-serif !important;
-        text-decoration: none;
+        text-decoration: none !important;
         font-weight: bold;
-        color: #444444;
         transition: 0.3s;
     }
 
-    .comment h5 button:hover {
+    .comment button:hover {
         color: #4154f1;
     }
 
     .comment .subtitulo {
         font-size: 14px;
         color: #013ca3;
+    }
+
+    .dropdown-toggle::after {
+        display: none !important;
     }
 </style>

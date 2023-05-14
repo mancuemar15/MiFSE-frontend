@@ -7,10 +7,13 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import { useLocation } from "svelte-navigator";
+
+    const location = useLocation();
 
     let usuariosConMensajesIntercambiados = [];
     let usuariosFiltrados = [];
-    let conversacion = [];
+    let mensajes = [];
 
     const getUsuariosConMensajesIntercambiados = async () => {
         const url = `http://localhost:8090/mensajes/usuarios/${$usuario.id}`;
@@ -21,15 +24,34 @@
 
     onMount(() => {
         getUsuariosConMensajesIntercambiados();
+        if ($location.state.destinatario) {
+            getConversacion($location.state.destinatario.id);
+        }
     });
 
     const getConversacion = async (idUsuario) => {
         const url = `http://localhost:8090/mensajes/usuarios/${$usuario.id}/${idUsuario}`;
         const response = await fetch(url);
-        conversacion = await response.json();
-        if (window.innerWidth < 992) {
-            mostrarConversacion();
+        if (response.status === 200) {
+            mensajes = await response.json();
+            if (window.innerWidth < 992) {
+                mostrarConversacion();
+            }
+        } else {
+            crearConversacion();
         }
+    };
+
+    const crearConversacion = () => {
+        mensajes = [
+            {
+                emisor: $usuario,
+                receptor: $location.state.destinatario,
+                contenido: "",
+                fechaEnvio: "",
+            },
+        ];
+        $location.state = null;
     };
 
     const mostrarConversacion = () => {
@@ -37,41 +59,37 @@
         document.querySelector(".conversacion").classList.remove("d-none");
     };
 
-    const seleccionarConversacion = (idUsuario) => {
-        getConversacion(idUsuario);
-    };
-
     const volverAMostrarUsuarios = () => {
         document.querySelector(".usuarios").classList.remove("d-none");
         document.querySelector(".conversacion").classList.add("d-none");
     };
 
-    const buscarNombre = (conversacion) => {
-        if (conversacion[0].emisor.id == $usuario.id) {
-            return `${conversacion[0].receptor.nombre} ${
-                conversacion[0].receptor.apellido1
-            } ${conversacion[0].receptor.apellido2 ?? ""}`;
+    const buscarNombre = (mensajes) => {
+        if (mensajes[0].emisor.id == $usuario.id) {
+            return `${mensajes[0].receptor.nombre} ${
+                mensajes[0].receptor.apellido1
+            } ${mensajes[0].receptor.apellido2 ?? ""}`;
         } else {
-            return `${conversacion[0].emisor.nombre} ${
-                conversacion[0].emisor.apellido1
-            } ${conversacion[0].emisor.apellido2 ?? ""}`;
+            return `${mensajes[0].emisor.nombre} ${
+                mensajes[0].emisor.apellido1
+            } ${mensajes[0].emisor.apellido2 ?? ""}`;
         }
     };
 
-    const buscarTipoResidenteYTitulacion = (conversacion) => {
-        if (conversacion[0].emisor.id == $usuario.id) {
-            return `${conversacion[0].receptor.tipoResidente.tipo} - ${conversacion[0].receptor.titulacion.nombre}`;
+    const buscarTipoResidenteYTitulacion = (mensajes) => {
+        if (mensajes[0].emisor.id == $usuario.id) {
+            return `${mensajes[0].receptor.tipoResidente.tipo} - ${mensajes[0].receptor.titulacion.nombre}`;
         } else {
-            return `${conversacion[0].emisor.tipoResidente.tipo} - ${conversacion[0].emisor.titulacion.nombre}`;
+            return `${mensajes[0].emisor.tipoResidente.tipo} - ${mensajes[0].emisor.titulacion.nombre}`;
         }
     };
 
     const enviarMensaje = (event) => {
         const contenido = event.target.querySelector("input").value;
         const idReceptor =
-            conversacion[0].emisor.id == $usuario.id
-                ? conversacion[0].receptor.id
-                : conversacion[0].emisor.id;
+            mensajes[0].emisor.id == $usuario.id
+                ? mensajes[0].receptor.id
+                : mensajes[0].emisor.id;
         const mensaje = {
             contenido,
             emisor: $usuario,
@@ -128,11 +146,11 @@
                                 <button
                                     class="list-group-item-action border-0 bg-transparent"
                                     class:activo={usuarioConMensajeIntercambiado.id ===
-                                        conversacion[0]?.emisor.id ||
+                                        mensajes[0]?.emisor.id ||
                                         usuarioConMensajeIntercambiado.id ===
-                                            conversacion[0]?.receptor.id}
+                                            mensajes[0]?.receptor.id}
                                     on:click={() => {
-                                        seleccionarConversacion(
+                                        getConversacion(
                                             usuarioConMensajeIntercambiado.id
                                         );
                                     }}
@@ -152,7 +170,7 @@
                 >
                     <div class="container-fluid">
                         <div class="row">
-                            {#if conversacion.length === 0}
+                            {#if mensajes.length === 0}
                                 <div class="col-12 p-0 d-none d-lg-block">
                                     <div
                                         class="d-flex flex-column align-items-center justify-content-center sin-mensajes"
@@ -174,13 +192,13 @@
                                         <div class="flex-grow-1 ps-3 ps-sm-0">
                                             <strong class="nombre-usuario"
                                                 >{buscarNombre(
-                                                    conversacion
+                                                    mensajes
                                                 )}</strong
                                             >
                                             <div class="text-muted small">
                                                 <em
                                                     >{buscarTipoResidenteYTitulacion(
-                                                        conversacion
+                                                        mensajes
                                                     )}</em
                                                 >
                                             </div>
@@ -188,17 +206,19 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mensajes p-4 px-3 px-sm-4">
-                                    {#each conversacion as mensaje}
-                                        {#if mensaje.emisor.id == $usuario.id}
-                                            <Mensaje
-                                                {mensaje}
-                                                posicion="derecha"
-                                            />
-                                        {:else}
-                                            <Mensaje
-                                                {mensaje}
-                                                posicion="izquierda"
-                                            />
+                                    {#each mensajes as mensaje}
+                                        {#if mensaje.contenido}
+                                            {#if mensaje.emisor.id == $usuario.id}
+                                                <Mensaje
+                                                    {mensaje}
+                                                    posicion="derecha"
+                                                />
+                                            {:else}
+                                                <Mensaje
+                                                    {mensaje}
+                                                    posicion="izquierda"
+                                                />
+                                            {/if}
                                         {/if}
                                     {/each}
                                 </div>
@@ -299,7 +319,6 @@
     }
 
     @media (min-width: 1400px) {
-        
         .sin-mensajes::before {
             background-size: 350px;
         }
