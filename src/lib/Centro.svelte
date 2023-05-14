@@ -84,8 +84,9 @@
                         <h3>Información del centro</h3>
                         <ul>
                             <li>
-                                <strong>Valoración</strong>: {centro.valoracionMedia ??
-                                    "Sin valoraciones"}
+                                <strong>Valoración</strong>: {centro.valoracionMedia
+                                    .toFixed(1)
+                                    .replace(".", ",") ?? "Sin valoraciones"}
                             </li>
                             <li>
                                 <strong>Dirección</strong>: {centro.direccion}

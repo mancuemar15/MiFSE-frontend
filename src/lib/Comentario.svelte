@@ -21,9 +21,11 @@
     <div class="d-flex justify-content-between">
         <div>
             {#if $usuario && comentario.residente.id === $usuario.id}
-                <h5 class="mb-0">Tú</h5>
+                <button class="btn btn-link dropdown-toggle p-0" disabled
+                    >Tú</button
+                >
             {:else}
-                <div class="btn-group dropend">
+                <div class="dropend">
                     <button
                         class="btn btn-link dropdown-toggle p-0"
                         data-bs-toggle="dropdown"
@@ -69,14 +71,21 @@
                 )} - {capitalizar(comentario.residente.titulacion.nombre)}
             </p>
         </div>
-        {#if $usuario && $usuario.tipoUsuario.id === 1}
-            <button
-                class="btn btn-link link-danger p-0"
-                on:click={() => {
-                    borrarComentario(comentario.id);
-                }}>Eliminar</button
-            >
-        {/if}
+        <div class="d-flex flex-column align-items-end justify-content-between">
+            <div class="valoracion d-flex justify-content-center">
+                <p class="m-0">
+                    {comentario.valoracion.toFixed(1).replace(".", ",")}
+                </p>
+            </div>
+            {#if $usuario && $usuario.tipoUsuario.id === 1}
+                <button
+                    class="btn btn-link link-danger p-0"
+                    on:click={() => {
+                        borrarComentario(comentario.id);
+                    }}>Eliminar</button
+                >
+            {/if}
+        </div>
     </div>
 
     <p>{comentario.contenido}</p>
@@ -88,17 +97,28 @@
         position: relative;
     }
 
-    .comment button,
-    .comment h5 {
+    .comment button:not(.link-danger),
+    .comment button:disabled {
         font-size: 16px;
         font-family: "Nunito", sans-serif !important;
         text-decoration: none !important;
         font-weight: bold;
         transition: 0.3s;
+        opacity: 1 !important;
+        color: #012970 !important;
     }
 
     .comment button:hover {
-        color: #4154f1;
+        color: #4154f1 !important;
+    }
+
+    .comment .valoracion {
+        height: 32px;
+        width: 32px;
+        font-size: 18px;
+        background-color: #013ca3;
+        color: #fff;
+        padding: 3px;
     }
 
     .comment .subtitulo {
@@ -108,5 +128,13 @@
 
     .dropdown-toggle::after {
         display: none !important;
+    }
+
+    @media (min-width: 992px) {
+        .comment .valoracion {
+            height: 39px;
+            width: 39px;
+            font-size: 22px;
+        }
     }
 </style>
