@@ -17,7 +17,6 @@
     let configuracionEstrellas = {
         countStars: 5,
         range: { min: 0, max: 5, step: 0.5 },
-        showScore: true,
         starConfig: {
             size: 30,
             fillColor: "#F9ED4F",
