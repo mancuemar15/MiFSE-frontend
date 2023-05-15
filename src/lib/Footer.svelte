@@ -43,14 +43,23 @@
                         <img src={logoMifse} alt="" />
                     </div>
                     <div class="social-links mt-3">
-                        <a href="#" class="twitter"
-                            ><i class="bi bi-twitter" /></a
+                        <a
+                            href="https://twitter.com/mifse_"
+                            class="twitter"
+                            title="Enlace a Twitter"
+                            target="_blank"><i class="bi bi-twitter" /></a
                         >
-                        <a href="#" class="facebook"
-                            ><i class="bi bi-facebook" /></a
+                        <a
+                            href="https://www.facebook.com/profile.php?id=100092903071812"
+                            class="facebook"
+                            title="Enlace a Facebook"
+                            target="_blank"><i class="bi bi-facebook" /></a
                         >
-                        <a href="#" class="instagram"
-                            ><i class="bi bi-instagram" /></a
+                        <a
+                            href="https://www.instagram.com/mifse_/"
+                            class="instagram"
+                            title="Enlace a Instagram"
+                            target="_blank"><i class="bi bi-instagram" /></a
                         >
                     </div>
                 </div>
