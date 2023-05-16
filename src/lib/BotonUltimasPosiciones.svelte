@@ -12,10 +12,7 @@
             .replace(/[\u0300-\u036f]/g, "")
             .toLowerCase();
         const respuesta = await fetch(
-            `${URL.ultimasPosiciones}/${nombreTitulacion}`,
-            {
-                method: "GET",
-            }
+            `${URL.ultimasPosiciones}/${nombreTitulacion}`
         );
         const datos = await respuesta.json();
         actualizarDatos(datos);

@@ -13,6 +13,7 @@
     const URL = getContext("URL");
 
     let usuariosConMensajesIntercambiados = [];
+    let usuariosConMensajesIntercambiadosSinLeer = [];
     let usuariosFiltrados = [];
     let mensajes = [];
 
@@ -23,8 +24,40 @@
         usuariosFiltrados = await usuariosConMensajesIntercambiados;
     };
 
+    const getUsuariosConMensajesIntercambiadosSinLeer = async () => {
+        const url = `${URL.mensajes}/usuarios/${$usuario.id}/sin-leer`;
+        const response = await fetch(url);
+        if (response.status === 200) {
+            usuariosConMensajesIntercambiadosSinLeer =
+                (await response.json()) ?? [];
+        } else {
+            usuariosConMensajesIntercambiadosSinLeer = [];
+        }
+    };
+
+    const marcarMensajesLeidos = (mensajes) => {
+        const mensajesAMarcarLeidos = mensajes.filter(
+            (m) => m.emisor.id !== $usuario.id && !m.leido
+        );
+        fetch(`${URL.mensajes}/leidos`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(mensajesAMarcarLeidos),
+        }).then((response) => {
+            if (!response.ok) {
+                anadirNotificacionError(
+                    "Error al marcar los mensajes como leídos"
+                );
+            }
+            getUsuariosConMensajesIntercambiadosSinLeer();
+        });
+    };
+
     onMount(() => {
         getUsuariosConMensajesIntercambiados();
+        getUsuariosConMensajesIntercambiadosSinLeer();
         if ($location.state.destinatario) {
             getConversacion($location.state.destinatario.id);
         }
@@ -38,6 +71,7 @@
             if (window.innerWidth < 992) {
                 mostrarConversacion();
             }
+            marcarMensajesLeidos(mensajes);
         } else {
             crearConversacion();
         }
@@ -121,6 +155,13 @@
                 .includes(e.target.value.toLowerCase())
         );
     };
+
+    const ponerScrollAbajo = async () => {
+        const mensajesConversacion = document.querySelector(
+            "#mensajes-conversacion"
+        );
+        mensajesConversacion.scrollTop = mensajesConversacion.scrollHeight;
+    };
 </script>
 
 <TituloPagina seccion="mensajes" titulo="Mensajes" />
@@ -150,10 +191,16 @@
                                         mensajes[0]?.emisor.id ||
                                         usuarioConMensajeIntercambiado.id ===
                                             mensajes[0]?.receptor.id}
-                                    on:click={() => {
-                                        getConversacion(
+                                    class:sin-leer={usuariosConMensajesIntercambiadosSinLeer.some(
+                                        (u) =>
+                                            u.id ===
+                                            usuarioConMensajeIntercambiado.id
+                                    )}
+                                    on:click={async () => {
+                                        await getConversacion(
                                             usuarioConMensajeIntercambiado.id
                                         );
+                                        await ponerScrollAbajo();
                                     }}
                                     ><span>
                                         {usuarioConMensajeIntercambiado.nombre}{" "}
@@ -162,6 +209,11 @@
                                             ""}</span
                                     >
                                 </button>
+                                {#if usuariosConMensajesIntercambiadosSinLeer.some((u) => u.id === usuarioConMensajeIntercambiado.id)}
+                                    <span
+                                        class="position-absolute alerta-sin-leer p-2 bg-danger rounded-circle"
+                                    />
+                                {/if}
                             </li>
                         {/each}
                     </ul>
@@ -190,7 +242,7 @@
                                         >
                                             <i class="fas fa-arrow-left" />
                                         </button>
-                                        <div class="flex-grow-1 ps-3 ps-sm-0">
+                                        <div class="flex-grow-1 ps-3 ps-lg-0">
                                             <strong class="nombre-usuario"
                                                 >{buscarNombre(
                                                     mensajes
@@ -206,7 +258,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mensajes p-4 px-3 px-sm-4">
+                                <div
+                                    id="mensajes-conversacion"
+                                    class="col-12 mensajes p-4 px-3 px-sm-4"
+                                >
                                     {#each mensajes as mensaje}
                                         {#if mensaje.contenido}
                                             {#if mensaje.emisor.id == $usuario.id}
@@ -291,6 +346,14 @@
         flex-direction: column;
         overflow-y: scroll;
         height: 60vh !important;
+    }
+
+    .sin-leer {
+        font-weight: 700 !important;
+    }
+
+    .alerta-sin-leer {
+        transform: translate(-120%, 20%) !important;
     }
 
     @media (min-width: 992px) {
