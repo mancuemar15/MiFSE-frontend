@@ -1,6 +1,6 @@
 <script>
     import TituloPagina from "./TituloPagina.svelte";
-    import { getContext, onMount } from "svelte";
+    import { afterUpdate, getContext, onMount } from "svelte";
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
@@ -47,6 +47,16 @@
                 anadirNotificacionError("Error al bloquear el usuario");
             });
     };
+
+    window.addEventListener("administradorRegistrado", (event) => {
+        console.log("evento administradorRegistrado");
+        console.log(event);
+        const nuevoAdministrador = event.detail;
+        usuarios = [...usuarios, nuevoAdministrador];
+        getUsuarios();
+    });
+
+    
 </script>
 
 <TituloPagina seccion="gestión de usuarios" titulo="Usuarios" />
@@ -62,8 +72,11 @@
                 />
             </div>
             <div class="col-12 col-sm-auto text-center">
-                <button class="boton-azul" on:click={abrirModalRegistroAdmin}
-                    >Añadir administrador</button
+                <button
+                    class="boton-azul"
+                    on:click={() => {
+                        abrirModalRegistroAdmin();
+                    }}>Añadir administrador</button
                 >
             </div>
         </div>

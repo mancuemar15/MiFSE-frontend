@@ -9,10 +9,12 @@
         eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
     import { getContext } from "svelte";
+    import { createEventDispatcher } from "svelte";
 
     export let isOpen;
 
     const URL = getContext("URL");
+    const dispatch = createEventDispatcher();
 
     function registrarResidente(event) {
         event.preventDefault();
@@ -49,10 +51,12 @@
                         "Ya existe un usuario con ese email"
                     );
                 }
+                return response.json();
             })
-            .then(() => {
+            .then((data) => {
                 eliminarNotificacionCargando(idNotificacion);
                 anadirNotificacionExito("Registro completado con éxito");
+                dispatch("administradorRegistrado", data);
                 closeModal();
             })
             .catch(() => {

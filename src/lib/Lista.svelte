@@ -149,54 +149,6 @@
                                 {#each $centrosFiltrados as centro}
                                     <div class="col-12 centro p-0">
                                         <CentroFiltrado {centro} {titulacion} />
-                                        <!-- <div class="blog-author">
-                                            <div
-                                                class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between"
-                                            >
-                                                <label
-                                                    class="form-check-label"
-                                                    for="check-{centro
-                                                        .especialidad
-                                                        .id}-{centro.centro.id}"
-                                                >
-                                                    <div class="text-start">
-                                                        <h4>
-                                                            {centro.centro
-                                                                .nombre}
-                                                        </h4>
-                                                        <div
-                                                            class="social-links"
-                                                        >
-                                                            <span
-                                                                class="text-muted fst-italic"
-                                                                >{centro
-                                                                    .especialidad
-                                                                    .nombre}</span
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </label>
-                                                <div>
-                                                    <input
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        value="{centro
-                                                            .especialidad
-                                                            .id}-{centro.centro
-                                                            .id}"
-                                                        id="check-{centro
-                                                            .especialidad
-                                                            .id}-{centro.centro
-                                                            .id}"
-                                                        on:change={(e) =>
-                                                            agregarCentro(
-                                                                e,
-                                                                centro
-                                                            )}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 {/each}
                             {/if}

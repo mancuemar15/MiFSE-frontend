@@ -31,8 +31,8 @@ function abrirModalBorrarCuenta() {
     openModal(ModalBorrarCuenta);
 }
 
-function abrirModalRegistroAdmin(usuarios) {
-    openModal(ModalRegistroAdmin, { usuarios });
+function abrirModalRegistroAdmin() {
+    openModal(ModalRegistroAdmin);
 }
 
 export { abrirModalRegistro, abrirModalInicioSesion, abrirModalLista, abrirModalBorrarCuenta, abrirModalRegistroAdmin };
