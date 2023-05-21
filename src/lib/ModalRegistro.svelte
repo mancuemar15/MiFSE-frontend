@@ -10,6 +10,7 @@
         anadirNotificacionCargando,
         eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
+    import { Link } from "svelte-navigator";
 
     export let isOpen;
     export let abrirOtra;
@@ -304,14 +305,40 @@
                                 </select>
                             </div>
                             <div
-                                class="col-12 d-flex align-items-center justify-content-end cambio-modal"
+                                class="col-12 d-lg-flex align-items-center justify-content-between cambio-modal"
                             >
-                                <span>¿Ya tienes cuenta?</span>
-                                <button
-                                    type="button"
-                                    class="btn btn-link px-0 ps-1"
-                                    on:click={abrirOtra}>Inicia sesión</button
-                                >
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        value=""
+                                        id="flexCheckDefault"
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="flexCheckDefault"
+                                    >
+                                        He leído y acepto la
+                                        <Link
+                                            to="/politica-privacidad"
+                                            class="btn-link"
+                                            on:click={() => {
+                                                closeModal();
+                                            }}
+                                        >
+                                            política de privacidad
+                                        </Link>
+                                    </label>
+                                </div>
+                                <div class="enlace-cambio-modal">
+                                    <span>¿Ya tienes cuenta?</span>
+                                    <button
+                                        type="button"
+                                        class="btn btn-link px-0 ps-1"
+                                        on:click={abrirOtra}
+                                        >Inicia sesión</button
+                                    >
+                                </div>
                             </div>
 
                             <div class="col-md-12 text-center">
@@ -371,6 +398,12 @@
 
     .cambio-modal {
         font-family: "Nunito", sans-serif;
+    }
+
+    .enlace-cambio-modal {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
     }
 
     @media (min-width: 425px) {
