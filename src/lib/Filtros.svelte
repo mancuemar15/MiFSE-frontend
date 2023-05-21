@@ -235,7 +235,13 @@
             first="label"
             last="label"
             id="range-valoracion-centro"
+            on:stop={(e) => {
+                valoracionesSeleccionadas = e.detail.values;
+            }}
         />
+        <span class="text-muted fst-italic"
+            >No aplica si no tiene valoración</span
+        >
     </div>
     <div class="filtro border-bottom">
         <h4>Necesidad de coche</h4>
