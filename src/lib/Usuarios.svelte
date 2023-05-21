@@ -55,7 +55,6 @@
                     anadirNotificacionError("Error al bloquear el usuario");
                     return;
                 }
-                return response.json();
             })
             .then(() => {
                 anadirNotificacionExito("Usuario bloqueado correctamente");
@@ -78,7 +77,6 @@
                     anadirNotificacionError("Error al desbloquear el usuario");
                     return;
                 }
-                return response.json();
             })
             .then(() => {
                 anadirNotificacionExito("Usuario desbloqueado correctamente");
