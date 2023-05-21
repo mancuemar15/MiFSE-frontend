@@ -1,11 +1,12 @@
 <script>
     import TituloPagina from "./TituloPagina.svelte";
-    import { afterUpdate, getContext, onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
     import { abrirModalRegistroAdmin } from "./utilidadesModales";
+    import { usuario } from "./store";
 
     const URL = getContext("URL");
 
@@ -13,7 +14,15 @@
     let usuariosFiltrados = [];
 
     const getUsuarios = async () => {
-        const response = await fetch(URL.usuarios);
+        const response = await fetch(URL.usuarios, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
+        if (response.status !== 200) {
+            anadirNotificacionError("Error al obtener los usuarios");
+            return;
+        }
         usuarios = await response.json();
         usuariosFiltrados = await usuarios;
     };
@@ -37,14 +46,46 @@
     const bloquearUsuario = (idUsuario) => {
         fetch(`${URL.usuarios}/bloquear/${idUsuario}`, {
             method: "PUT",
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.status !== 200) {
+                    anadirNotificacionError("Error al bloquear el usuario");
+                    return;
+                }
+                return response.json();
+            })
             .then(() => {
                 anadirNotificacionExito("Usuario bloqueado correctamente");
                 getUsuarios();
             })
             .catch(() => {
                 anadirNotificacionError("Error al bloquear el usuario");
+            });
+    };
+
+    const desbloquearUsuario = (idUsuario) => {
+        fetch(`${URL.usuarios}/desbloquear/${idUsuario}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    anadirNotificacionError("Error al desbloquear el usuario");
+                    return;
+                }
+                return response.json();
+            })
+            .then(() => {
+                anadirNotificacionExito("Usuario desbloqueado correctamente");
+                getUsuarios();
+            })
+            .catch(() => {
+                anadirNotificacionError("Error al desbloquear el usuario");
             });
     };
 
@@ -55,8 +96,6 @@
         usuarios = [...usuarios, nuevoAdministrador];
         getUsuarios();
     });
-
-    
 </script>
 
 <TituloPagina seccion="gestión de usuarios" titulo="Usuarios" />
@@ -103,31 +142,47 @@
                             >
                             <td>{usuario.email}</td>
                             <td class="text-center">
-                                {#if usuario.inhabilitado}
-                                    <span class="badge bg-danger fs-6 fw-normal"
-                                        >Bloqueado</span
-                                    >
-                                {:else}
+                                {#if usuario.habilitado}
                                     <span
                                         class="badge bg-success fs-6 fw-normal"
                                         >Activo</span
+                                    >
+                                {:else}
+                                    <span class="badge bg-danger fs-6 fw-normal"
+                                        >Bloqueado</span
                                     >
                                 {/if}</td
                             >
                             <td>{usuario.tipoUsuario.tipo}</td>
                             <td class="text-center">
-                                <button
-                                    class="btn d-inline-flex p-0"
-                                    title="Bloquear usuario"
-                                    on:click={() => {
-                                        bloquearUsuario(usuario.id);
-                                    }}
-                                    ><span
-                                        class="material-symbols-outlined link-danger fs-3"
-                                    >
-                                        no_accounts
-                                    </span></button
+                                <div
+                                    class="d-flex justify-content-center align-items-center"
                                 >
+                                    <button
+                                        class="btn d-inline-flex p-0"
+                                        title="Desbloquear usuario"
+                                        on:click={() => {
+                                            desbloquearUsuario(usuario.id);
+                                        }}
+                                        ><span
+                                            class="material-symbols-outlined link-success fs-3"
+                                        >
+                                            lock_open_right
+                                        </span>
+                                    </button>
+                                    <button
+                                        class="btn d-inline-flex p-0"
+                                        title="Bloquear usuario"
+                                        on:click={() => {
+                                            bloquearUsuario(usuario.id);
+                                        }}
+                                        ><span
+                                            class="material-symbols-outlined link-danger fs-3"
+                                        >
+                                            lock
+                                        </span>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     {/each}

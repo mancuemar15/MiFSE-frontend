@@ -46,6 +46,7 @@
             fetch(URL.comentarios, {
                 method: "POST",
                 headers: {
+                    Authorization: `Bearer ${$usuario.token}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(comentarioAEnviar),
@@ -80,6 +81,9 @@
     const borrarComentario = (idComentario) => {
         fetch(`${URL.comentarios}/${idComentario}`, {
             method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
         })
             .then((response) => {
                 if (response.ok) {
@@ -108,60 +112,63 @@
         {:else}
             <h4 class="fw-bold sin-comentarios">No hay comentarios</h4>
         {/if}
-        <div class="reply-form">
-            <h4 class="mb-3">Deja tu valoración y comentario</h4>
-            {#if $usuario}
-                <form on:submit={enviarComentario} class="text-center">
-                    <div class="row">
-                        <div class="col form-group">
-                            <StarRatting
-                                config={configuracionEstrellas}
-                                on:change={(e) => {
-                                    comprobarValidezEstrellas(e.target);
-                                }}
-                            />
+        {#if $usuario?.tipoUsuario.id === 2}
+            <div class="reply-form">
+                <h4 class="mb-3">Deja tu valoración y comentario</h4>
+                {#if $usuario}
+                    <form on:submit={enviarComentario} class="text-center">
+                        <div class="row">
+                            <div class="col form-group">
+                                <StarRatting
+                                    config={configuracionEstrellas}
+                                    on:change={(e) => {
+                                        comprobarValidezEstrellas(e.target);
+                                    }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col form-group text-start">
-                            <label
-                                for="comentario"
-                                class="form-label obligatorio">Comentario</label
+                        <div class="row">
+                            <div class="col form-group text-start">
+                                <label
+                                    for="comentario"
+                                    class="form-label obligatorio"
+                                    >Comentario</label
+                                >
+                                <textarea
+                                    name="comentario"
+                                    class="form-control"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary boton-azul"
+                            >Enviar</button
+                        >
+                    </form>
+                {:else}
+                    <div class="bloque-usuario-no-login">
+                        <p>
+                            Para poder comentar debes iniciar sesión o
+                            registrarte.
+                        </p>
+                        <div
+                            class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
+                        >
+                            <button
+                                class="btn btn-primary boton-azul"
+                                on:click={abrirModalInicioSesion}
+                                >Iniciar sesión</button
                             >
-                            <textarea
-                                name="comentario"
-                                class="form-control"
-                                required
-                            />
+                            <button
+                                class="btn btn-primary boton-azul"
+                                on:click={abrirModalRegistro}
+                                >Registrarse</button
+                            >
                         </div>
                     </div>
-                    <button
-                        type="submit"
-                        class="btn btn-primary boton-azul"
-                        disabled={$usuario.tipoUsuario.id === 1}>Enviar</button
-                    >
-                </form>
-            {:else}
-                <div class="bloque-usuario-no-login">
-                    <p>
-                        Para poder comentar debes iniciar sesión o registrarte.
-                    </p>
-                    <div
-                        class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
-                    >
-                        <button
-                            class="btn btn-primary boton-azul"
-                            on:click={abrirModalInicioSesion}
-                            >Iniciar sesión</button
-                        >
-                        <button
-                            class="btn btn-primary boton-azul"
-                            on:click={abrirModalRegistro}>Registrarse</button
-                        >
-                    </div>
-                </div>
-            {/if}
-        </div>
+                {/if}
+            </div>
+        {/if}
     </div>
 </section>
 

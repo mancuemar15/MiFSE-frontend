@@ -8,7 +8,7 @@
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
     import { getContext } from "svelte";
-    import { centrosSeleccionados } from "./store";
+    import { centrosSeleccionados, usuario } from "./store";
 
     export let isOpen;
     export let lista;
@@ -22,11 +22,21 @@
         fetch(URL.listas, {
             method: "POST",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(lista),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.status !== 201) {
+                    anadirNotificacionError(
+                        "Ha ocurrido un error al guardar la lista de centros"
+                    );
+                    return;
+                } else {
+                    return response.json();
+                }
+            })
             .then((data) => {
                 anadirNotificacionExito(
                     "La lista de centros se ha guardado correctamente"

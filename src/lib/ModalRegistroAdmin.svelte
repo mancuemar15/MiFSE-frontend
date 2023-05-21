@@ -10,6 +10,7 @@
     } from "./utilidadesNotificaciones";
     import { getContext } from "svelte";
     import { createEventDispatcher } from "svelte";
+    import { usuario } from "./store";
 
     export let isOpen;
 
@@ -41,26 +42,34 @@
         fetch(`${URL.administradores}/registro`, {
             method: "POST",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(datos),
         })
             .then((response) => {
+                eliminarNotificacionCargando(idNotificacion);
                 if (response.status === 409) {
                     anadirNotificacionError(
-                        "Ya existe un usuario con ese email"
+                        "Ya existe un administrador con ese email"
+                    );
+                } else if (response.status === 201) {
+                    anadirNotificacionExito("Registro completado con éxito");
+                    closeModal();
+                    return response.json();
+                } else {
+                    anadirNotificacionError(
+                        "No se ha podido registrar el usuario. Inténtelo de nuevo más tarde"
                     );
                 }
-                return response.json();
             })
             .then((data) => {
-                eliminarNotificacionCargando(idNotificacion);
-                anadirNotificacionExito("Registro completado con éxito");
                 dispatch("administradorRegistrado", data);
-                closeModal();
             })
             .catch(() => {
-                anadirNotificacionError("No se ha podido registrar el usuario");
+                anadirNotificacionError(
+                    "No se ha podido registrar el usuario. Inténtelo de nuevo más tarde"
+                );
             });
     }
 

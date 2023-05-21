@@ -9,6 +9,7 @@
         anadirNotificacionExito,
         anadirNotificacionError,
     } from "./utilidadesNotificaciones";
+    import { usuario } from "./store";
 
     export let id;
 
@@ -20,8 +21,12 @@
 
     const getLista = async () => {
         const url = `${URL.listas}/${id}/preferencias`;
-        const response = await fetch(url);
-        if (!response.ok) {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
+        if (response.status !== 200) {
             redireccionarNotFound();
         }
         lista = await response.json();
@@ -68,17 +73,23 @@
         fetch(URL.listas, {
             method: "PUT",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(lista),
         })
-            .then((response) => response.json())
-            .then(() => {
-                anadirNotificacionExito(
-                    "Se han guardado las preferencias correctamente"
-                );
-                if (funcionAnterior !== "anadir-centros") {
-                    navigate("/perfil/mis-listas");
+            .then((response) => {
+                if (response.status !== 200) {
+                    anadirNotificacionError(
+                        "Ha ocurrido un error al guardar las preferencias"
+                    );
+                } else {
+                    if (funcionAnterior !== "anadir-centros") {
+                        anadirNotificacionExito(
+                            "Se han guardado las preferencias correctamente"
+                        );
+                        navigate("/perfil/mis-listas");
+                    }
                 }
             })
             .catch(() => {

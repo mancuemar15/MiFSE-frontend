@@ -66,26 +66,7 @@
                                     Enviar mensaje
                                 </button>
                             </li>
-                        {:else if !$usuario}
-                            <li>
-                                <button
-                                    class="dropdown-item"
-                                    type="button"
-                                    on:click={abrirModalInicioSesion}
-                                >
-                                    Enviar mensaje
-                                </button>
-                            </li>
                         {:else}
-                            <li>
-                                <button
-                                    class="dropdown-item"
-                                    type="button"
-                                    on:click={abrirModalInicioSesion}
-                                >
-                                    Enviar mensaje
-                                </button>
-                            </li>
                             <li>
                                 <button
                                     class="dropdown-item"

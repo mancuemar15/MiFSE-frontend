@@ -21,20 +21,20 @@
     }
 
     async function getSugerenciasCentros() {
-        try {
-            const response = await fetch(
-                `${URL.centrosSugerencias}/${terminoBusqueda}`
-            );
+        const response = await fetch(
+            `${URL.centrosSugerencias}/${terminoBusqueda}`
+        );
+        
+        if (response.status === 200) {
             const data = await response.json();
             sugerenciasCentros = data;
             mostrarSugerencias = true;
-        } catch (error) {
+        } else {
             sugerenciasCentros = [];
         }
     }
 
     function handleClickFueraComponente(event) {
-        // Check if the click event originated from within the component
         if (
             event.target.closest(".contenedor-buscador") === null &&
             mostrarSugerencias
@@ -50,12 +50,10 @@
         terminoBusqueda = "";
     }
 
-    // Add event listener for click events outside the component
     onMount(() => {
         document.addEventListener("click", handleClickFueraComponente);
     });
 
-    // Clean up the event listener on component destruction
     onDestroy(() => {
         document.removeEventListener("click", handleClickFueraComponente);
     });

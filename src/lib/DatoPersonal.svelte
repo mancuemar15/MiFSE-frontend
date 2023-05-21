@@ -43,11 +43,12 @@
         fetch(url, {
             method: "PUT",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify($usuario),
         }).then((response) => {
-            if (!response.ok) {
+            if (response.status !== 200) {
                 anadirNotificacionError("Error al guardar el nuevo dato");
             } else {
                 anadirNotificacionExito("Dato guardado correctamente");
@@ -56,7 +57,7 @@
     };
 </script>
 
-<div class="col-12 border-bottom dato-personal">
+<div class="col-12 d-grid border-bottom dato-personal">
     <div class="d-flex my-3 my-md-2">
         <div
             class="flex-grow-1 d-flex align-items-md-center flex-column flex-md-row"
@@ -92,23 +93,25 @@
                 />
             {/if}
         </div>
-        <div class="d-flex align-items-center">
-            {#if editando}
-                <button class="btn btn-link" on:click={guardarInput}
-                    ><span
-                        class="material-symbols-outlined azul icono-guardado"
+        {#if nombreInput !== "email" && nombreInput !== "contrasena"}
+            <div class="d-flex align-items-center">
+                {#if editando}
+                    <button class="btn btn-link d-flex text-decoration-none" on:click={guardarInput}
+                        ><span
+                            class="material-symbols-outlined azul icono-guardado"
+                        >
+                            save
+                        </span></button
                     >
-                        save
-                    </span></button
-                >
-            {:else}
-                <button class="btn btn-link" on:click={editarInput}
-                    ><span class="material-symbols-outlined azul icono">
-                        edit
-                    </span></button
-                >
-            {/if}
-        </div>
+                {:else}
+                    <button class="btn btn-link d-flex text-decoration-none" on:click={editarInput}
+                        ><span class="material-symbols-outlined azul icono">
+                            edit
+                        </span></button
+                    >
+                {/if}
+            </div>
+        {/if}
     </div>
 </div>
 
@@ -164,7 +167,7 @@
 
     @media (min-width: 768px) {
         .dato-personal {
-            max-height: 65px !important;
+            height: 65px !important;
         }
 
         .form-control:enabled {

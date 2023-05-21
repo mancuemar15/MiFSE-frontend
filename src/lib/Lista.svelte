@@ -36,14 +36,21 @@
         const response = await fetch(
             `${URL.especialidadesCentros}/${titulacion}`
         );
-        if (!response.ok) {
+        if (response.status !== 200) {
             redireccionarNotFound();
         }
         centros = await response.json();
     };
 
     const getLista = async () => {
-        const response = await fetch(`${URL.listas}/${id}`);
+        const response = await fetch(`${URL.listas}/${id}`, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
+        if (response.status !== 200) {
+            redireccionarNotFound();
+        }
         lista = await response.json();
         if ($usuario.id !== lista.residente.id) {
             redireccionarNotFound();
@@ -92,6 +99,7 @@
             const response = await fetch(URL.listas, {
                 method: "PUT",
                 headers: {
+                    Authorization: `Bearer ${$usuario.token}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(lista),

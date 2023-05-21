@@ -13,7 +13,11 @@
     let listasEditandose = [];
 
     const getListas = async () => {
-        const response = await fetch(`${URL.listas}/residente/${$usuario.id}`);
+        const response = await fetch(`${URL.listas}/residente/${$usuario.id}`, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
         if (response.status === 200) {
             listas = await response.json();
         } else {
@@ -28,9 +32,12 @@
     const eliminarLista = (idLista) => {
         fetch(`${URL.listas}/${idLista}`, {
             method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status !== 204) {
                     anadirNotificacionError("Error al eliminar la lista");
                 } else {
                     anadirNotificacionExito("Lista eliminada correctamente");
@@ -58,16 +65,22 @@
         fetch(URL.listas, {
             method: "PUT",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(lista),
         })
-            .then((response) => response.json())
-            .then(() => {
-                anadirNotificacionExito(
-                    "Nombre de la lista cambiado correctamente"
-                );
-                getListas();
+            .then((response) => {
+                if (response.status !== 200) {
+                    anadirNotificacionError(
+                        "Error al cambiar el nombre de la lista"
+                    );
+                } else {
+                    anadirNotificacionExito(
+                        "Nombre de la lista cambiado correctamente"
+                    );
+                    getListas();
+                }
             })
             .catch(() => {
                 anadirNotificacionError(

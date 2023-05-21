@@ -1,5 +1,7 @@
 <script>
     import { getContext } from "svelte";
+    import { usuario } from "./store";
+    import { anadirNotificacionError } from "./utilidadesNotificaciones";
 
     export let titulacion;
     export let actualizarDatos;
@@ -14,6 +16,10 @@
         const respuesta = await fetch(
             `${URL.ultimasPosiciones}/${nombreTitulacion}`
         );
+        if (respuesta.status !== 200) {
+            anadirNotificacionError("Error al obtener las últimas posiciones");
+            return;
+        }
         const datos = await respuesta.json();
         actualizarDatos(datos);
     }

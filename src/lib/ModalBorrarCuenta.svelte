@@ -19,22 +19,26 @@
         fetch(`${URL.usuarios}/${$usuario.id}`, {
             method: "DELETE",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ contrasena: e.target.contrasena.value }),
         })
             .then((response) => {
-                if (response.status === 401) {
+                if (response.status === 200) {
+                    anadirNotificacionExito("Cuenta borrada correctamente");
+                    closeModal();
+                    cerrarSesion();
+                    navigate("/");
+                } else if (response.status === 401) {
                     anadirNotificacionError("Contraseña incorrecta");
+                } else {
+                    anadirNotificacionError(
+                        "Se ha producido un error al borrar la cuenta"
+                    );
                 }
             })
-            .then(() => {
-                anadirNotificacionExito("Cuenta borrada correctamente");
-                closeModal();
-                cerrarSesion();
-                navigate("/");
-            })
-            .catch((error) => {
+            .catch(() => {
                 anadirNotificacionError("Error al borrar la cuenta");
             });
     };

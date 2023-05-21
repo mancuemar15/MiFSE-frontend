@@ -19,14 +19,27 @@
 
     const getUsuariosConMensajesIntercambiados = async () => {
         const url = `${URL.mensajes}/usuarios/${$usuario.id}`;
-        const response = await fetch(url);
-        usuariosConMensajesIntercambiados = await response.json();
-        usuariosFiltrados = await usuariosConMensajesIntercambiados;
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
+        if (response.status === 200) {
+            usuariosConMensajesIntercambiados = await response.json();
+            usuariosFiltrados = await usuariosConMensajesIntercambiados;
+        } else {
+            usuariosConMensajesIntercambiados = [];
+            usuariosFiltrados = [];
+        }
     };
 
     const getUsuariosConMensajesIntercambiadosSinLeer = async () => {
         const url = `${URL.mensajes}/usuarios/${$usuario.id}/sin-leer`;
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
         if (response.status === 200) {
             usuariosConMensajesIntercambiadosSinLeer =
                 (await response.json()) ?? [];
@@ -39,19 +52,24 @@
         const mensajesAMarcarLeidos = mensajes.filter(
             (m) => m.emisor.id !== $usuario.id && !m.leido
         );
+        if (mensajesAMarcarLeidos.length === 0) {
+            return;
+        }
         fetch(`${URL.mensajes}/leidos`, {
             method: "PUT",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(mensajesAMarcarLeidos),
         }).then((response) => {
-            if (!response.ok) {
+            if (response.status !== 200) {
                 anadirNotificacionError(
                     "Error al marcar los mensajes como leídos"
                 );
+            } else {
+                getUsuariosConMensajesIntercambiadosSinLeer();
             }
-            getUsuariosConMensajesIntercambiadosSinLeer();
         });
     };
 
@@ -65,7 +83,11 @@
 
     const getConversacion = async (idUsuario) => {
         const url = `${URL.mensajes}/usuarios/${$usuario.id}/${idUsuario}`;
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${$usuario.token}`,
+            },
+        });
         if (response.status === 200) {
             mensajes = await response.json();
             if (window.innerWidth < 992) {
@@ -134,11 +156,12 @@
         fetch(URL.mensajes, {
             method: "POST",
             headers: {
+                Authorization: `Bearer ${$usuario.token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(mensaje),
         }).then((response) => {
-            if (!response.ok) {
+            if (response.status !== 201) {
                 anadirNotificacionError("Error al enviar el mensaje");
             } else {
                 anadirNotificacionExito("Mensaje enviado correctamente");

@@ -29,18 +29,17 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(datos),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    eliminarNotificacionCargando(idNotificacion);
-                    anadirNotificacionExito("Mensaje enviado correctamente");
-                    formulario.reset();
-                }
-            })
-            .catch(() => {
-                eliminarNotificacionCargando(idNotificacion);
-                anadirNotificacionError("Error al enviar el mensaje");
-            });
+        }).then((response) => {
+            eliminarNotificacionCargando(idNotificacion);
+            if (response.status === 200) {
+                anadirNotificacionExito("Mensaje enviado correctamente");
+                formulario.reset();
+            } else {
+                anadirNotificacionError(
+                    "Error al enviar el mensaje. Inténtelo de nuevo más tarde"
+                );
+            }
+        });
     };
 </script>
 

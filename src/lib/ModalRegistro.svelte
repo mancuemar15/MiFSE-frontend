@@ -7,6 +7,8 @@
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
+        anadirNotificacionCargando,
+        eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
 
     export let isOpen;
@@ -19,11 +21,17 @@
 
     const getTitulaciones = async () => {
         const response = await fetch(URL.titulaciones);
+        if (response.status !== 200) {
+            return;
+        }
         titulaciones = await response.json();
     };
 
     const getTiposResidente = async () => {
         const response = await fetch(URL.tiposResidentes);
+        if (response.status !== 200) {
+            return;
+        }
         tiposResidente = await response.json();
     };
 
@@ -50,6 +58,9 @@
             tipoResidente: { id: parseInt(tipoResidente) },
             tipoUsuario: { id: 2 },
         };
+        const idNotificacion = anadirNotificacionCargando(
+            "Registrando usuario"
+        );
         fetch(`${URL.residentes}/registro`, {
             method: "POST",
             headers: {
@@ -58,18 +69,24 @@
             body: JSON.stringify(datos),
         })
             .then((response) => {
+                eliminarNotificacionCargando(idNotificacion);
                 if (response.status === 409) {
                     anadirNotificacionError(
-                        "Ya existe un usuario con ese email"
+                        "Ya existe un residente con ese email"
+                    );
+                } else if (response.status === 201) {
+                    anadirNotificacionExito("Registro completado con éxito");
+                    closeModal();
+                } else {
+                    anadirNotificacionError(
+                        "No se ha podido registrar el usuario. Inténtelo de nuevo más tarde"
                     );
                 }
             })
-            .then(() => {
-                anadirNotificacionExito("Registro completado con éxito");
-                closeModal();
-            })
             .catch(() => {
-                anadirNotificacionError("No se ha podido registrar el usuario");
+                anadirNotificacionError(
+                    "No se ha podido registrar el usuario. Inténtelo de nuevo más tarde"
+                );
             });
     }
 

@@ -9,6 +9,9 @@
 
     const getTiposResidente = async () => {
         const response = await fetch(URL.tiposResidentes);
+        if (response.status !== 200) {
+            return;
+        }
         tiposResidentes = await response.json();
     };
 
@@ -28,13 +31,11 @@
         bind:valor={$usuario.apellido1}
         nombreInput="apellido1"
     />
-    {#if $usuario.apellido2}
-        <DatoPersonal
-            nombre="Segundo apellido"
-            bind:valor={$usuario.apellido2}
-            nombreInput="apellido2"
-        />
-    {/if}
+    <DatoPersonal
+        nombre="Segundo apellido"
+        bind:valor={$usuario.apellido2}
+        nombreInput="apellido2"
+    />
     <DatoPersonal
         nombre="Email"
         bind:valor={$usuario.email}

@@ -31,11 +31,17 @@
 
     const getTiposTrabajoFinResidencia = async () => {
         const response = await fetch(URL.tiposTrabajos);
+        if (response.status !== 200) {
+            return;
+        }
         tiposTrabajoFinResidencia = await response.json();
     };
 
     const getTiposGuardiasFindesFestivos = async () => {
         const response = await fetch(URL.tiposGuardias);
+        if (response.status !== 200) {
+            return;
+        }
         tiposGuardiasFindesFestivos = await response.json();
     };
 

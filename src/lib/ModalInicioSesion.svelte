@@ -27,17 +27,21 @@
             },
             body: JSON.stringify(datos),
         })
-            .then(async (response) => {
+            .then((response) => {
                 if (response.status === 200) {
                     anadirNotificacionExito("Inicio de sesión correcto");
-                    const data = await response.json();
-                    iniciarSesion(data);
                     closeModal();
+                    return response.json();
+                } else if (response.status === 401) {
+                    anadirNotificacionError("Credenciales incorrectos");
                 } else {
                     anadirNotificacionError(
                         "Se ha producido un error al iniciar sesión"
                     );
                 }
+            })
+            .then((data) => {
+                iniciarSesion(data);
             })
             .catch(() => {
                 anadirNotificacionError(
