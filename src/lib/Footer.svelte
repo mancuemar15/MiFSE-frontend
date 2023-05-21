@@ -71,12 +71,6 @@
                             {#each opcion.enlaces as enlace}
                                 <li>
                                     <i class="bi bi-chevron-right" />
-                                    <!-- <button
-                                        class="btn btn-link"
-                                        on:click={() => {
-                                            navigate(enlace.ruta);
-                                        }}>{enlace.texto}</button
-                                    > -->
                                     <Link to={enlace.ruta}>{enlace.texto}</Link>
                                 </li>
                             {/each}
