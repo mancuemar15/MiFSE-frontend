@@ -9,13 +9,11 @@
         eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
     import { getContext } from "svelte";
-    import { createEventDispatcher } from "svelte";
     import { usuario } from "./store";
 
     export let isOpen;
 
     const URL = getContext("URL");
-    const dispatch = createEventDispatcher();
 
     function registrarResidente(event) {
         event.preventDefault();
@@ -47,7 +45,7 @@
             },
             body: JSON.stringify(datos),
         })
-            .then((response) => {
+            .then(async (response) => {
                 eliminarNotificacionCargando(idNotificacion);
                 if (response.status === 409) {
                     anadirNotificacionError(
@@ -56,15 +54,16 @@
                 } else if (response.status === 201) {
                     anadirNotificacionExito("Registro completado con éxito");
                     closeModal();
-                    return response.json();
+                    const usuario = await response.json();
+                    const event = new CustomEvent("administradorRegistrado", {
+                        detail: usuario,
+                    });
+                    window.dispatchEvent(event);
                 } else {
                     anadirNotificacionError(
                         "No se ha podido registrar el usuario. Inténtelo de nuevo más tarde"
                     );
                 }
-            })
-            .then((data) => {
-                dispatch("administradorRegistrado", data);
             })
             .catch(() => {
                 anadirNotificacionError(
