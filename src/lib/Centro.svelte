@@ -59,8 +59,11 @@
         for (let especialidad of especialidades) {
             let nombre = capitalizar(especialidad.nombre);
             let titulacion = capitalizar(especialidad.titulacion.nombre);
+
             if (titulacion in especialidadesPorTitulacion) {
-                especialidadesPorTitulacion[titulacion].push(nombre);
+                if (!especialidadesPorTitulacion[titulacion].includes(nombre)) {
+                    especialidadesPorTitulacion[titulacion].push(nombre);
+                }
             } else {
                 especialidadesPorTitulacion[titulacion] = [nombre];
             }
