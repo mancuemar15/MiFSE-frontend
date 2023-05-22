@@ -13,6 +13,7 @@
     import Mensajes from "./Mensajes.svelte";
     import Usuarios from "./Usuarios.svelte";
     import PoliticaPrivacidad from "./PoliticaPrivacidad.svelte";
+    import Verificacion from "./Verificacion.svelte";
 </script>
 
 <main>
@@ -36,6 +37,7 @@
         <Usuarios />
     </RutaPrivada>
     <Route path="/politica-privacidad" component={PoliticaPrivacidad} />
+    <Route path="/verificacion" component={Verificacion} />
     <Modals>
         <div slot="backdrop" class="backdrop" transition:fade />
     </Modals>
