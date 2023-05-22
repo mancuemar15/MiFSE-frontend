@@ -100,8 +100,9 @@
                 );
             });
         const cumpleValoraciones =
-            centro.centro.valoracionMedia >= valoracionesSeleccionadas[0] &&
-            centro.centro.valoracionMedia <= valoracionesSeleccionadas[1];
+            centro.centro.valoracionMedia === null ||
+            (centro.centro.valoracionMedia >= valoracionesSeleccionadas[0] &&
+                centro.centro.valoracionMedia <= valoracionesSeleccionadas[1]);
         const cumpleNecesidadCoche =
             necesidadCoche === null || centro.necesidadCoche === necesidadCoche;
         const cumpleHayClases =
