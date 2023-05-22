@@ -312,11 +312,12 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         value=""
-                                        id="flexCheckDefault"
+                                        id="check-privacidad"
+                                        required
                                     />
                                     <label
                                         class="form-check-label"
-                                        for="flexCheckDefault"
+                                        for="check-privacidad"
                                     >
                                         He leído y acepto la
                                         <Link
