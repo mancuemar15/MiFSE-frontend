@@ -4,9 +4,6 @@
     import Contacto from "./Contacto.svelte";
     import Faqs from "./Faqs.svelte";
     import Valores from "./Valores.svelte";
-    import { useFocus } from "svelte-navigator";
-
-    const registerFocus = useFocus();
 </script>
 
 <Banner />
