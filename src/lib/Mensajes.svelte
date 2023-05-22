@@ -6,6 +6,8 @@
     import {
         anadirNotificacionExito,
         anadirNotificacionError,
+        anadirNotificacionCargando,
+        eliminarNotificacionCargando,
     } from "./utilidadesNotificaciones";
     import { useLocation } from "svelte-navigator";
 
@@ -153,6 +155,9 @@
             receptor: { id: idReceptor },
             fechaEnvio: new Date().toJSON(),
         };
+        const idNotificacion = anadirNotificacionCargando(
+            "Enviando mensaje..."
+        );
         fetch(URL.mensajes, {
             method: "POST",
             headers: {
@@ -161,6 +166,7 @@
             },
             body: JSON.stringify(mensaje),
         }).then((response) => {
+            eliminarNotificacionCargando(idNotificacion);
             if (response.status !== 201) {
                 anadirNotificacionError("Error al enviar el mensaje");
             } else {
