@@ -1,7 +1,10 @@
 <script>
+    // @ts-nocheck
+
     import { onMount, afterUpdate, getContext } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
-    import Mapa from "./Mapa.svelte";
+    // import Mapa from "./Mapa.svelte";
+    import Map from "@anoram/leaflet-svelte";
     import Comentarios from "./Comentarios.svelte";
     import { capitalizar } from "./utilidadesString";
     import { redireccionarNotFound } from "./utilidadesLinks";
@@ -14,6 +17,7 @@
     let centro = {};
     let especialidadesPorTitulacion = [];
     let numeroAnteriorComentarios = 0;
+    let options = {};
 
     const getCentro = async () => {
         const response = await fetch(`${URL.centros}/${id}`);
@@ -21,6 +25,21 @@
             redireccionarNotFound();
         }
         centro = await response.json();
+        options = await {
+            center: [centro.latitud, centro.longitud],
+            zoom: 12,
+            mapID: "mapa",
+            markers: [
+                {
+                    lat: centro.latitud,
+                    lng: centro.longitud,
+                    popup: {
+                        isOpen: false,
+                        text: centro.nombre,
+                    },
+                },
+            ],
+        };
         numeroAnteriorComentarios = await centro.comentarios.length;
     };
 
@@ -149,11 +168,11 @@
         </div>
     </section>
     {#key centro}
-        <Mapa latitud={centro.latitud} longitud={centro.longitud} />
+        <div class="container mapa">
+            <Map {options} />
+        </div>
     {/key}
     <Comentarios bind:comentarios={centro.comentarios} idCentro={centro.id} />
-{:catch error}
-    <p>Error: {error.message}</p>
 {/await}
 
 <style>
@@ -205,6 +224,15 @@
         padding-right: 4px;
         color: #d0d4fc;
         font-size: 12px;
+    }
+
+    .mapa {
+        height: 400px;
+        width: 100%;
+    }
+
+    :global(.map) {
+        z-index: 0 !important;
     }
 
     @media (min-width: 425px) {

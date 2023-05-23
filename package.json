@@ -13,6 +13,7 @@
     "svelte": "^3.59.1"
   },
   "dependencies": {
+    "@anoram/leaflet-svelte": "^0.0.7-1",
     "@ernane/svelte-star-rating": "^1.1.2",
     "@zerodevx/svelte-toast": "^0.9.3",
     "leaflet": "^1.9.3",
