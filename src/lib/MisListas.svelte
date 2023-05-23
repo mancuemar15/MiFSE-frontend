@@ -91,76 +91,88 @@
 </script>
 
 <div class="row gy-2">
-    {#if listas.length === 0}
-        <div class="col-12 text-center">
-            <h3 class="text-center">No tienes listas creadas</h3>
+    {#await getListas()}
+        <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status" />
         </div>
-    {:else}
-        {#each listas as lista}
-            <div class="col-12 lista">
-                <div class="d-flex align-items-center">
-                    <h4 class="flex-grow-1 m-0">
-                        <input
-                            type="text"
-                            class="w-100"
-                            name="nombreLista{lista.id}"
-                            id="nombre-lista-{lista.id}"
-                            value={lista.nombre}
-                            disabled
-                        />
-                    </h4>
-                    <div class="d-flex align-items-end botones ps-2">
-                        {#if listasEditandose[lista.id]}
-                            <button
-                                class="text-decoration-none bg-transparent border-0 d-flex"
-                                on:click={() => {
-                                    cambiarNombreLista(lista.id);
-                                }}
-                            >
-                                <span
-                                    class="material-symbols-outlined azul icono-guardado"
+    {:then}
+        {#if listas.length === 0}
+            <div class="col-12 text-center">
+                <h3 class="text-center">No tienes listas creadas</h3>
+            </div>
+        {:else}
+            {#each listas as lista}
+                <div class="col-12 lista">
+                    <div class="d-flex align-items-center">
+                        <h4 class="flex-grow-1 m-0">
+                            <input
+                                type="text"
+                                class="w-100"
+                                name="nombreLista{lista.id}"
+                                id="nombre-lista-{lista.id}"
+                                value={lista.nombre}
+                                disabled
+                            />
+                        </h4>
+                        <div class="d-flex align-items-end botones ps-2">
+                            {#if listasEditandose[lista.id]}
+                                <button
+                                    class="text-decoration-none bg-transparent border-0 d-flex"
+                                    on:click={() => {
+                                        cambiarNombreLista(lista.id);
+                                    }}
                                 >
-                                    save
-                                </span>
-                            </button>
-                        {:else}
-                            <button
-                                class="text-decoration-none bg-transparent border-0 d-flex"
-                                on:click={() => {
-                                    editarNombreLista(lista.id);
-                                }}
-                            >
-                                <span
-                                    class="material-symbols-outlined azul icono py-1"
+                                    <span
+                                        class="material-symbols-outlined azul icono-guardado"
+                                    >
+                                        save
+                                    </span>
+                                </button>
+                            {:else}
+                                <button
+                                    class="text-decoration-none bg-transparent border-0 d-flex"
+                                    on:click={() => {
+                                        editarNombreLista(lista.id);
+                                    }}
                                 >
-                                    edit
-                                </span>
-                            </button>
-                        {/if}
-                        <Link
-                            to={`/preferencias/lista/${lista.id}`}
-                            class="text-decoration-none d-flex align-items-end"
-                        >
-                            <i
-                                class="material-symbols-outlined azul icono-grande"
+                                    <span
+                                        class="material-symbols-outlined azul icono py-1"
+                                    >
+                                        edit
+                                    </span>
+                                </button>
+                            {/if}
+                            <Link
+                                to={`/preferencias/lista/${lista.id}`}
+                                class="text-decoration-none d-flex align-items-end"
                             >
-                                edit_note
-                            </i>
-                        </Link>
-                        <button
-                            class="text-decoration-none bg-transparent border-0"
-                            on:click={() => {
-                                eliminarLista(lista.id);
-                            }}
-                            ><i
-                                class="fa-solid fa-trash-can link-danger"
-                            /></button
-                        >
+                                <i
+                                    class="material-symbols-outlined azul icono-grande"
+                                >
+                                    edit_note
+                                </i>
+                            </Link>
+                            <button
+                                class="text-decoration-none bg-transparent border-0"
+                                on:click={() => {
+                                    eliminarLista(lista.id);
+                                }}
+                                ><i
+                                    class="fa-solid fa-trash-can link-danger"
+                                /></button
+                            >
+                        </div>
                     </div>
                 </div>
-            </div>
-        {/each}
-    {/if}
+            {/each}
+        {/if}
+    {:catch error}
+        <div class="col-12 text-center">
+            <h3 class="text-center">
+                Ha ocurrido un error al cargar las listas
+            </h3>
+        </div>
+    {/await}
 </div>
 
 <style>
