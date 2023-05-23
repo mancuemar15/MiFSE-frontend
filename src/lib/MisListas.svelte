@@ -92,7 +92,7 @@
 
 <div class="row gy-2">
     {#await getListas()}
-        <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="col-12 text-center">
             <div class="spinner-border text-primary" role="status" />
         </div>
     {:then}
