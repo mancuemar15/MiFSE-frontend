@@ -316,7 +316,7 @@
                                         required
                                     />
                                     <label
-                                        class="form-check-label"
+                                        class="form-check-label obligatorio"
                                         for="check-privacidad"
                                     >
                                         He leído y acepto la
