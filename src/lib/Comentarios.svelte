@@ -1,4 +1,5 @@
 <script>
+    // @ts-ignore
     import StarRatting from "@ernane/svelte-star-rating";
     import { usuario } from "./store.js";
     import Comentario from "./Comentario.svelte";
@@ -112,7 +113,7 @@
         {:else}
             <h4 class="fw-bold sin-comentarios">No hay comentarios</h4>
         {/if}
-        {#if $usuario?.tipoUsuario.id === 2}
+        {#if $usuario?.tipoUsuario.id !== 1}
             <div class="reply-form">
                 <h4 class="mb-3">Deja tu valoración y comentario</h4>
                 {#if $usuario}
