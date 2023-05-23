@@ -64,12 +64,11 @@
                 </div>`;
     }
 
-    function anadirCentros() {
+    const anadirCentros = () => {
         guardarPreferencias("anadir-centros");
-        navigate(`/lista/${titulacion}/${id}`);
-    }
+    };
 
-    function guardarPreferencias(funcionAnterior) {
+    const guardarPreferencias = (funcionAnterior) => {
         fetch(URL.listas, {
             method: "PUT",
             headers: {
@@ -84,7 +83,9 @@
                         "Ha ocurrido un error al guardar las preferencias"
                     );
                 } else {
-                    if (funcionAnterior !== "anadir-centros") {
+                    if (funcionAnterior === "anadir-centros") {
+                        navigate(`/lista/${titulacion}/${id}`);
+                    } else {
                         anadirNotificacionExito(
                             "Se han guardado las preferencias correctamente"
                         );
@@ -97,7 +98,7 @@
                     "Ha ocurrido un error al guardar las preferencias"
                 );
             });
-    }
+    };
 
     $: lista.preferencias = preferenciasArrastrables.map((p, i) => {
         p.original.numero = i + 1;
@@ -105,32 +106,40 @@
     });
 </script>
 
-<TituloPagina seccion="preferencias" titulo="Preferencias de {lista.nombre}" />
+<TituloPagina seccion="preferencias" titulo="Preferencias de {lista.nombre ?? ""}" />
 <section id="preferencias">
     <div class="container">
-        <div class="row gy-4">
-            <div class="col-12">
-                <DragDrop
-                    bind:data={preferenciasArrastrables}
-                    removesItems={true}
-                />
-            </div>
-            <div class="col-12">
-                <div
-                    class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
-                >
-                    <button
-                        class="btn btn-primary boton-azul"
-                        on:click={anadirCentros}>Añadir más centros</button
-                    >
-                    <button
-                        class="btn btn-primary boton-azul"
-                        on:click={guardarPreferencias}
-                        >Guardar preferencias</button
-                    >
+        {#await getLista()}
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
                 </div>
             </div>
-        </div>
+        {:then}
+            <div class="row gy-4">
+                <div class="col-12">
+                    <DragDrop
+                        bind:data={preferenciasArrastrables}
+                        removesItems={true}
+                    />
+                </div>
+                <div class="col-12">
+                    <div
+                        class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
+                    >
+                        <button
+                            class="btn btn-primary boton-azul"
+                            on:click={anadirCentros}>Añadir más centros</button
+                        >
+                        <button
+                            class="btn btn-primary boton-azul"
+                            on:click={guardarPreferencias}
+                            >Guardar preferencias</button
+                        >
+                    </div>
+                </div>
+            </div>
+        {/await}
     </div>
 </section>
 

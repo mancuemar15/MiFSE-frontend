@@ -139,7 +139,7 @@
                                     role="status"
                                 >
                                     <span class="visually-hidden"
-                                        >Loading...</span
+                                        >Cargando...</span
                                     >
                                 </div>
                             </div>
