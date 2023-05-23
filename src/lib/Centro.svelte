@@ -3,7 +3,6 @@
 
     import { onMount, afterUpdate, getContext } from "svelte";
     import TituloPagina from "./TituloPagina.svelte";
-    // import Mapa from "./Mapa.svelte";
     import Map from "@anoram/leaflet-svelte";
     import Comentarios from "./Comentarios.svelte";
     import { capitalizar } from "./utilidadesString";
