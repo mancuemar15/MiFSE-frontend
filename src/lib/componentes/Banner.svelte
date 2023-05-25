@@ -1,5 +1,5 @@
 <script>
-    import imagenBanner from "../assets/banner.png";
+    import imagenBanner from "../../assets/banner.png";
     import { abrirModalRegistro } from "../utils/utilidadesModales";
 </script>
 

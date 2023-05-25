@@ -1,9 +1,9 @@
 import { closeModal, openModal } from "svelte-modals";
-import ModalRegistro from "./ModalRegistro.svelte";
-import ModalInicioSesion from "./ModalInicioSesion.svelte";
-import ModalLista from "./ModalLista.svelte";
-import ModalBorrarCuenta from "./ModalBorrarCuenta.svelte";
-import ModalRegistroAdmin from "./ModalRegistroAdmin.svelte";
+import ModalRegistro from "../componentes/ModalRegistro.svelte";
+import ModalInicioSesion from "../componentes/ModalInicioSesion.svelte";
+import ModalLista from "../componentes/ModalLista.svelte";
+import ModalBorrarCuenta from "../componentes/ModalBorrarCuenta.svelte";
+import ModalRegistroAdmin from "../componentes/ModalRegistroAdmin.svelte";
 
 function abrirModalRegistro() {
     openModal(ModalRegistro, {

@@ -1,5 +1,5 @@
 <script>
-    import imagen404 from "../assets/404.png";
+    import imagen404 from "../../assets/404.png";
     import { navigate } from "svelte-navigator";
 </script>
 

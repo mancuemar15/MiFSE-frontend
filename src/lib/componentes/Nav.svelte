@@ -1,6 +1,6 @@
 <script>
     import { Link, useLocation } from "svelte-navigator";
-    import mifseLogo from "../assets/logo-mifse.svg";
+    import mifseLogo from "../../assets/logo-mifse.svg";
     import Buscador from "./Buscador.svelte";
     import { usuario, cerrarSesion } from "../utils/store";
     import { abrirModalRegistro } from "../utils/utilidadesModales";

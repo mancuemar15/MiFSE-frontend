@@ -1,6 +1,6 @@
 <script>
     import { Link } from "svelte-navigator";
-    import logoMifse from "../assets/logo-mifse.svg";
+    import logoMifse from "../../assets/logo-mifse.svg";
 
     const opcionesFooter = [
         {

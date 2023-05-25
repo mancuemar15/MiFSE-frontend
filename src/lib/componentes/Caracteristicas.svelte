@@ -1,6 +1,6 @@
 <script>
     import Caracteristica from "./Caracteristica.svelte";
-    import imagenCaracteristicas from "../assets/caracteristicas.png";
+    import imagenCaracteristicas from "../../assets/caracteristicas.png";
 
     const caracteristicas = [
         { titulo: "Buscar centros", icono: "bi bi-check" },
