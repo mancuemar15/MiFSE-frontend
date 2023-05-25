@@ -82,7 +82,7 @@
 
     <div class="container">
         <div class="copyright">
-            &copy; Copyright <strong><span>Manuel Cuevas Martín</span></strong>.
+            &copy; Copyright <strong><span>MiFSE</span></strong>.
             Todos los derechos reservados.
         </div>
     </div>
