@@ -123,6 +123,23 @@
         getTitulaciones();
         getTiposResidente();
     });
+
+    const mostrarContrasena = () => {
+        const inputContrasena = document.getElementById("contrasena");
+        const botonVerContrasena = document.getElementById(
+            "boton-ver-contrasena"
+        );
+        // @ts-ignore
+        if (inputContrasena.type === "password") {
+            // @ts-ignore
+            inputContrasena.type = "text";
+            botonVerContrasena.innerHTML = '<i class="bi bi-eye-slash" />';
+        } else {
+            // @ts-ignore
+            inputContrasena.type = "password";
+            botonVerContrasena.innerHTML = '<i class="bi bi-eye" />';
+        }
+    };
 </script>
 
 {#if isOpen}
@@ -232,14 +249,24 @@
                                     class="form-label obligatorio"
                                     >Contraseña</label
                                 >
-                                <input
-                                    type="password"
-                                    id="contrasena"
-                                    class="form-control"
-                                    name="contrasena"
-                                    required
-                                    on:input={validarContrasena}
-                                />
+                                <div class="input-group mb-3">
+                                    <input
+                                        type="password"
+                                        id="contrasena"
+                                        class="form-control"
+                                        name="contrasena"
+                                        required
+                                        on:input={validarContrasena}
+                                    />
+                                    <button
+                                        class="btn boton-azul"
+                                        type="button"
+                                        id="boton-ver-contrasena"
+                                        on:click={() => {
+                                            mostrarContrasena();
+                                        }}><i class="bi bi-eye" /></button
+                                    >
+                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <label
@@ -405,6 +432,15 @@
         display: flex !important;
         align-items: center;
         justify-content: center;
+    }
+
+    #boton-ver-contrasena {
+        padding: 0 15px !important;
+        border-radius: 0 !important;
+    }
+
+    #boton-ver-contrasena:hover {
+        transform: scale(1);
     }
 
     @media (min-width: 425px) {

@@ -96,7 +96,7 @@
     }
 
     .footer-top {
-        background: white url(../assets/bg-footer3.png) no-repeat right top;
+        background: white url(../../assets/bg-footer3.png) no-repeat right top;
         background-size: contain;
         border-top: 1px solid #e1ecff;
         border-bottom: 1px solid #e1ecff;
