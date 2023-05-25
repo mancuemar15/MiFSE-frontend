@@ -1,8 +1,8 @@
 <script>
   import { Router } from "svelte-navigator";
-  import Nav from "./lib/Nav.svelte";
-  import Contenido from "./lib/Contenido.svelte";
-  import Footer from "./lib/Footer.svelte";
+  import Nav from "./lib/componentes/Nav.svelte";
+  import Contenido from "./lib/componentes/Contenido.svelte";
+  import Footer from "./lib/componentes/Footer.svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { setContext } from "svelte";
 
