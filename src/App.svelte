@@ -6,7 +6,7 @@
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { setContext } from "svelte";
 
-  const URL_BASE = "httpS://mifse.herokuapp.com";
+  const URL_BASE = "https://mifse.herokuapp.com";
   const URL = {
     ultimasPosiciones: `${URL_BASE}/ultimas-posiciones`,
     centros: `${URL_BASE}/centros`,
