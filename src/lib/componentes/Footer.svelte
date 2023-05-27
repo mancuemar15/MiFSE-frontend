@@ -43,7 +43,7 @@
                             src={logoMifse}
                             alt="Logo MiFSE"
                             height="70"
-                            width="auto"
+                            width="163.337"
                         />
                     </div>
                     <div class="social-links mt-3">
