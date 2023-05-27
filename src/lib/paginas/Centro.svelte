@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
 
     import { onMount, afterUpdate, getContext } from "svelte";
     import TituloPagina from "../componentes/TituloPagina.svelte";
@@ -161,7 +161,13 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <img src="/img/centro/centro.webp" class="w-100" alt="" />
+                    <img
+                        src="/img/centro/centro.webp"
+                        class="w-100"
+                        alt="Centro hospitalario"
+                        width="100%"
+                        height="100%"
+                    />
                 </div>
             </div>
         </div>
