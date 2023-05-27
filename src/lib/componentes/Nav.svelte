@@ -53,7 +53,7 @@
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid container-lg">
         <Link to="/" class="navbar-brand">
-            <img src={mifseLogo} alt="Logo MiFSE" width="120" />
+            <img src={mifseLogo} alt="Logo MiFSE" width="120" height="100%" />
         </Link>
         <button
             class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"

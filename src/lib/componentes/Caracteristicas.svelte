@@ -21,7 +21,13 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <img src={imagenCaracteristicas} class="img-fluid" alt="" />
+                <img
+                    src={imagenCaracteristicas}
+                    class="img-fluid"
+                    alt="Datos médicos"
+                    height="100%"
+                    width="100%"
+                />
             </div>
 
             <div class="col-lg-6 mt-5 mt-lg-0 d-flex">

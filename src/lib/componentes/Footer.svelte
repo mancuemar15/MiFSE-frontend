@@ -39,7 +39,12 @@
             <div class="row gy-4">
                 <div class="col-md-6 col-xl-8 col-sm-12 footer-info">
                     <div class="logo d-flex align-items-center">
-                        <img src={logoMifse} alt="" />
+                        <img
+                            src={logoMifse}
+                            alt="Logo MiFSE"
+                            height="70"
+                            width="auto"
+                        />
                     </div>
                     <div class="social-links mt-3">
                         <a
@@ -82,8 +87,8 @@
 
     <div class="container">
         <div class="copyright">
-            &copy; Copyright <strong><span>MiFSE</span></strong>.
-            Todos los derechos reservados.
+            &copy; Copyright <strong><span>MiFSE</span></strong>. Todos los
+            derechos reservados.
         </div>
     </div>
 </footer>

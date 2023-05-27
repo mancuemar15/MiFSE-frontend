@@ -27,7 +27,13 @@
                 </div>
             </div>
             <div class="col-lg-6 banner-img">
-                <img src={imagenBanner} class="img-fluid w-100" alt="" />
+                <img
+                    src={imagenBanner}
+                    class="img-fluid w-100"
+                    alt="Dibujo de sanitarios delante de un hospital"
+                    width="100%"
+                    height="100%"
+                />
             </div>
         </div>
     </div>

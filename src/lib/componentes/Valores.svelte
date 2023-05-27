@@ -14,7 +14,13 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="box">
-                    <img src={imagenInnovacion} class="img-fluid" alt="" />
+                    <img
+                        src={imagenInnovacion}
+                        class="img-fluid"
+                        alt="Personas con una bombilla"
+                        height="100%"
+                        width="100%"
+                    />
                     <h3>Innovación</h3>
                     <p>
                         Apostamos por soluciones innovadoras para mejorar la
@@ -26,7 +32,13 @@
 
             <div class="col-lg-4 mt-4 mt-lg-0">
                 <div class="box">
-                    <img src={imagenColaboracion} class="img-fluid" alt="" />
+                    <img
+                        src={imagenColaboracion}
+                        class="img-fluid"
+                        alt="Personas encajando piezas de un puzzle"
+                        height="100%"
+                        width="100%"
+                    />
                     <h3>Colaboración</h3>
                     <p>
                         Creemos en la colaboración como herramienta fundamental
@@ -37,7 +49,13 @@
 
             <div class="col-lg-4 mt-4 mt-lg-0">
                 <div class="box">
-                    <img src={imagenSatisfaccion} class="img-fluid" alt="" />
+                    <img
+                        src={imagenSatisfaccion}
+                        class="img-fluid"
+                        alt="Persona rodeada de pulgares arriba"
+                        height="100%"
+                        width="100%"
+                    />
                     <h3>Satisfacción</h3>
                     <p>
                         Buscamos la satisfacción de todos los usuarios,
