@@ -161,7 +161,7 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <img src="/img/centro/centro.jpg" class="w-100" alt="" />
+                    <img src="/img/centro/centro.webp" class="w-100" alt="" />
                 </div>
             </div>
         </div>
