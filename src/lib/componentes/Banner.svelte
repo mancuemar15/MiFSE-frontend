@@ -1,5 +1,5 @@
 <script>
-    import imagenBanner from "../../assets/banner.png";
+    import imagenBanner from "../../assets/banner.webp";
     import { abrirModalRegistro } from "../utils/utilidadesModales";
 </script>
 
@@ -36,7 +36,7 @@
 <style>
     .banner {
         width: 100%;
-        background: url(/src/assets/bg.png) top center no-repeat;
+        background: url(/src/assets/bg.webp) top center no-repeat;
         background-size: cover;
         padding: 120px 0 60px 0;
         height: auto;

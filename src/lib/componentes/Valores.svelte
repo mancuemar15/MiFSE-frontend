@@ -1,7 +1,7 @@
 <script>
-    import imagenInnovacion from "../../assets/valores-innovacion.png";
-    import imagenColaboracion from "../../assets/valores-colaboracion.png";
-    import imagenSatisfaccion from "../../assets/valores-satisfaccion.png";
+    import imagenInnovacion from "../../assets/valores-innovacion.webp";
+    import imagenColaboracion from "../../assets/valores-colaboracion.webp";
+    import imagenSatisfaccion from "../../assets/valores-satisfaccion.webp";
 </script>
 
 <section id="valores" class="valores">

@@ -1,5 +1,5 @@
 <script>
-    import imagen404 from "../../assets/404.png";
+    import imagen404 from "../../assets/404.webp";
     import { navigate } from "svelte-navigator";
 </script>
 
@@ -32,7 +32,7 @@
 <style>
     .banner {
         width: 100%;
-        background: url(/src/assets/bg.png) top center no-repeat;
+        background: url(/src/assets/bg.webp) top center no-repeat;
         background-size: cover;
         padding: 120px 0 60px 0;
         height: auto;
