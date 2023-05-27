@@ -165,8 +165,6 @@
                         src="/img/centro/centro.webp"
                         class="w-100"
                         alt="Centro hospitalario"
-                        width="100%"
-                        height="100%"
                     />
                 </div>
             </div>
