@@ -12,7 +12,7 @@
 
     function handleInput(event) {
         terminoBusqueda = event.target.value;
-        if (terminoBusqueda.length > 0) {
+        if (terminoBusqueda.length > 2) {
             getSugerenciasCentros();
         } else {
             sugerenciasCentros = [];
@@ -24,7 +24,7 @@
         const response = await fetch(
             `${URL.centrosSugerencias}/${terminoBusqueda}`
         );
-        
+        console.log("peticion de sugerencia");
         if (response.status === 200) {
             const data = await response.json();
             sugerenciasCentros = data;
@@ -58,6 +58,8 @@
     onDestroy(() => {
         document.removeEventListener("click", handleClickFueraComponente);
     });
+
+    $: console.log(sugerenciasCentros);
 </script>
 
 <div class="contenedor-buscador">
