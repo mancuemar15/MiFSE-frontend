@@ -392,7 +392,7 @@
 
         .sin-mensajes::before {
             content: "";
-            background-image: url("../assets/conversacion_2.webp");
+            background-image: url(../assets/conversacion_2.webp);
             position: absolute;
             width: 100%;
             height: 100%;

@@ -24,7 +24,7 @@
             redireccionarNotFound();
         }
         centro = await response.json();
-        options = await {
+        options = {
             center: [centro.latitud, centro.longitud],
             zoom: 12,
             mapID: "mapa",
