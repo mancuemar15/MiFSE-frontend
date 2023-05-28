@@ -8,6 +8,7 @@
         anadirNotificacionError,
         anadirNotificacionCargando,
         eliminarNotificacionCargando,
+        anadirNotificacionInfo,
     } from "../utils/utilidadesNotificaciones";
     import { useLocation } from "svelte-navigator";
 
@@ -144,6 +145,12 @@
     };
 
     const enviarMensaje = (event) => {
+        if (!$usuario.verificado) {
+            anadirNotificacionInfo(
+                "Verifica tu cuenta para poder enviar mensajes"
+            );
+            return;
+        }
         const contenido = event.target.querySelector("input").value;
         const idReceptor =
             mensajes[0].emisor.id == $usuario.id
