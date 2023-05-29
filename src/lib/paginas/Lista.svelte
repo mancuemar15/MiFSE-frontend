@@ -3,7 +3,11 @@
     import TituloPagina from "../componentes/TituloPagina.svelte";
     import Filtros from "../componentes/Filtros.svelte";
     import CentroFiltrado from "../componentes/CentroFiltrado.svelte";
-    import { usuario, centrosFiltrados, centrosSeleccionados } from "../utils/store";
+    import {
+        usuario,
+        centrosFiltrados,
+        centrosSeleccionados,
+    } from "../utils/store";
     import { navigate } from "svelte-navigator";
     import { redireccionarNotFound } from "../utils/utilidadesLinks";
     import {
@@ -186,44 +190,45 @@
                                     </p>
                                 </div>
                             {/if}
-                        {/await}
-                        <div class="col-12 text-center">
-                            <div class="mt-3">
-                                {#if $usuario}
-                                    <button
-                                        type="button"
-                                        class="btn boton-azul"
-                                        disabled={$centrosSeleccionados[
-                                            titulacion
-                                        ].length === 0 ||
-                                            $usuario.tipoUsuario.id === 1}
-                                        on:click={guardarLista}
-                                        >Guardar lista</button
-                                    >
-                                {:else}
-                                    <div class="bloque-usuario-no-login">
-                                        <p>
-                                            Para guardar la lista de centros
-                                            debes iniciar sesión o registrarte.
-                                        </p>
-                                        <div
-                                            class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
+                            <div class="col-12 text-center">
+                                <div class="mt-3">
+                                    {#if $usuario}
+                                        <button
+                                            type="button"
+                                            class="btn boton-azul"
+                                            disabled={$centrosSeleccionados[
+                                                titulacion
+                                            ].length === 0 ||
+                                                $usuario.tipoUsuario.id === 1}
+                                            on:click={guardarLista}
+                                            >Guardar lista</button
                                         >
-                                            <button
-                                                class="btn btn-primary boton-azul"
-                                                on:click={abrirModalInicioSesion}
-                                                >Iniciar sesión</button
+                                    {:else}
+                                        <div class="bloque-usuario-no-login">
+                                            <p>
+                                                Para guardar la lista de centros
+                                                debes iniciar sesión o
+                                                registrarte.
+                                            </p>
+                                            <div
+                                                class="d-flex flex-row flex-wrap justify-content-center botones-usuario-anonimo"
                                             >
-                                            <button
-                                                class="btn btn-primary boton-azul"
-                                                on:click={abrirModalRegistro}
-                                                >Registrarse</button
-                                            >
+                                                <button
+                                                    class="btn btn-primary boton-azul"
+                                                    on:click={abrirModalInicioSesion}
+                                                    >Iniciar sesión</button
+                                                >
+                                                <button
+                                                    class="btn btn-primary boton-azul"
+                                                    on:click={abrirModalRegistro}
+                                                    >Registrarse</button
+                                                >
+                                            </div>
                                         </div>
-                                    </div>
-                                {/if}
+                                    {/if}
+                                </div>
                             </div>
-                        </div>
+                        {/await}
                     </div>
                 </div>
             </div>
