@@ -120,85 +120,97 @@
                 >
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Estado</th>
-                        <th>Tipo de usuario</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#if usuariosFiltrados.length > 0}
-                        {#each usuariosFiltrados as usuario}
-                            <tr>
-                                <th>{usuario?.id}</th>
-                                <td
-                                    >{`${usuario?.nombre} ${
-                                        usuario?.apellido1
-                                    } ${usuario?.apellido2 ?? ""}`}</td
-                                >
-                                <td>{usuario?.email}</td>
-                                <td class="text-center">
-                                    {#if usuario?.habilitado}
-                                        <span
-                                            class="badge bg-success fs-6 fw-normal"
-                                            >Activo</span
-                                        >
-                                    {:else}
-                                        <span
-                                            class="badge bg-danger fs-6 fw-normal"
-                                            >Bloqueado</span
-                                        >
-                                    {/if}</td
-                                >
-                                <td>{usuario?.tipoUsuario.tipo}</td>
-                                <td class="text-center">
-                                    <div
-                                        class="d-flex justify-content-center align-items-center"
+        {#await getUsuarios()}
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        {:then}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Tipo de usuario</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#if usuariosFiltrados.length > 0}
+                            {#each usuariosFiltrados as usuario}
+                                <tr>
+                                    <th>{usuario?.id}</th>
+                                    <td
+                                        >{`${usuario?.nombre} ${
+                                            usuario?.apellido1
+                                        } ${usuario?.apellido2 ?? ""}`}</td
                                     >
-                                        <button
-                                            class="btn d-inline-flex p-0"
-                                            title="Desbloquear usuario"
-                                            on:click={() => {
-                                                desbloquearUsuario(usuario?.id);
-                                            }}
-                                            ><span
-                                                class="material-symbols-outlined link-success fs-3"
+                                    <td>{usuario?.email}</td>
+                                    <td class="text-center">
+                                        {#if usuario?.habilitado}
+                                            <span
+                                                class="badge bg-success fs-6 fw-normal"
+                                                >Activo</span
                                             >
-                                                lock_open_right
-                                            </span>
-                                        </button>
-                                        <button
-                                            class="btn d-inline-flex p-0"
-                                            title="Bloquear usuario"
-                                            on:click={() => {
-                                                bloquearUsuario(usuario?.id);
-                                            }}
-                                            ><span
-                                                class="material-symbols-outlined link-danger fs-3"
+                                        {:else}
+                                            <span
+                                                class="badge bg-danger fs-6 fw-normal"
+                                                >Bloqueado</span
                                             >
-                                                lock
-                                            </span>
-                                        </button>
-                                    </div>
+                                        {/if}</td
+                                    >
+                                    <td>{usuario?.tipoUsuario.tipo}</td>
+                                    <td class="text-center">
+                                        <div
+                                            class="d-flex justify-content-center align-items-center"
+                                        >
+                                            <button
+                                                class="btn d-inline-flex p-0"
+                                                title="Desbloquear usuario"
+                                                on:click={() => {
+                                                    desbloquearUsuario(
+                                                        usuario?.id
+                                                    );
+                                                }}
+                                                ><span
+                                                    class="material-symbols-outlined link-success fs-3"
+                                                >
+                                                    lock_open_right
+                                                </span>
+                                            </button>
+                                            <button
+                                                class="btn d-inline-flex p-0"
+                                                title="Bloquear usuario"
+                                                on:click={() => {
+                                                    bloquearUsuario(
+                                                        usuario?.id
+                                                    );
+                                                }}
+                                                ><span
+                                                    class="material-symbols-outlined link-danger fs-3"
+                                                >
+                                                    lock
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {/each}
+                        {:else}
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    No hay usuarios
                                 </td>
                             </tr>
-                        {/each}
-                    {:else}
-                        <tr>
-                            <td colspan="6" class="text-center">
-                                No hay usuarios
-                            </td>
-                        </tr>
-                    {/if}
-                </tbody>
-            </table>
-        </div>
+                        {/if}
+                    </tbody>
+                </table>
+            </div>
+        {/await}
     </div>
 </section>
 
