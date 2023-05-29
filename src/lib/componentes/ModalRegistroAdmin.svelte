@@ -93,6 +93,8 @@
         const patronContrasena =
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
 
+        formulario.contrasena.setCustomValidity("");
+        formulario.contrasenaConfirmar.setCustomValidity("");
         if (!patronContrasena.test(contrasena)) {
             formulario.contrasena.setCustomValidity(
                 "La contraseña debe tener al menos 8 caracteres y contener al menos \nun número, una minúscula, una mayúscula y un símbolo"
