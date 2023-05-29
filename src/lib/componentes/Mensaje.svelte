@@ -9,7 +9,7 @@
             {mensaje.contenido}
         </div>
         <div class="text-muted small py-2 px-3">
-            {new Date(mensaje.fechaEnvio).toLocaleString()}
+            {new Date(mensaje.fechaEnvio).toLocaleString('es-ES')}
         </div>
     </div>
 </div>

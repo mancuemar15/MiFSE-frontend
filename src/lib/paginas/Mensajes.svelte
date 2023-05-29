@@ -160,7 +160,7 @@
             contenido,
             emisor: $usuario,
             receptor: { id: idReceptor },
-            fechaEnvio: new Date().toLocaleString(),
+            fechaEnvio: new Date().toJSON(),
         };
         const idNotificacion = anadirNotificacionCargando(
             "Enviando mensaje..."
