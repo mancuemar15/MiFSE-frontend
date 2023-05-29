@@ -90,12 +90,19 @@
         const formulario = event.target.form;
         const contrasena = formulario.contrasena.value;
         const contrasenaConfirmar = formulario.contrasenaConfirmar.value;
+        const patronContrasena =
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
 
-        if (contrasena !== contrasenaConfirmar) {
+        if (!patronContrasena.test(contrasena)) {
+            formulario.contrasena.setCustomValidity(
+                "La contraseña debe tener al menos 8 caracteres y contener al menos \nun número, una minúscula, una mayúscula y un símbolo"
+            );
+        } else if (contrasena !== contrasenaConfirmar) {
             formulario.contrasenaConfirmar.setCustomValidity(
                 "Las contraseñas no coinciden"
             );
         } else {
+            formulario.contrasena.setCustomValidity("");
             formulario.contrasenaConfirmar.setCustomValidity("");
         }
     }
