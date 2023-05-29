@@ -36,11 +36,11 @@
     };
 
     const getPreferenciasArrastrables = async (lista) => {
-        return lista.preferencias.map((p, i) => {
+        return lista.preferencias.map((preferencia) => {
             return {
-                id: p.numero,
-                html: anadirHTML(p),
-                original: p,
+                id: preferencia.numero,
+                html: anadirHTML(preferencia),
+                original: preferencia,
             };
         });
     };
