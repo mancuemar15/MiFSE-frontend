@@ -32,6 +32,8 @@
                     anadirNotificacionExito("Inicio de sesión correcto");
                     closeModal();
                     return response.json();
+                } else if (response.status === 403) {
+                    anadirNotificacionError("La cuenta está bloqueada");
                 } else if (response.status === 401) {
                     anadirNotificacionError("Credenciales incorrectos");
                 } else {
