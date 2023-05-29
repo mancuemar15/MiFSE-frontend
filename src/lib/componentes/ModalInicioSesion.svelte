@@ -120,7 +120,7 @@
                                     class="form-label obligatorio"
                                     >Contraseña</label
                                 >
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <input
                                         type="password"
                                         id="contrasena"

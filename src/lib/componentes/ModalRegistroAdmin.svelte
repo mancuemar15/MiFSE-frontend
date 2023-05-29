@@ -209,7 +209,23 @@
                                     class="form-label obligatorio"
                                     >Repetir email</label
                                 >
-                                <div class="input-group mb-3">
+                                <input
+                                    type="email"
+                                    id="email-confirmar"
+                                    class="form-control"
+                                    name="email-confirmar"
+                                    required
+                                    on:input={validarEmail}
+                                />
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label
+                                    for="contrasena"
+                                    class="form-label obligatorio"
+                                    >Contraseña</label
+                                >
+                                <div class="input-group">
                                     <input
                                         type="password"
                                         id="contrasena"
@@ -227,22 +243,6 @@
                                         }}><i class="bi bi-eye" /></button
                                     >
                                 </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label
-                                    for="contrasena"
-                                    class="form-label obligatorio"
-                                    >Contraseña</label
-                                >
-                                <input
-                                    type="password"
-                                    id="contrasena"
-                                    class="form-control"
-                                    name="contrasena"
-                                    required
-                                    on:input={validarContrasena}
-                                />
                             </div>
                             <div class="col-lg-6">
                                 <label
