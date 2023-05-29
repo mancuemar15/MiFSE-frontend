@@ -15,7 +15,7 @@
 
     const URL = getContext("URL");
 
-    function registrarResidente(event) {
+    function registrarAdministrador(event) {
         event.preventDefault();
         const formulario = event.target;
         const nombre = formulario.nombre.value;
@@ -147,7 +147,7 @@
                 <div class="modal-body">
                     <form
                         class="formulario-inicio-sesion"
-                        on:submit={registrarResidente}
+                        on:submit={registrarAdministrador}
                     >
                         <div class="row gy-3 gy-lg-4">
                             <div class="col-lg-4 mt-0 mt-lg-auto">
@@ -213,7 +213,7 @@
                                     type="email"
                                     id="email-confirmar"
                                     class="form-control"
-                                    name="email-confirmar"
+                                    name="emailConfirmar"
                                     required
                                     on:input={validarEmail}
                                 />
