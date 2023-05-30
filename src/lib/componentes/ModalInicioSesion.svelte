@@ -220,7 +220,7 @@
     }
 
     #boton-ver-contrasena:active {
-        background-color: #4154f1;
+        background-color: #4154f1 !important;
     }
 
     @media (min-width: 425px) {
