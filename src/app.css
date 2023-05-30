@@ -132,6 +132,21 @@ form label {
   margin-top: revert !important;
 }
 
+
+#boton-ver-contrasena {
+  padding: 0 15px !important;
+  border-radius: 0 !important;
+}
+
+#boton-ver-contrasena:hover {
+  transform: scale(1);
+}
+
+#boton-ver-contrasena:active,
+#boton-ver-contrasena:focus-visible {
+  background-color: #4154f1 !important;
+}
+
 @media (min-width: 768px) {
   .header-seccion p {
     font-size: 38px;

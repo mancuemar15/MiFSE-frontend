@@ -323,19 +323,6 @@
         border-color: #4154f1;
     }
 
-    #boton-ver-contrasena {
-        padding: 0 15px !important;
-        border-radius: 0 !important;
-    }
-
-    #boton-ver-contrasena:hover {
-        transform: scale(1);
-    }
-
-    #boton-ver-contrasena:active {
-        background-color: #4154f1 !important;
-    }
-
     @media (min-width: 425px) {
         .formulario-inicio-sesion {
             padding: 30px;
