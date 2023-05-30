@@ -332,6 +332,10 @@
         transform: scale(1);
     }
 
+    #boton-ver-contrasena:active {
+        background-color: #4154f1;
+    }
+
     @media (min-width: 425px) {
         .formulario-inicio-sesion {
             padding: 30px;
